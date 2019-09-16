@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
+/*
+const JOB_URL = 'http://192.168.0.22:8080/frivilligbanken/app/singleJob.php';
+*/
 class VolunteerDashScreen extends Component {
 
     static navigationOptions = {
@@ -15,11 +18,34 @@ class VolunteerDashScreen extends Component {
           },
           headerTintColor: 'white',
           backTitle: null,
-      };
+    };
+
+    /*
+    state = { 
+        jobData: [] 
+    }
+
+    async getJob() {
+        try {
+            const response = await fetch(JOB_URL)
+
+            this.setState({ jobData: await response.json() })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    componentDidMount() {
+        this.getJob();
+    }
+
+    */
 
     render() {
-        const id = this.props.navigation.getParam('id')
-        
+        const id = this.props.navigation.getParam('id');
+        /*
+        const { jobData } = this.state;
+        */
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <Text>Hello World!</Text>

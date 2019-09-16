@@ -13,6 +13,7 @@ import History from './app/screens/volunteer/History';
 import VolunteerDashScreen from './app/screens/volunteer/VolunteerDashScreen';
 import GiftcardShop from './app/screens/volunteer/GiftcardShop';
 import VolunteerProfile from './app/screens/volunteer/VolunteerProfile';
+import VolunteerSettings from './app/screens/volunteer/VolunteerSettings';
 
 const JobTab = createStackNavigator({
   Jobs: { screen: Jobs },
@@ -45,6 +46,7 @@ ShopTab.navigationOptions = {
 
 const VolunteerProfileTab = createStackNavigator({
   VolunteerProfile: { screen: VolunteerProfile },
+  VolunteerSettings: { screen: VolunteerSettings },
 })
 VolunteerProfileTab.navigationOptions = {
   tabBarIcon: <Icon name="person" type='material' size={35} color="white" />

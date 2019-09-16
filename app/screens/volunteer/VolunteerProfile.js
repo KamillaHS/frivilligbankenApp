@@ -27,7 +27,7 @@ class VolunteerProfile extends Component {
           },
           headerRight: (
             <Button
-              onPress={() => Alert.alert('Manglende side', 'Indstillinger for profil virker ikke')}
+              onPress={() => this.props.navigation.navigate('VolunteerSettings')}
               icon={
                 <Icon
                   name="settings"

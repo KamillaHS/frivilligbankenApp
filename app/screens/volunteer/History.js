@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
-const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allJobs.php';
+const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/allJobs.php';
 
 class History extends Component {
     static navigationOptions = {

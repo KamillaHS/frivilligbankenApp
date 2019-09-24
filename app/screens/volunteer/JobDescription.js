@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
-const JOB_URL = 'http://192.168.0.22:8080/frivilligbanken/app/singleJob.php';
+const JOB_URL = 'http://kamilla-test.000webhostapp.com/app/singleJob.php';
 
-class VolunteerDashScreen extends Component {
+class JobDescription extends Component {
 
     static navigationOptions = {
         title: 'Job Beskrivelse',
@@ -16,7 +16,6 @@ class VolunteerDashScreen extends Component {
             backgroundColor: '#517BBE',
           },
           headerTintColor: 'white',
-          backTitle: null,
     };
 
     
@@ -108,7 +107,7 @@ class VolunteerDashScreen extends Component {
     }
 }
 
-export default VolunteerDashScreen;
+export default JobDescription;
 
 const styles = StyleSheet.create({
     container:{

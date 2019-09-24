@@ -12,8 +12,11 @@ import JobDescription from './app/screens/volunteer/JobDescription';
 import History from './app/screens/volunteer/History';
 import VolunteerDashScreen from './app/screens/volunteer/VolunteerDashScreen';
 import GiftcardShop from './app/screens/volunteer/GiftcardShop';
+import Giftcard from './app/screens/volunteer/Giftcard';
 import VolunteerProfile from './app/screens/volunteer/VolunteerProfile';
 import VolunteerSettings from './app/screens/volunteer/VolunteerSettings';
+import ChangeProfile from './app/screens/ChangeProfile';
+
 
 const JobTab = createStackNavigator({
   Jobs: { screen: Jobs },
@@ -39,6 +42,7 @@ HomeTab.navigationOptions = {
 
 const ShopTab = createStackNavigator({
   Shop: { screen: GiftcardShop },
+  Giftcard: { screen: Giftcard }
 })
 ShopTab.navigationOptions = {
   tabBarIcon: <Icon name="shopping-cart" type='material' size={35} color="white" />
@@ -47,6 +51,7 @@ ShopTab.navigationOptions = {
 const VolunteerProfileTab = createStackNavigator({
   VolunteerProfile: { screen: VolunteerProfile },
   VolunteerSettings: { screen: VolunteerSettings },
+  ChangeProfile: { screen: ChangeProfile },
 })
 VolunteerProfileTab.navigationOptions = {
   tabBarIcon: <Icon name="person" type='material' size={35} color="white" />
@@ -79,6 +84,7 @@ const RootStack = createStackNavigator(
   },
   {
     headerMode: 'none', 
+    initialRouteName: 'Login',
   }, 
 )
 
@@ -86,7 +92,7 @@ const AppContainer = createAppContainer(RootStack);
 
 class App extends Component {
   render() {
-    return <AppContainer {...navigationPersistence} />;
+    return <AppContainer {...navigationPersistence}/>;
   }
 };
 

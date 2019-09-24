@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 
-const LOGIN_URL = 'http://192.168.0.22:8080/frivilligbanken/app/userLogin.php';
+const LOGIN_URL = 'http://kamilla-test.000webhostapp.com/app/userLogin.php';
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -15,25 +15,28 @@ class LoginScreen extends Component {
     }
 
     async onLogin() {
-        const { email, password } = this.state;
+        if(this.state.email != '' && this.state.password != '') {
+            const { email, password } = this.state;
         
-        const responose = await fetch(LOGIN_URL, {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({ email, password }),
-        })
-        
-        const data = await responose.json()
+            const responose = await fetch(LOGIN_URL, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({ email, password }),
+            })
+            
+            const data = await responose.json()
 
-        if (data.error) {
-            alert(data.error)
+            if (data.error) {
+                alert(data.error)
+            } else {
+                AsyncStorage.setItem('UserID', data.user.UserID)
+                this.props.navigation.navigate('VolunteerTabs')
+            }
         } else {
-            alert('Velkommen tilbage, ' + data.user.FullName)
-            AsyncStorage.setItem('UserID', data.user.UserID)
-            this.props.navigation.navigate('VolunteerTabs')
+            Alert.alert('Tomme felter', 'Venligt indtast email og password for at logge ind')
         }
     }
 
@@ -75,7 +78,7 @@ class LoginScreen extends Component {
                     <Button 
                         title="Opret Konto" 
                         buttonStyle={styles.blueButton}
-                        onPress={this.onLogin.bind(this)}
+                        
                     />
                 </View>
 

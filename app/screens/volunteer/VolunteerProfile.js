@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
+const VOLUNTEER_URL = 'http://kamilla-test.000webhostapp.com/app/volunteerInfo.php';
+
 
 interests = [
   {'id': 1, 'interest': 'insterest1'}, 
@@ -17,7 +19,8 @@ unions = [
 
 
 class VolunteerProfile extends Component {
-    static navigationOptions = {
+    static navigationOptions =  ({ navigation }) => { 
+      return {
         title: 'Frivillig Profil',
         headerTitleStyle: {
             color: 'white',
@@ -25,9 +28,10 @@ class VolunteerProfile extends Component {
           headerStyle: {
             backgroundColor: '#517BBE',
           },
+          headerBackTitle: null,
           headerRight: (
             <Button
-              onPress={() => this.props.navigation.navigate('VolunteerSettings')}
+              onPress={() => navigation.navigate('VolunteerSettings')}
               icon={
                 <Icon
                   name="settings"
@@ -39,16 +43,29 @@ class VolunteerProfile extends Component {
               type="clear"
             />
           ),
-      };
+    }};
+
+    state = { 
+        userData: [] 
+    }
 
     async getUser() {
-        const UserID = await AsyncStorage.getItem('UserID')
-        return (
-            UserID
-        )
+        try {
+            const response = await fetch(VOLUNTEER_URL)
+
+            this.setState({ userData: await response.json() })
+        } catch (error) {
+            console.error(error)  
+        }
+    }
+
+    componentDidMount() {
+        this.getUser();
     }
     
     render() {
+        const { userData } = this.state;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.noBGarea}>
@@ -60,7 +77,7 @@ class VolunteerProfile extends Component {
                           color='#4c4c4c'
                       />
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
-                          55
+                          {userData.Points}
                       </Text>
                       { /* number is supposed to come from db */} 
                   </View>

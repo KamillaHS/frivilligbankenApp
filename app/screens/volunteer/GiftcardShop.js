@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { stringify } from "qs";
 
-const GIFTCARD_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allGiftcards.php';
+const GIFTCARD_URL = 'http://kamilla-test.000webhostapp.com/app/allGiftcards.php';
 
 class GiftcardShop extends Component {
     static navigationOptions = {
@@ -14,6 +14,7 @@ class GiftcardShop extends Component {
           headerStyle: {
             backgroundColor: '#517BBE',
           },
+          headerBackTitle: null,
     };
 
     state = { 
@@ -55,7 +56,7 @@ class GiftcardShop extends Component {
                 </View>
                 {
                     giftCardData.map((item, i) => (
-                        <View style={styles.giftcard} key={i}>
+                        <TouchableOpacity style={styles.giftcard} key={i} onPress={() => this.props.navigation.navigate('Giftcard', {id: item.GiftcardID})}>
                             <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{ borderRadius: 10 }} />
                             <View style={styles.cardInfo}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -71,7 +72,7 @@ class GiftcardShop extends Component {
                                     </View>
                                 </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     ))    
                 }
             </ScrollView>

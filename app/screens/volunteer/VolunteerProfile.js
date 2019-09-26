@@ -4,7 +4,6 @@ import { Button, Icon } from 'react-native-elements';
 
 const VOLUNTEER_URL = 'http://kamilla-test.000webhostapp.com/app/volunteerInfo.php';
 
-
 interests = [
   {'id': 1, 'interest': 'insterest1'}, 
   {'id': 2, 'interest': 'insterest2'}, 
@@ -16,7 +15,6 @@ unions = [
   {'id': 2, 'union': 'Brydeklubben Thor'}, 
   {'id': 3, 'union': 'Nykøbing F. Petanque Klub'},
 ];
-
 
 class VolunteerProfile extends Component {
     static navigationOptions =  ({ navigation }) => { 
@@ -51,10 +49,12 @@ class VolunteerProfile extends Component {
 
     async getUser() {
         try {
-            const response = await fetch(VOLUNTEER_URL)
+          AsyncStorage.getItem('UserID');
+          const response = await fetch(VOLUNTEER_URL)
 
-            this.setState({ userData: await response.json() })
-        } catch (error) {
+          this.setState({ userData: await response.json() })
+        } 
+        catch (error) {
             console.error(error)  
         }
     }

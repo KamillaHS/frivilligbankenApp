@@ -17,7 +17,17 @@ import VolunteerProfile from './app/screens/volunteer/VolunteerProfile';
 import VolunteerSettings from './app/screens/volunteer/VolunteerSettings';
 import ChangeProfile from './app/screens/ChangeProfile';
 
+import UnionDashboard from './app/screens/union/UnionDashboard';
+import UnionJobs from './app/screens/union/UnionJobs';
+import UnionProfile from './app/screens/union/UnionProfile';
+import UnionSettings from './app/screens/union/UnionSettings';
 
+import SponsorDashboard from './app/screens/sponsor/SponsorDashboard';
+import SponsorGiftcards from './app/screens/sponsor/SponsorGiftcards';
+import SponsorProfile from './app/screens/sponsor/SponsorProfile';
+import SponsorSettings from './app/screens/sponsor/SponsorSettings';
+
+/* Volunteer Tabs */
 const JobTab = createStackNavigator({
   Jobs: { screen: Jobs },
   JobDescription: { screen: JobDescription}
@@ -77,14 +87,104 @@ const VolunteerTabs = createBottomTabNavigator(
   }
 )
 
+/* Union Tabs */
+
+
+const UnionJobsTab = createStackNavigator({
+  UnionJobs: { screen: UnionJobs },
+})
+UnionJobsTab.navigationOptions = {
+  tabBarIcon: <Icon name="work" type='material' size={35} color="white" />
+}
+
+const UnionHomeTab = createStackNavigator({
+  UnionHome: { screen: UnionDashboard },
+})
+UnionHomeTab.navigationOptions = {
+  tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />
+}
+
+const UnionProfileTab = createStackNavigator({
+  UnionProfile: { screen: UnionProfile },
+  UnionSettings: { screen: UnionSettings },
+  ChangeProfile: { screen: ChangeProfile },
+})
+UnionProfileTab.navigationOptions = {
+  tabBarIcon: <Icon name="person" type='material' size={35} color="white" />
+}
+
+const UnionTabs = createBottomTabNavigator(
+  {
+  UnionJobsTab,
+  UnionHomeTab,
+  UnionProfileTab,
+  },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#517BBE',
+      },
+      showLabel: false,
+      showIcon: true,
+    },
+    initialRouteName: 'UnionHomeTab',
+  }
+)
+
+/* Sponsor Tabs */
+
+const SponsorGiftcardTab = createStackNavigator({
+  SponsorGiftcards: { screen: SponsorGiftcards },
+})
+SponsorGiftcardTab.navigationOptions = {
+  tabBarIcon: <Icon name="loyalty" type='material' size={35} color="white" />
+}
+
+const SponsorHomeTab = createStackNavigator({
+  SponsorHome: { screen: SponsorDashboard },
+})
+SponsorHomeTab.navigationOptions = {
+  tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />
+}
+
+const SponsorProfileTab = createStackNavigator({
+  SponsorProfile: { screen: SponsorProfile },
+  SponsorSettings: { screen: SponsorSettings },
+  ChangeProfile: { screen: ChangeProfile },
+})
+SponsorProfileTab.navigationOptions = {
+  tabBarIcon: <Icon name="person" type='material' size={35} color="white" />
+}
+
+const SponsorTabs = createBottomTabNavigator(
+  {
+  SponsorGiftcardTab,
+  SponsorHomeTab,
+  SponsorProfileTab,
+  },
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: '#517BBE',
+      },
+      showLabel: false,
+      showIcon: true,
+    },
+    initialRouteName: 'SponsorHomeTab',
+  }
+)
+
+/* Collection */
+
 const RootStack = createStackNavigator(
   {
     Login: { screen: LoginScreen },
     VolunteerTabs,
+    UnionTabs,
+    SponsorTabs,
   },
   {
     headerMode: 'none', 
-    initialRouteName: 'Login',
   }, 
 )
 

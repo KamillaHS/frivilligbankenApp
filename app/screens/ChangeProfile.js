@@ -28,13 +28,22 @@ class ChangeProfile extends Component {
                             <Text style={styles.text}>Navn Navnesen</Text>
                         </View>
                     </TouchableOpacity>
+
                     <Text style={styles.title}>Andre Profiler</Text>
-                    <TouchableOpacity style={styles.profileLine}>
+                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('UnionHome')}>
                         <View style={styles.lightTitle}>
                             <Text style={styles.text}>Forening</Text>
                         </View>
                         <View style={styles.darkName}>
                             <Text style={styles.text}>Forening Navn</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('SponsorHome')}>
+                        <View style={styles.lightTitle}>
+                            <Text style={styles.text}>Sponsor</Text>
+                        </View>
+                        <View style={styles.darkName}>
+                            <Text style={styles.text}>Sponsor Navn</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

@@ -12,10 +12,10 @@ class JobDescription extends Component {
         headerTitleStyle: {
             color: 'white',
           },
-          headerStyle: {
+        headerStyle: {
             backgroundColor: '#517BBE',
-          },
-          headerTintColor: 'white',
+        },
+        headerTintColor: 'white',
     };
 
     

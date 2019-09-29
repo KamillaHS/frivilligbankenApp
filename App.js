@@ -21,9 +21,12 @@ import UnionDashboard from './app/screens/union/UnionDashboard';
 import UnionJobs from './app/screens/union/UnionJobs';
 import UnionProfile from './app/screens/union/UnionProfile';
 import UnionSettings from './app/screens/union/UnionSettings';
+import UnionMembers from './app/screens/union/UnionMembers';
 
 import SponsorDashboard from './app/screens/sponsor/SponsorDashboard';
 import SponsorGiftcards from './app/screens/sponsor/SponsorGiftcards';
+import SingleGiftcard from './app/screens/sponsor/SingleGiftcard';
+import AllGiftcards from './app/screens/sponsor/AllGiftcards';
 import SponsorProfile from './app/screens/sponsor/SponsorProfile';
 import SponsorSettings from './app/screens/sponsor/SponsorSettings';
 
@@ -38,6 +41,7 @@ JobTab.navigationOptions = {
 
 const HistoryTab = createStackNavigator({
   History: { screen: History },
+  JobDescription: { screen: JobDescription},
 })
 HistoryTab.navigationOptions = {
   tabBarIcon: <Icon name="restore" type='material' size={35} color="white" />
@@ -89,9 +93,9 @@ const VolunteerTabs = createBottomTabNavigator(
 
 /* Union Tabs */
 
-
 const UnionJobsTab = createStackNavigator({
   UnionJobs: { screen: UnionJobs },
+  JobDescription: { screen: JobDescription},
 })
 UnionJobsTab.navigationOptions = {
   tabBarIcon: <Icon name="work" type='material' size={35} color="white" />
@@ -99,6 +103,7 @@ UnionJobsTab.navigationOptions = {
 
 const UnionHomeTab = createStackNavigator({
   UnionHome: { screen: UnionDashboard },
+  UnionMembers: { screen: UnionMembers },
 })
 UnionHomeTab.navigationOptions = {
   tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />
@@ -135,6 +140,8 @@ const UnionTabs = createBottomTabNavigator(
 
 const SponsorGiftcardTab = createStackNavigator({
   SponsorGiftcards: { screen: SponsorGiftcards },
+  AllGiftcards: { screen: AllGiftcards },
+  SingleGiftcard: { screen: SingleGiftcard },
 })
 SponsorGiftcardTab.navigationOptions = {
   tabBarIcon: <Icon name="loyalty" type='material' size={35} color="white" />

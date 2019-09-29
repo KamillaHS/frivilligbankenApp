@@ -8,16 +8,39 @@ class UnionDashboard extends Component {
         title: 'Forside',
         headerTitleStyle: {
             color: 'white',
-          },
-          headerStyle: {
+        },
+        headerStyle: {
             backgroundColor: '#517BBE',
-          },
+        },
+        headerBackTitle: null,
       };
 
     render() {
         return(
             <ScrollView contentContainerStyle={styles.container}>
-                <Text>Forenings forside</Text>
+                <View style={styles.area}>
+                    <Text style={[styles.text, {fontSize: 18}]}>Velkommen Forening Navn</Text>
+                    <Text style={[styles.text, {fontSize: 15}]}>Hvad har du lyst til at foretage dig?</Text>
+                </View>
+                <View style={styles.noBGarea}>
+                    <Button 
+                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
+                        title='Opret Job'
+                    />
+                    <Button 
+                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
+                        title='Frivillige Medlemmer'
+                        onPress={() => this.props.navigation.navigate('UnionMembers')}
+                    />
+                    <Button 
+                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
+                        title='Godkend/Afvis Ansøgere'
+                    />
+                    <Button 
+                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
+                        title='Tildel Arbejdstimer'
+                    />
+                </View>
             </ScrollView>
         )
     }
@@ -31,6 +54,20 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         backgroundColor: '#E7EBF0',
     },
+    area:{
+        backgroundColor: 'rgba(81,123,190,0.3)',
+        borderRadius: 10,
+        width: '90%',
+        padding: 10,
+        marginBottom: 10
+    },
+    text:{
+        color: '#4c4c4c',
+    },
+    noBGarea:{
+        width: '90%',
+        marginBottom: 10
+    },
     greenButton: {
         backgroundColor:"#30A451",
         borderRadius:10,
@@ -39,5 +76,6 @@ const styles = StyleSheet.create({
     blueButton: {
         backgroundColor:"#517BBE",
         borderRadius:10,
+        width: '100%',
     },
 });

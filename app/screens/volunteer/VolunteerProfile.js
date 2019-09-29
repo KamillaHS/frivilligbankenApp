@@ -1,20 +1,16 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
+import moment from 'moment';
+import 'moment/locale/da';
+moment.locale('da');
+
+
 const VOLUNTEER_URL = 'http://kamilla-test.000webhostapp.com/app/volunteerInfo.php';
-
-interests = [
-  {'id': 1, 'interest': 'insterest1'}, 
-  {'id': 2, 'interest': 'insterest2'}, 
-  {'id': 3, 'interest': 'insterest3'},
-];
-
-unions = [
-  {'id': 1, 'union': 'Nykøbing FC'}, 
-  {'id': 2, 'union': 'Brydeklubben Thor'}, 
-  {'id': 3, 'union': 'Nykøbing F. Petanque Klub'},
-];
+const USERINTERESTS_URL = 'http://kamilla-test.000webhostapp.com/app/volunteerInterests.php';
+const USERMEMBERSHIPS_URL = 'http://kamilla-test.000webhostapp.com/app/userMemberships.php';
+const USREGIFTCARDS_URL = 'http://kamilla-test.000webhostapp.com/app/userGiftcards.php';
 
 class VolunteerProfile extends Component {
     static navigationOptions =  ({ navigation }) => { 
@@ -44,27 +40,80 @@ class VolunteerProfile extends Component {
     }};
 
     state = { 
-        userData: [] 
+        userData: [],
+        userInterests: [],
+        userMemberships: [],
+        userGiftcards: [],
     }
 
     async getUser() {
         try {
           AsyncStorage.getItem('UserID');
-          const response = await fetch(VOLUNTEER_URL)
+
+          /*
+          alert(await AsyncStorage.getItem('sessionID'));
+          */
+
+          const response = await fetch(VOLUNTEER_URL, {
+            credentials: 'include',
+          })
+
+          /*
+          const response = await fetch(VOLUNTEER_URL, {
+            headers: {'Session-ID': await AsyncStorage.getItem('sessionID')}
+          })
+          */
 
           this.setState({ userData: await response.json() })
+          
         } 
         catch (error) {
             console.error(error)  
         }
     }
 
+    async getUserInterests() {
+      AsyncStorage.getItem('UserID');
+
+      const response = await fetch(USERINTERESTS_URL, {
+        credentials: 'include',
+      })
+
+      this.setState({ userInterests: await response.json() })
+    }
+
+    async getUserMemberships() {
+      AsyncStorage.getItem('UserID');
+
+      const response = await fetch(USERMEMBERSHIPS_URL, {
+        credentials: 'include',
+      })
+
+      this.setState({ userMemberships: await response.json() })
+    }
+    
+    async getUserGiftcards() {
+      AsyncStorage.getItem('VolunteerID');
+
+      const response = await fetch(USREGIFTCARDS_URL, {
+        credentials: 'include',
+      })
+
+      this.setState({ userGiftcards: await response.json() })
+    }
+
     componentDidMount() {
         this.getUser();
+        this.getUserInterests();
+        this.getUserMemberships();
+        this.getUserGiftcards();
     }
     
     render() {
         const { userData } = this.state;
+        const { userInterests } = this.state;
+        const { userMemberships } = this.state;
+        const { userGiftcards } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -99,26 +148,26 @@ class VolunteerProfile extends Component {
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                     <Image
                       style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50}}
-                      source={{uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}}
+                      source={{uri: userData.VolunteerPic}}
                     />
-                    <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>Full Name</Text>
+                    <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{userData.FullName}</Text>
                   </View>
 
                   <View style={styles.infoBox}>
                     <View style={styles.rows}>
                       <View style={{width: '50%'}}><Text style={styles.titles}>Fødselsdato</Text></View>
-                      <View style={{width: '50%'}}><Text style={styles.values}>00-00-0000</Text></View>
+                      <View style={{width: '50%'}}><Text style={styles.values}>{moment(userData.DoB).format('L')}</Text></View>
                     </View>
                     <View style={styles.rows}>
                       <View style={{width: '50%'}}><Text style={styles.titles}>Adresse</Text></View>
-                      <View style={{width: '50%'}}><Text style={styles.values}>Randomvej 11</Text></View>
+                      <View style={{width: '50%'}}><Text style={styles.values}>{userData.Address}</Text></View>
                     </View>
                     <View style={styles.rows}>
                       <View style={{width: '50%'}}><Text style={styles.titles}>By</Text></View>
-                      <View style={{width: '50%'}}><Text style={styles.values}>0000, Ingensted</Text></View>
+                      <View style={{width: '50%'}}><Text style={styles.values}>{userData.PostalCode}, {userData.City}</Text></View>
                     </View>
                     <Text style={styles.titles}>Beskrivelse</Text>
-                    <Text style={styles.values}>Blaa... Blaaa... Blaaaa...</Text>
+                    <Text style={styles.values}>{userData.Description}</Text>
                     <Button 
                       buttonStyle={styles.blueButton}
                       title='CV'
@@ -130,9 +179,9 @@ class VolunteerProfile extends Component {
                     <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Interesser</Text>
                     <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap'}}>
                     {
-                      interests.map((item, i) => (
+                      userInterests.map((item, i) => (
                         <View style={i % 4 == 1 || i % 4 == 2 ? styles.interestDark : styles.interestLight} key={i}>
-                          <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.interest}</Text>
+                          <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.InterestName}</Text>
                         </View>
                       ))
                     }
@@ -143,9 +192,9 @@ class VolunteerProfile extends Component {
                   <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Medlemskaber</Text>
                   <View>
                   {
-                      unions.map((item, i) => (
+                      userMemberships.map((item, i) => (
                         <View style={i % 2 == 0 ? styles.unionDark : styles.unionLight} key={i}>
-                          <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.union}</Text>
+                          <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.UnionName}</Text>
                         </View>
                       ))
                     }
@@ -154,17 +203,46 @@ class VolunteerProfile extends Component {
 
                 <View style={styles.area}>
                   <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Købte Gavekort</Text>
-                    <Text>Købte Gavekort</Text>
+                  <View styles={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+                  {
+                    userGiftcards.map((item, i) => (
+                      <TouchableOpacity style={[item.isUsed == 1 ? {display: 'none'} : styles.giftcard, item.isExpired == 1 ? {display: 'none'} : styles.giftcard]} key={i}>
+                        <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
+                        <View style={styles.cardInfo}>   
+                          <Text style={{color: 'white', fontSize: 12 }}>Brug før: { moment(item.ExpirationDate).format('L') }</Text>     
+                        </View>
+                      </TouchableOpacity>
+                    ))
+                  }
+                  </View>
                 </View>
 
                 <View style={styles.area}>
                   <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Brugte Gavekort</Text>
-                    <Text>Brugte Gavekort</Text>
+                  {
+                    userGiftcards.map((item, i) => (
+                      <TouchableOpacity style={item.isUsed == 1 ? styles.giftcard : {display: 'none'}} key={i}>
+                        <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
+                        <View style={styles.cardInfo}>   
+                          <Text style={{color: 'white', fontSize: 12 }}>Brugt d. { moment(item.ExpirationDate).format('L') }</Text>     
+                        </View>
+                      </TouchableOpacity>
+                    ))
+                  }
                 </View>
 
                 <View style={styles.area}>
                   <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Udløbne Gavekort</Text>
-                    <Text>Udløbne Gavekort</Text>
+                  {
+                    userGiftcards.map((item, i) => (
+                      <TouchableOpacity style={item.isExpired == 1 ? styles.giftcard : {display: 'none'}} key={i}>
+                        <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
+                        <View style={styles.cardInfo}>   
+                          <Text style={{color: 'white', fontSize: 12 }}>Udløb d. { moment(item.ExpirationDate).format('L') }</Text>     
+                        </View>
+                      </TouchableOpacity>
+                    ))
+                  }
                 </View>
                 
             </ScrollView>
@@ -250,4 +328,29 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(255,255,255,0.6)',
       padding: 10,
     },
+    giftcard: {
+      height: 100,
+      width: '45%',
+      backgroundColor: 'lightgrey',
+      borderWidth: 1,
+      borderColor: '#4c4c4c',
+      borderRadius: 10,
+      marginBottom: 10,
+    },
+    cardImg:{
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      borderRadius: 10,
+    },
+    cardInfo:{
+      height: 25,
+      width: '100%',
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      borderBottomLeftRadius: 9,
+      borderBottomRightRadius: 9,
+      marginBottom: 0,
+      marginTop: 'auto',
+      padding: 5,
+  }
 });

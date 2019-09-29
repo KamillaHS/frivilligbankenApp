@@ -17,9 +17,10 @@ class LoginScreen extends Component {
     async onLogin() {
         if(this.state.email != '' && this.state.password != '') {
             const { email, password } = this.state;
-        
+            
             const responose = await fetch(LOGIN_URL, {
                 headers: {
+                    credentials: 'include',
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -27,7 +28,10 @@ class LoginScreen extends Component {
                 body: JSON.stringify({ email, password }),
             })
             
-            const data = await responose.json()
+            const data = await responose.json();
+            /*
+            await AsyncStorage.setItem('sessionID', data.sessionID);
+            */
 
             if (data.error) {
                 alert(data.error)

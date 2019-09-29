@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableWithoutFeedback } from "react-native";
-import { Button, Icon, ListItem, Divider } from 'react-native-elements';
-import { stringify } from "qs";
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, ImageBackground, Picker } from "react-native";
+import { Button, Icon } from 'react-native-elements';
 import { TextInput } from "react-native-gesture-handler";
 
-const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/allJobs.php';
+const GIFTCARDS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allGiftcards.php';
 
-class Jobs extends Component {
+class AllGiftcards extends Component {
+
     static navigationOptions = {
-        title: 'Alle Jobs',
+        title: 'Alle Gavekort',
         headerTitleStyle: {
             color: 'white',
         },
@@ -16,28 +16,29 @@ class Jobs extends Component {
             backgroundColor: '#517BBE',
         },
         headerBackTitle: null,
+        headerTintColor: 'white',
     };
 
     state = { 
-        jobsData: [] 
+        giftcardsData: [],
     }
 
-    async getJobs() {
+    async getGiftcards() {
         try {
-            const response = await fetch(JOBS_URL)
+            const response = await fetch(GIFTCARDS_URL)
 
-            this.setState({ jobsData: await response.json() })
+            this.setState({ giftcardsData: await response.json() })
         } catch (error) {
             console.error(error)
         }
     }
 
     componentDidMount() {
-        this.getJobs();
+        this.getGiftcards();
     }
-    
+
     render() {
-        const { jobsData } = this.state;
+        const { giftcardsData } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -97,43 +98,37 @@ class Jobs extends Component {
                             style={styles.searchInput}
                         />
                     </View>
+
+                    
                 </View>
 
-                <View style={ styles.area }>
-                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingTop: 10, paddingRight: 10}}>
-                        <Text style={styles.text}>Jobs</Text>
-                        <Text style={styles.text}>Start dato</Text>
-                    </View>
-                    {
-                        jobsData.map((item, key) => (
-                            <TouchableWithoutFeedback key={key.JobID} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
-                                <View style={styles.jobListItem}>
-                                    <View style={styles.jobLogo}>
-                                        <Image
-                                            style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                            source={{uri: item.UnionLogo}}
+                {
+                    giftcardsData.map((item, i) => (
+                        <TouchableOpacity style={styles.giftcard} key={i} onPress={() => this.props.navigation.navigate('SingleGiftcard', {id: item.GiftcardID})}>
+                            <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{ borderRadius: 10 }} />
+                            <View style={styles.cardInfo}>
+                                <View style={{flex: 1, flexDirection: 'row'}}>
+                                    <Text style={{color: 'white', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', padding: 2}}>
+                                        <Icon
+                                            type='material' 
+                                            name="control-point" 
+                                            size={25}
+                                            color='white'
                                         />
-                                    </View>
-                                    <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
-                                        <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
-                                        <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
-                                        <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
-                                    </View>
-                                    <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                        <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
+                                        <Text style={{color: 'white', fontSize: 18, padding: 1}}>{ item.Value }</Text>
                                     </View>
                                 </View>
-                            </TouchableWithoutFeedback>
-                        ))
-                    }
-                </View>
-
+                            </View>
+                        </TouchableOpacity>
+                    ))    
+                }
             </ScrollView>
         )
     }
 }
 
-export default Jobs;
+export default AllGiftcards;
 
 const styles = StyleSheet.create({
     container:{
@@ -166,10 +161,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#4c4c4c",
         borderRadius: 10,
-    },
-    text:{
-        color: '#4c4c4c',
-        fontSize: 15,
+    
     },
     searchInput:{
         width: '90%',
@@ -182,25 +174,33 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         width: '90%',
     },
-    jobListItem:{
-        flex:1,
-        flexDirection: 'row',
-        backgroundColor: 'rgba(255,255,255,0.5)',
-        padding: 5,
-        color: '#4c4c4c',
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 10,
-        borderRadius: 10,
-        justifyContent: 'center', 
-        alignItems: 'center',
+    text:{
+        fontSize: 15,
+        color: '#4c4c4c'
     },
-    jobLogo:{
-        height: 50,
-        width: 50,
-        backgroundColor: 'white',
+    giftcard:{
+        height: 200,
+        width: '90%',
+        backgroundColor: 'lightgrey',
         borderWidth: 1,
         borderColor: '#4c4c4c',
-        borderRadius: 25,
-    }
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    cardImg:{
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        borderRadius: 10,
+    },
+    cardInfo:{
+        height: 40,
+        width: '100%',
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        borderBottomLeftRadius: 9,
+        borderBottomRightRadius: 9,
+        marginBottom: 0,
+        marginTop: 'auto',
+        padding: 5,
+    },
 });

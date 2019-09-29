@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
 const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/allJobs.php';
@@ -13,6 +13,7 @@ class History extends Component {
           headerStyle: {
             backgroundColor: '#517BBE',
           },
+          headerBackTitle: null,
       };
 
     state = { 
@@ -45,14 +46,14 @@ class History extends Component {
                     </View>
                     {
                         jobsData.map((item, i) => (
-                            <View style={styles.jobListItemGreen} key={i}>
+                            <TouchableOpacity style={styles.jobListItemGreen} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         source={{uri: item.UnionLogo}}
                                     />
                                 </View>
-                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5 }}>
+                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
                                     <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
@@ -60,7 +61,7 @@ class History extends Component {
                                 <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
                                     <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         ))
                     }
                 </View>
@@ -72,14 +73,14 @@ class History extends Component {
                     </View>
                     {
                         jobsData.map((item, i) => (
-                            <View style={styles.jobListItemYellow} key={i}>
+                            <TouchableOpacity style={styles.jobListItemYellow} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         source={{uri: item.UnionLogo}}
                                     />
                                 </View>
-                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5 }}>
+                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
                                     <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
@@ -87,7 +88,7 @@ class History extends Component {
                                 <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
                                     <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         ))
                     }
                 </View>
@@ -98,19 +99,19 @@ class History extends Component {
                     </View>
                     {
                         jobsData.map((item, i) => (
-                            <View style={styles.jobListItemRed} key={i}>
+                            <TouchableOpacity style={styles.jobListItemRed} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         source={{uri: item.UnionLogo}}
                                     />
                                 </View>
-                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5 }}>
+                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
                                     <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         ))
                     }
                 </View>
@@ -121,14 +122,14 @@ class History extends Component {
                     </View>
                     {
                         jobsData.map((item, i) => (
-                            <View style={styles.jobListItemGrey} key={i}>
+                            <TouchableOpacity style={styles.jobListItemGrey} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         source={{uri: item.UnionLogo}}
                                     />
                                 </View>
-                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5 }}>
+                                <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
                                     <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
@@ -136,7 +137,7 @@ class History extends Component {
                                 <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
                                     <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         ))
                     }
                 </View>
@@ -164,49 +165,49 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'row',
         backgroundColor: 'rgba(49,168,83,0.5)',
-        height: 60,
         padding: 5,
         color: '#4c4c4c',
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10,
         borderRadius: 10,
+        alignItems: 'center',
     },
     jobListItemYellow:{
         flex:1,
         flexDirection: 'row',
         backgroundColor: 'rgba(255,128,0,0.5)',
-        height: 60,
         padding: 5,
         color: '#4c4c4c',
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10,
-        borderRadius: 10,
+        borderRadius: 10, 
+        alignItems: 'center',
     },
     jobListItemRed:{
         flex:1,
         flexDirection: 'row',
         backgroundColor: 'rgba(232,67,53,0.5)',
-        height: 60,
         padding: 5,
         color: '#4c4c4c',
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10,
         borderRadius: 10,
+        alignItems: 'center',
     },
     jobListItemGrey:{
         flex:1,
         flexDirection: 'row',
         backgroundColor: 'rgba(76,76,76,0.4)',
-        height: 60,
         padding: 5,
         color: '#4c4c4c',
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10,
         borderRadius: 10,
+        alignItems: 'center',
     },
     jobLogo:{
         height: 50,

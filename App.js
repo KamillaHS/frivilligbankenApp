@@ -7,6 +7,9 @@ import { Icon } from 'react-native-elements';
 import * as navigationPersistence from './navigation-persistence';
 
 import LoginScreen from './app/screens/LoginScreen';
+
+import SignUpScreen from './app/screens/signUp/SignUp';
+
 import Jobs from './app/screens/volunteer/Jobs';
 import JobDescription from './app/screens/volunteer/JobDescription';
 import History from './app/screens/volunteer/History';
@@ -174,11 +177,22 @@ const SponsorTabs = createBottomTabNavigator(
   }
 )
 
+/* SignUp */
+
+const SignUp = createStackNavigator({
+  SignUp: { screen: SignUpScreen },
+  },
+  {
+    headerMode: 'none',
+  }
+)
+
 /* Collection */
 
 const RootStack = createStackNavigator(
   {
     Login: { screen: LoginScreen },
+    SignUp,
     VolunteerTabs,
     UnionTabs,
     SponsorTabs,

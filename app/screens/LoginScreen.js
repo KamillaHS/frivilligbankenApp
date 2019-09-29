@@ -78,7 +78,7 @@ class LoginScreen extends Component {
                     <Button 
                         title="Opret Konto" 
                         buttonStyle={styles.blueButton}
-                        
+                        onPress={() => this.props.navigation.navigate('SignUp')}
                     />
                 </View>
 

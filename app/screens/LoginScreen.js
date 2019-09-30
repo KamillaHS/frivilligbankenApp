@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 
-const LOGIN_URL = 'http://kamilla-test.000webhostapp.com/app/userLogin.php';
+const LOGIN_URL = 'http://192.168.0.22:8080/frivilligbanken/app/userLogin.php';
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class LoginScreen extends Component {
         if(this.state.email != '' && this.state.password != '') {
             const { email, password } = this.state;
             
-            const responose = await fetch(LOGIN_URL, {
+            const response = await fetch(LOGIN_URL, {
                 headers: {
                     credentials: 'include',
                     Accept: 'application/json',
@@ -27,8 +27,8 @@ class LoginScreen extends Component {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
             })
+            const data = await response.json();
             
-            const data = await responose.json();
             /*
             await AsyncStorage.setItem('sessionID', data.sessionID);
             */
@@ -83,6 +83,11 @@ class LoginScreen extends Component {
                         title="Opret Konto" 
                         buttonStyle={styles.blueButton}
                         onPress={() => this.props.navigation.navigate('SignUp')}
+                    />
+
+                    <Button 
+                        title="Debug" 
+                        onPress={() => this.props.navigation.navigate('Debug')}
                     />
                 </View>
 

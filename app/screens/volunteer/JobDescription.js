@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
-const JOB_URL = 'http://kamilla-test.000webhostapp.com/app/singleJob.php';
+const JOB_URL = 'http://192.168.0.22:8080/frivilligbanken/app/singleJob.php';
 
 class JobDescription extends Component {
 
@@ -29,6 +29,7 @@ class JobDescription extends Component {
             const response = await fetch(JOB_URL + '?id=' + id)
 
             this.setState({ jobData: await response.json() })
+
         } catch (error) {
             console.error(error)  
         }

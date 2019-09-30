@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage, TouchableOpacity } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 
-const LOGIN_URL = 'http://kamilla-test.000webhostapp.com/app/userLogin.php';
+const SIGNUP_URL = 'http://192.168.0.22:8080/frivilligbanken/app/signUp.php';
 
 class SignUp extends Component {
     constructor(props) {
@@ -19,13 +19,10 @@ class SignUp extends Component {
         const { email, password, password2 } = this.state;
 
         if(this.state.email != '' && this.state.password != '' && this.state.password2 != '') {
-
             if(password != password2) {
                 Alert.alert('Password matcher ikke', 'De to indtastede passwords skal være det samme password')
             } else {
-                alert('Email: ' + email + ', password: ' + password + ', password2: ' + password2)
-                /*
-                const responose = await fetch(LOGIN_URL, {
+                const response = await fetch(SIGNUP_URL, {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json'
@@ -34,15 +31,15 @@ class SignUp extends Component {
                     body: JSON.stringify({ email, password }),
                 })
                 
-                const data = await responose.json()
-    
+                const data = await response.json()
+                
+               
                 if (data.error) {
                     alert(data.error)
                 } else {
                     AsyncStorage.setItem('UserID', data.user.UserID)
-                    this.props.navigation.navigate('VolunteerTabs')
+                    this.props.navigation.navigate('SignUpMessage')
                 }
-                */
             }
         } else {
             Alert.alert('Tomme felter', 'Venligt indtast email og password for at kunne oprette en bruger')

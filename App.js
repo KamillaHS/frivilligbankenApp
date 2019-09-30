@@ -9,6 +9,8 @@ import * as navigationPersistence from './navigation-persistence';
 import LoginScreen from './app/screens/LoginScreen';
 
 import SignUpScreen from './app/screens/signUp/SignUp';
+import SignUpMessage from './app/screens/signUp/SignUpMessage';
+import VolunteerSignUp from './app/screens/signUp/VolunteerSignUp';
 
 import Jobs from './app/screens/volunteer/Jobs';
 import JobDescription from './app/screens/volunteer/JobDescription';
@@ -33,6 +35,8 @@ import AllGiftcards from './app/screens/sponsor/AllGiftcards';
 import SponsorProfile from './app/screens/sponsor/SponsorProfile';
 import SponsorSettings from './app/screens/sponsor/SponsorSettings';
 
+import Debug from './app/screens/DebugScreen'
+
 /* Volunteer Tabs */
 const JobTab = createStackNavigator({
   Jobs: { screen: Jobs },
@@ -52,6 +56,8 @@ HistoryTab.navigationOptions = {
 
 const HomeTab = createStackNavigator({
   Home: { screen: VolunteerDashScreen },
+  JobDescription: { screen: JobDescription},
+  Debug: { screen: Debug},
 })
 HomeTab.navigationOptions = {
   tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />
@@ -188,6 +194,8 @@ const SponsorTabs = createBottomTabNavigator(
 
 const SignUp = createStackNavigator({
   SignUp: { screen: SignUpScreen },
+  SignUpMessage: { screen: SignUpMessage },
+  VolunteerSignUp: { screen: VolunteerSignUp },
   },
   {
     headerMode: 'none',
@@ -200,6 +208,7 @@ const RootStack = createStackNavigator(
   {
     Login: { screen: LoginScreen },
     SignUp,
+    Debug: { screen: Debug},
     VolunteerTabs,
     UnionTabs,
     SponsorTabs,

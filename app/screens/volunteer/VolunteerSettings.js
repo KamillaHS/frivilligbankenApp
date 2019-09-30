@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Switch, TouchableOpacity } from "react-native";
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, ThemeConsumer } from 'react-native-elements';
 import SwitchToggle from 'react-native-switch-toggle';
 import ToggleSwitch from 'rn-toggle-switch'
 import { isConfigurationAvailable } from "expo/build/AR";
 
+const LOGOUT_URL = 'http://192.168.0.22:8080/frivilligbanken/app/logout.php';
 
 class VolunteerSettings extends Component {
 
@@ -28,6 +29,13 @@ class VolunteerSettings extends Component {
             switchValue2: false,
         };
     };
+
+    async logout() {
+        await fetch(LOGOUT_URL, {
+            credentials: 'include',
+        })
+        this.props.navigation.navigate('Login')
+    }
     
 
    toggleSwitch = (value) => {
@@ -78,7 +86,7 @@ class VolunteerSettings extends Component {
                     <Button
                         title="Log Ud"
                         buttonStyle={styles.redButton}
-                        onPress={() => this.props.navigation.navigate('Login') }
+                        onPress={() => this.logout()}
                     />
                 </View>
 

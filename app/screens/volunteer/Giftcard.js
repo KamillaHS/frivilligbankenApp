@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
-const GIFTCARD_URL = 'http://kamilla-test.000webhostapp.com/app/singleGiftcard.php';
+const GIFTCARD_URL = 'http://192.168.0.22:8080/frivilligbanken/app/singleGiftcard.php';
 
 class Giftcard extends Component {
 
@@ -29,6 +29,7 @@ class Giftcard extends Component {
             const response = await fetch(GIFTCARD_URL + '?id=' + id)
 
             this.setState({ giftcardData: await response.json() })
+
         } catch (error) {
             console.error(error)  
         }

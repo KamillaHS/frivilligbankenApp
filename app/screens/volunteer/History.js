@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
-const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/allJobs.php';
+const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allJobs.php';
 
 class History extends Component {
     static navigationOptions = {
@@ -23,8 +23,9 @@ class History extends Component {
     async getJobs() {
         try {
             const response = await fetch(JOBS_URL)
-
+ 
             this.setState({ jobsData: await response.json() })
+
         } catch (error) {
             console.error(error)
         }

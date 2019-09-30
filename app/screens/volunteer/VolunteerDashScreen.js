@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, AsyncStorage } from "react-native";
-import { Button, Icon } from 'react-native-elements';
+import { View, Text, StyleSheet, Alert, ScrollView, AsyncStorage, Image } from "react-native";
+import { Button, Icon, Divider } from 'react-native-elements';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const USERSTATUS_URL = 'http://kamilla-test.000webhostapp.com/app/checkUserStatus.php';
+const USERSTATUS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/checkUserStatus.php';
+const MEMBERJOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/userMemberJobs.php';
 
 class VolunteerDashScreen extends Component {
 
@@ -15,10 +16,12 @@ class VolunteerDashScreen extends Component {
           headerStyle: {
             backgroundColor: '#517BBE',
           },
+          headerBackTitle: null,
     };
 
     state = {
-        userStatus: []
+        userStatus: [],
+        memberJobs: []
     }
 
     async getUserStatus() {
@@ -30,12 +33,24 @@ class VolunteerDashScreen extends Component {
         this.setState({ userStatus: await response.json() })
     }
 
+    async getMemberJobs() {
+        AsyncStorage.getItem('UserID')
+        const response = await fetch(MEMBERJOBS_URL, {
+            credentials: 'include',
+        });
+        
+        this.setState({ memberJobs: await response.json() })
+        
+    }
+
     componentDidMount() {
         this.getUserStatus();
+        this.getMemberJobs();
     }
 
     render() {
         const { userStatus } = this.state;
+        const { memberJobs } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -44,7 +59,7 @@ class VolunteerDashScreen extends Component {
                 </View>
 
                 <View style={{width: '100%'}}>
-                    <TouchableOpacity style={userStatus.interests > 0 ? styles.fillInterest : styles.fillInterest}>
+                    <TouchableOpacity style={userStatus.interests > 0 ? {display: 'none'} : styles.fillInterest}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Text style={[styles.text, {fontSize: 18}]}>Din Profil er Inaktiv</Text>
                         <Icon
@@ -59,13 +74,36 @@ class VolunteerDashScreen extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <View>
+                <View style={styles.area}>
                     <TouchableOpacity style={userStatus.memberships > 0 ? {display: 'none'} : styles.fillMemberships}>
-
+                        <Text>Advarsel omkring manglende medlemskab her</Text>
                     </TouchableOpacity>
 
-                    <View style={userStatus.memberships > 0 ? styles.job : {display: 'none'}}>
-                        <Text>map af job her</Text>
+                    <View style={userStatus.memberships > 0 ? styles.jobList : {display: 'none'}}>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Text style={styles.text}>Aktuelle Jobs</Text>
+                            <Text style={styles.text}>Start dato</Text>
+                        </View>
+                        {
+                            memberJobs.map((item, i) => (
+                                <TouchableOpacity style={styles.jobItem} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
+                                    <View style={styles.jobLogo}>
+                                        <Image
+                                            style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
+                                            source={{uri: item.UnionLogo}}
+                                        />
+                                    </View>
+                                    <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
+                                        <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                        <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
+                                        <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
+                                    </View>
+                                    <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                        <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            ))
+                        }
                     </View>
                 </View>
 
@@ -103,7 +141,13 @@ class VolunteerDashScreen extends Component {
                         size={30}
                         color='white'
                         />
-                    } />
+                    } 
+                />
+
+                <Button 
+                    title="Debug" 
+                    onPress={() => this.props.navigation.navigate('Debug')}
+                />
 
             </ScrollView>
         )
@@ -136,8 +180,31 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'center'
     },
-    job:{
+    jobList:{
 
+    },
+    jobItem:{
+        flex:1,
+        flexDirection: 'row',
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        padding: 5,
+        color: '#4c4c4c',
+        marginTop: 10,
+        borderRadius: 10,
+        justifyContent: 'center', 
+        alignItems: 'center',
+    },
+    text:{
+        color: '#4c4c4c',
+        fontSize: 15,
+    },
+    jobLogo:{
+        height: 50,
+        width: 50,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#4c4c4c',
+        borderRadius: 25,
     },
     greenButton:{
         backgroundColor:"#30A451",

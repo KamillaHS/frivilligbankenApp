@@ -4,7 +4,7 @@ import { Button, Icon, ListItem, Divider } from 'react-native-elements';
 import { stringify } from "qs";
 import { TextInput } from "react-native-gesture-handler";
 
-const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/allJobs.php';
+const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allJobs.php';
 
 class Jobs extends Component {
     static navigationOptions = {
@@ -27,6 +27,7 @@ class Jobs extends Component {
             const response = await fetch(JOBS_URL)
 
             this.setState({ jobsData: await response.json() })
+           
         } catch (error) {
             console.error(error)
         }

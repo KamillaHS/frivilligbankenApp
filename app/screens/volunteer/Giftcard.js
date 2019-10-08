@@ -76,7 +76,10 @@ class Giftcard extends Component {
                             </View>
                         </View>
 
-                        <Text style={{color: '#4c4c4c', fontSize: 15, marginTop: 5}}>Beskrivelse kommer her. Ikke sat i db endnu.</Text>
+                        <Text style={{color: '#4c4c4c', fontSize: 15, marginTop: 5}}>{giftcardData.Description}</Text>
+                        
+                        <Text style={{color: '#4c4c4c', fontSize: 15, marginTop: 5}}>{"\n"}{giftcardData.Requirements}</Text>
+                    
 
                         <View style={{marginTop: 20, marginBottom: 10}}>
                             <View style={[styles.lightArea, {flex: 1, flexDirection: 'row'}]}>

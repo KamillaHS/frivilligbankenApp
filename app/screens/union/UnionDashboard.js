@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
+const UNION_URL = 'http://192.168.0.22:8080/frivilligbanken/app/union/getUnionName.php';
+
 class UnionDashboard extends Component {
 
     static navigationOptions = {
@@ -15,11 +17,33 @@ class UnionDashboard extends Component {
         headerBackTitle: null,
       };
 
+
+    state = { 
+        union: []
+    }
+
+    async getUnion() {
+        try {
+            const response = await fetch(UNION_URL)
+
+            this.setState({ union: await response.json() })
+
+        } catch (error) {
+            console.error(error)  
+        }
+    }
+
+    componentDidMount() {
+        this.getUnion();
+    }
+
     render() {
+        const { union } = this.state;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}>
-                    <Text style={[styles.text, {fontSize: 18}]}>Velkommen Forening Navn</Text>
+                    <Text style={[styles.text, {fontSize: 18}]}>Velkommen {union.UnionName}</Text>
                     <Text style={[styles.text, {fontSize: 15}]}>Hvad har du lyst til at foretage dig?</Text>
                 </View>
                 <View style={styles.noBGarea}>

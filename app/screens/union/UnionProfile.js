@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage } from "react-native";
 import { Button, Icon } from 'react-native-elements';
+
+UNION_URL = 'http://192.168.0.22:8080/frivilligbanken/app/union/unionInfo.php';
 
 class UnionProfile extends Component {
 
@@ -31,50 +33,74 @@ class UnionProfile extends Component {
         }
     };
 
-    render() {
-        return(
-            <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.area}>
-                  <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
-                      <Image
-                        style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50}}
-                        source={{uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}}
-                      />
-                      <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>Forenings Navn</Text>
-                    </View>
+  state = { 
+      unionData: []
+  }
 
-                    <View style={styles.infoBox}>
-                    <View style={styles.rows}>
-                      <View style={{width: '40%'}}><Text style={styles.titles}>CVR</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>00000000</Text></View>
-                    </View>
-                    <View style={styles.rows}>
-                      <View style={{width: '40%'}}><Text style={styles.titles}>Email</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>mail@mail.com</Text></View>
-                    </View>
-                    <View style={styles.rows}>
-                      <View style={{width: '40%'}}><Text style={styles.titles}>Adresse</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>Randomvej 11</Text></View>
-                    </View>
-                    <View style={styles.rows}>
-                      <View style={{width: '40%'}}><Text style={styles.titles}>By</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>0000, Ingensted</Text></View>
-                    </View>
-                    <View style={styles.rows}>
-                      <View style={{width: '40%'}}><Text style={styles.titles}>Telefon</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>00000000</Text></View>
-                    </View>
-                    <View style={styles.rows}>
-                      <View style={{width: '40%'}}><Text style={styles.titles}>Hjemmeside</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>www.hjemmeside.dk</Text></View>
-                    </View>
-                    <Text style={styles.titles}>Beskrivelse</Text>
-                    <Text style={styles.values}>Blaa... Blaaa... Blaaaa...</Text>
-                  </View>
-                </View>
-            </ScrollView>
-        )
+  async getUnion() {
+    try {
+      const response = await fetch(UNION_URL, {
+        credentials: 'include',
+      })
+    
+      this.setState({ unionData: await response.json() })
+      
+    } 
+    catch (error) {
+        console.error(error)  
     }
+  }
+
+  componentDidMount() {
+    this.getUnion();
+  }
+
+  render() {
+    const { unionData } = this.state;
+
+    return(
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.area}>
+          <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
+            <Image
+              style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50}}
+              source={{uri: unionData.UnionLogo}}
+            />
+            <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{unionData.UnionName}</Text>
+          </View>
+
+          <View style={styles.infoBox}>
+            <View style={styles.rows}>
+              <View style={{width: '40%'}}><Text style={styles.titles}>CVR</Text></View>
+              <View style={{width: '60%'}}><Text style={styles.values}>{unionData.UnionCVR}</Text></View>
+            </View>
+            <View style={styles.rows}>
+              <View style={{width: '40%'}}><Text style={styles.titles}>Email</Text></View>
+              <View style={{width: '60%'}}><Text style={styles.values}>{unionData.UnionEmail}</Text></View>
+            </View>
+            <View style={styles.rows}>
+              <View style={{width: '40%'}}><Text style={styles.titles}>Adresse</Text></View>
+              <View style={{width: '60%'}}><Text style={styles.values}>{unionData.Address}</Text></View>
+            </View>
+            <View style={styles.rows}>
+              <View style={{width: '40%'}}><Text style={styles.titles}>By</Text></View>
+              <View style={{width: '60%'}}><Text style={styles.values}>{unionData.PostalCode}, {unionData.City}</Text></View>
+            </View>
+            <View style={styles.rows}>
+              <View style={{width: '40%'}}><Text style={styles.titles}>Telefon</Text></View>
+              <View style={{width: '60%'}}><Text style={styles.values}>{unionData.Phone}</Text></View>
+            </View>
+            <View style={styles.rows}>
+              <View style={{width: '40%'}}><Text style={styles.titles}>Hjemmeside</Text></View>
+              <View style={{width: '60%'}}><Text style={styles.values}>{unionData.Website}</Text></View>
+            </View>
+            <Text style={styles.titles}>Beskrivelse</Text>
+            <Text style={styles.values}>{unionData.Description}</Text>
+          </View>
+        </View>          
+      </ScrollView>          
+    )
+  }
 }
 
 export default UnionProfile;

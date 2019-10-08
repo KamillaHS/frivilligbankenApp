@@ -4,6 +4,10 @@ import { Button, Icon, ListItem, Divider } from 'react-native-elements';
 import { stringify } from "qs";
 import { TextInput } from "react-native-gesture-handler";
 
+import moment from 'moment';
+import 'moment/locale/da';
+moment.locale('da');
+
 const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allJobs.php';
 
 class Jobs extends Component {
@@ -120,8 +124,8 @@ class Jobs extends Component {
                                         <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                         <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                     </View>
-                                    <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                        <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
+                                    <View style={{ width: 75, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                        <Text style={{color: '#4c4c4c' }} >{ moment(item.StartDate).format('L') }</Text>
                                     </View>
                                 </View>
                             </TouchableWithoutFeedback>

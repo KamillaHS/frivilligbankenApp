@@ -3,8 +3,13 @@ import { View, Text, StyleSheet, Alert, ScrollView, AsyncStorage, Image } from "
 import { Button, Icon, Divider } from 'react-native-elements';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import moment from 'moment';
+import 'moment/locale/da';
+moment.locale('da');
+
 const USERSTATUS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/checkUserStatus.php';
 const MEMBERJOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/userMemberJobs.php';
+const NAME_URL = 'http://192.168.0.22:8080/frivilligbanken/app/getVolunteerName.php';
 
 class VolunteerDashScreen extends Component {
 
@@ -21,7 +26,8 @@ class VolunteerDashScreen extends Component {
 
     state = {
         userStatus: [],
-        memberJobs: []
+        memberJobs: [],
+        name: []
     }
 
     async getUserStatus() {
@@ -40,26 +46,35 @@ class VolunteerDashScreen extends Component {
         });
         
         this.setState({ memberJobs: await response.json() })
+    }
+
+    async getName() {
+        const response = await fetch(NAME_URL, {
+            credentials: 'include',
+        });
         
+        this.setState({ name: await response.json() })
     }
 
     componentDidMount() {
         this.getUserStatus();
         this.getMemberJobs();
+        this.getName();
     }
 
     render() {
         const { userStatus } = this.state;
         const { memberJobs } = this.state;
+        const { name } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}>
-                    <Text style={[styles.text, {fontSize: 18}]}>Velkommen Navn</Text>
+                    <Text style={[styles.text, {fontSize: 18}]}>Velkommen {name.FullName}</Text>
                 </View>
 
                 <View style={{width: '100%'}}>
-                    <TouchableOpacity style={userStatus.interests > 0 ? {display: 'none'} : styles.fillInterest}>
+                    <TouchableOpacity style={userStatus.Interests > 0 ? {display: 'none'} : styles.fillInterest}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Text style={[styles.text, {fontSize: 18}]}>Din Profil er Inaktiv</Text>
                         <Icon
@@ -75,9 +90,18 @@ class VolunteerDashScreen extends Component {
                 </View>
 
                 <View style={styles.area}>
-                    <TouchableOpacity style={userStatus.memberships > 0 ? {display: 'none'} : styles.fillMemberships}>
-                        <Text>Advarsel omkring manglende medlemskab her</Text>
-                    </TouchableOpacity>
+                    <View style={userStatus.Memberships > 0 ? {display: 'none'} : styles.fillMemberships}>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Text style={styles.text}>Aktuelle Jobs</Text>
+                            <Text style={styles.text}>Start dato</Text>
+                        </View>
+                        
+                        <TouchableOpacity style={styles.noMemberships}>
+                            <Text style={[styles.text, {fontWeight: 'bold'}]}>Du er ikke medlem af en forening</Text>
+                            <Text style={styles.text}>Du behøber ikke at være medlem af en forening, for at se og søge frivilligt arbejde. Du får dog kun vist aktuelle jobs, hvis du er medlem af en forening. </Text>
+                            <Text style={styles.text}>Klik her for at tilmelde dig en forening</Text>
+                        </TouchableOpacity>
+                    </View>
 
                     <View style={userStatus.memberships > 0 ? styles.jobList : {display: 'none'}}>
                         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -98,12 +122,17 @@ class VolunteerDashScreen extends Component {
                                         <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                         <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                     </View>
-                                    <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                        <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
+                                    <View style={{ width: 75, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                        <Text style={{color: '#4c4c4c' }} >{ moment(item.StartDate).format('L') }</Text>
                                     </View>
                                 </TouchableOpacity>
                             ))
                         }
+                        <Button 
+                            title="Se Alle Jobs"
+                            buttonStyle={[styles.greenButton, {marginTop: 10}]}
+                            onPress={() => this.props.navigation.navigate('Jobs')}
+                        />
                     </View>
                 </View>
 
@@ -120,7 +149,11 @@ class VolunteerDashScreen extends Component {
                     [
                         {
                         text: 'Ja, fortsæt',
-                        onPress: () => console.log('Ok pressed'),
+                        onPress: () => Alert.alert('Godkendt', 'Du har nu søgt jobbet xxx', {
+                            text: 'Gå til Jobhistorik',
+                            onPress: () => this.props.navigation.navigate('History'),
+                            style: 'cancel'
+                        }),
                         style: 'default'
                         },
                         {
@@ -180,6 +213,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignSelf: 'center'
     },
+    noMemberships:{
+        backgroundColor: 'rgba(232,67,53,0.3)',
+        borderRadius: 10,
+        width: '100%',
+        padding: 10,
+        marginTop: 10,
+    },
     jobList:{
 
     },
@@ -209,10 +249,10 @@ const styles = StyleSheet.create({
     greenButton:{
         backgroundColor:"#30A451",
         borderRadius:10,
-        width: 100,
+        
       },
-      blueButton:{
+    blueButton:{
         backgroundColor:"#517BBE",
         borderRadius:10,
-      },
+    },
 });

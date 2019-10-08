@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Switch, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, Switch, TouchableOpacity, AsyncStorage } from "react-native";
 import { Button, Icon, ThemeConsumer } from 'react-native-elements';
 import SwitchToggle from 'react-native-switch-toggle';
 import ToggleSwitch from 'rn-toggle-switch'
@@ -36,7 +36,6 @@ class VolunteerSettings extends Component {
         })
         this.props.navigation.navigate('Login')
     }
-    
 
    toggleSwitch = (value) => {
        //onValueChange of the switch this function will be called
@@ -75,7 +74,7 @@ class VolunteerSettings extends Component {
                     <Button
                         title="Skift Profil"
                         buttonStyle={styles.blueButton}
-                        onPress={() => this.props.navigation.navigate('ChangeProfile')}
+                        onPress={() => this.props.navigation.navigate('ChangeProfile', {type: 'volunteer'})}
                     />
 
                     <Button

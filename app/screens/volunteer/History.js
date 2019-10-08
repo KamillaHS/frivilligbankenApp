@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
-const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allJobs.php';
+import moment from 'moment';
+import 'moment/locale/da';
+moment.locale('da');
+
+const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/jobHistory.php';
 
 class History extends Component {
     static navigationOptions = {
@@ -17,14 +21,14 @@ class History extends Component {
       };
 
     state = { 
-        jobsData: [] 
+        historyData: [] 
     }
 
     async getJobs() {
         try {
             const response = await fetch(JOBS_URL)
  
-            this.setState({ jobsData: await response.json() })
+            this.setState({ historyData: await response.json() })
 
         } catch (error) {
             console.error(error)
@@ -36,7 +40,7 @@ class History extends Component {
     }
     
     render() {
-        const { jobsData } = this.state;
+        const { historyData } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -46,8 +50,8 @@ class History extends Component {
                         <Text style={{color: '#4c4c4c', marginRight: 0, marginLeft: 'auto', paddingTop: 3}}>Start dato</Text>
                     </View>
                     {
-                        jobsData.map((item, i) => (
-                            <TouchableOpacity style={styles.jobListItemGreen} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
+                        historyData.map((item, i) => (
+                            <TouchableOpacity style={item.Status == 'Godkendt' ? styles.jobListItemGreen : {display: 'none'}} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
@@ -59,8 +63,8 @@ class History extends Component {
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>
-                                <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                    <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
+                                <View style={{ width: 75, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                    <Text style={{color: '#4c4c4c' }} >{ moment(item.StartDate).format('L') }</Text>
                                 </View>
                             </TouchableOpacity>
                         ))
@@ -73,8 +77,8 @@ class History extends Component {
                         <Text style={{color: '#4c4c4c', marginRight: 0, marginLeft: 'auto', paddingTop: 3}}>Start dato</Text>
                     </View>
                     {
-                        jobsData.map((item, i) => (
-                            <TouchableOpacity style={styles.jobListItemYellow} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
+                        historyData.map((item, i) => (
+                            <TouchableOpacity style={item.Status == 'Afventer' ? styles.jobListItemYellow : {display: 'none'}} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
@@ -86,8 +90,8 @@ class History extends Component {
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>
-                                <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                    <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
+                                <View style={{ width: 75, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                    <Text style={{color: '#4c4c4c' }} >{ moment(item.StartDate).format('L') }</Text>
                                 </View>
                             </TouchableOpacity>
                         ))
@@ -99,8 +103,8 @@ class History extends Component {
                         <Text style={{color: '#4c4c4c', fontSize: 18, }}>Afvist</Text>
                     </View>
                     {
-                        jobsData.map((item, i) => (
-                            <TouchableOpacity style={styles.jobListItemRed} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
+                        historyData.map((item, i) => (
+                            <TouchableOpacity style={item.Status == 'Afvist' ? styles.jobListItemRed : {display: 'none'}} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
@@ -122,8 +126,8 @@ class History extends Component {
                         <Text style={{color: '#4c4c4c', marginRight: 0, marginLeft: 'auto', paddingTop: 3}}>Slut dato</Text>
                     </View>
                     {
-                        jobsData.map((item, i) => (
-                            <TouchableOpacity style={styles.jobListItemGrey} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
+                        historyData.map((item, i) => (
+                            <TouchableOpacity style={item.Status == 'Afsluttet' ? styles.jobListItemGrey : {display: 'none'}} key={i} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
@@ -135,8 +139,8 @@ class History extends Component {
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>
-                                <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                    <Text style={{color: '#4c4c4c' }} >{ item.StartDate }</Text>
+                                <View style={{ width: 75, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                    <Text style={{color: '#4c4c4c' }} >{ moment(item.StartDate).format('L') }</Text>
                                 </View>
                             </TouchableOpacity>
                         ))

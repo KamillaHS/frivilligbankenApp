@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
+const PROFILES_URL = 'http://192.168.0.22:8080/frivilligbanken/app/getUserProfiles.php';
+
 class ChangeProfile extends Component {
 
     static navigationOptions = {
@@ -15,12 +17,36 @@ class ChangeProfile extends Component {
           headerTintColor: 'white',
     };
 
+    state = { 
+        userProfiles: [],
+        currentID: []
+    }
+
+    async getProfiles() {
+        try {
+            const response = await fetch(PROFILES_URL)
+
+            this.setState({ userProfiles: await response.json() })
+
+        } catch (error) {
+            console.error(error)  
+        }
+    }
+
+    componentDidMount() {
+        this.getProfiles();
+    }
+
+
     render() {
+        const { userProfiles } = this.state;
+        let type = this.props.navigation.getParam('type');
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}>
                     <Text style={styles.title}>Nuværende Profil</Text>
-                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('Home')}>
+                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('Home', {id: userProfiles.VolunteerID})}>
                         <View style={styles.lightTitle}>
                             <Text style={styles.text}>Frivillig</Text>
                         </View>
@@ -30,7 +56,7 @@ class ChangeProfile extends Component {
                     </TouchableOpacity>
 
                     <Text style={styles.title}>Andre Profiler</Text>
-                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('UnionHome')}>
+                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('UnionHome', {id: userProfiles.UnionID})}>
                         <View style={styles.lightTitle}>
                             <Text style={styles.text}>Forening</Text>
                         </View>
@@ -38,7 +64,7 @@ class ChangeProfile extends Component {
                             <Text style={styles.text}>Forening Navn</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('SponsorHome')}>
+                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('SponsorHome', {id: userProfiles.SponsorID})}>
                         <View style={styles.lightTitle}>
                             <Text style={styles.text}>Sponsor</Text>
                         </View>

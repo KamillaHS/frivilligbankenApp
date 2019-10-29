@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage, TouchableOpacity } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 
-const SIGNUP_URL = 'http://192.168.0.22:8080/frivilligbanken/app/signUp.php';
+const SIGNUP_URL = 'http://kamilla-test.000webhostapp.com/app/signUp.php';
 
 class SignUp extends Component {
     constructor(props) {

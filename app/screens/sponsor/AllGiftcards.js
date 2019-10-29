@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, ImageBackg
 import { Button, Icon } from 'react-native-elements';
 import { TextInput } from "react-native-gesture-handler";
 
-const GIFTCARDS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allGiftcards.php';
+const GIFTCARDS_URL = 'http://kamilla-test.000webhostapp.com/app/allGiftcards.php';
 
 class AllGiftcards extends Component {
 

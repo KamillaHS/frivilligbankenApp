@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 
-const LOGIN_URL = 'http://192.168.0.22:8080/frivilligbanken/app/userLogin.php';
+const LOGIN_URL = 'http://kamilla-test.000webhostapp.com/app/userLogin.php';
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -51,8 +51,7 @@ class LoginScreen extends Component {
                 
                 <View>
                     <Image source={require('../../assets/logo.png')} style={styles.logo} />
-
-                    <Icon type='material' name="person" size={25} />
+                    
                     <TextInput
                         value={this.state.email}
                         onChangeText={(email) => this.setState({email})}

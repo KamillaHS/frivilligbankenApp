@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image, ImageBackground, Touc
 import { Button, Icon, Divider } from 'react-native-elements';
 import { stringify } from "qs";
 
-const GIFTCARD_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allGiftcards.php';
+const GIFTCARD_URL = 'http://kamilla-test.000webhostapp.com/app/allGiftcards.php';
 
 class GiftcardShop extends Component {
     static navigationOptions = {

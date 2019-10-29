@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
-const PROFILES_URL = 'http://192.168.0.22:8080/frivilligbanken/app/getUserProfiles.php';
+const PROFILES_URL = 'http://kamilla-test.000webhostapp.com/app/getUserProfiles.php';
 
 class ChangeProfile extends Component {
 

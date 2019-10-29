@@ -7,8 +7,8 @@ import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const JOB_URL = 'http://192.168.0.22:8080/frivilligbanken/app/singleJob.php';
-const APPLY_URL = 'http://192.168.0.22:8080/frivilligbanken/app/jobApplication.php';
+const JOB_URL = 'http://kamilla-test.000webhostapp.com/app/singleJob.php';
+const APPLY_URL = 'http://kamilla-test.000webhostapp.com/app/jobApplication.php';
 
 class JobDescription extends Component {
 

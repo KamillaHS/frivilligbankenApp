@@ -5,7 +5,7 @@ import SwitchToggle from 'react-native-switch-toggle';
 import ToggleSwitch from 'rn-toggle-switch'
 import { isConfigurationAvailable } from "expo/build/AR";
 
-const LOGOUT_URL = 'http://192.168.0.22:8080/frivilligbanken/app/logout.php';
+const LOGOUT_URL = 'http://kamilla-test.000webhostapp.com/app/logout.php';
 
 class VolunteerSettings extends Component {
 

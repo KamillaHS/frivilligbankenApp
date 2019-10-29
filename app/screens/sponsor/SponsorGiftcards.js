@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
-const GIFTCARDS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allGiftcards.php';
+const GIFTCARDS_URL = 'http://kamilla-test.000webhostapp.com/app/allGiftcards.php';
 
 class SponsorGiftcards extends Component {
 

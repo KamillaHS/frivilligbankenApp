@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
-const UNION_URL = 'http://192.168.0.22:8080/frivilligbanken/app/union/getUnionName.php';
+const UNION_URL = 'http://kamilla-test.000webhostapp.com/app/union/getUnionName.php';
 
 class UnionDashboard extends Component {
 

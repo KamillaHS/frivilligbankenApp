@@ -8,7 +8,7 @@ import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/allJobs.php';
+const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/allJobs.php';
 
 class Jobs extends Component {
     static navigationOptions = {

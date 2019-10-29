@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const JOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/jobHistory.php';
+const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/jobHistory.php';
 
 class History extends Component {
     static navigationOptions = {
@@ -35,15 +36,17 @@ class History extends Component {
         }
     }
 
+    /*
     componentDidMount() {
         this.getJobs();
     }
-    
+    */
+
     render() {
         const { historyData } = this.state;
-
         return(
             <ScrollView contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getJobs() }/> 
                 <View style={ styles.area }>
                     <View style={{flex:1, flexDirection: 'row', paddingRight: 10, paddingLeft: 10, paddingTop: 10}}>
                         <Text style={{color: '#4c4c4c', fontSize: 18, }}>Godkendt</Text>

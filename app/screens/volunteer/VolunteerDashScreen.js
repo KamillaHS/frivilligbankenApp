@@ -7,9 +7,9 @@ import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const USERSTATUS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/checkUserStatus.php';
-const MEMBERJOBS_URL = 'http://192.168.0.22:8080/frivilligbanken/app/userMemberJobs.php';
-const NAME_URL = 'http://192.168.0.22:8080/frivilligbanken/app/getVolunteerName.php';
+const USERSTATUS_URL = 'http://kamilla-test.000webhostapp.com/app/checkUserStatus.php';
+const MEMBERJOBS_URL = 'http://kamilla-test.000webhostapp.com/app/userMemberJobs.php';
+const NAME_URL = 'http://kamilla-test.000webhostapp.com/app/getVolunteerName.php';
 
 class VolunteerDashScreen extends Component {
 

@@ -6,8 +6,8 @@ import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const VOLSIGNUP_URL = 'http://kamilla-test.000webhostapp.com/app/makeVolProfile.php';
-const CITIES_URL = 'http://kamilla-test.000webhostapp.com/app/getCities.php';
+const VOLSIGNUP_URL = 'http://kamilla-server.000webhostapp.com/app/makeVolProfile.php';
+const CITIES_URL = 'http://kamilla-server.000webhostapp.com/app/getCities.php';
 
 class VolunteerSignUp extends Component {
     constructor(props) {

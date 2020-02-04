@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
-const GIFTCARD_URL = 'http://kamilla-test.000webhostapp.com/app/singleGiftcard.php';
+const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/singleGiftcard.php';
+const BUY_URL = 'http://kamilla-server.000webhostapp.com/app/buyGiftCard.php';
 
 class Giftcard extends Component {
 
@@ -33,6 +34,20 @@ class Giftcard extends Component {
         } catch (error) {
             console.error(error)  
         }
+    }
+
+    async buy() {
+        const id = this.props.navigation.getParam('id');
+        const response = await fetch(BUY_URL + '?id=' + id, {
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+        })
+
+        const data = await response.json()
     }
 
     componentDidMount() {
@@ -150,7 +165,7 @@ class Giftcard extends Component {
                                 [
                                     {
                                     text: 'Ja, fortsæt',
-                                    onPress: () => console.log('Ok pressed'),
+                                    onPress: () => {this.buy(); this.props.navigation.navigate('VolunteerProfile')},
                                     style: 'default'
                                     },
                                     {

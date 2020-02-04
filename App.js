@@ -20,6 +20,7 @@ import GiftcardShop from './app/screens/volunteer/GiftcardShop';
 import Giftcard from './app/screens/volunteer/Giftcard';
 import VolunteerProfile from './app/screens/volunteer/VolunteerProfile';
 import VolunteerSettings from './app/screens/volunteer/VolunteerSettings';
+import EditInterests from './app/screens/volunteer/EditInterests';
 import ChangeProfile from './app/screens/ChangeProfile';
 
 import UnionDashboard from './app/screens/union/UnionDashboard';
@@ -74,6 +75,7 @@ ShopTab.navigationOptions = {
 const VolunteerProfileTab = createStackNavigator({
   VolunteerProfile: { screen: VolunteerProfile },
   VolunteerSettings: { screen: VolunteerSettings },
+  EditInterests: { screen: EditInterests },
   ChangeProfile: { screen: ChangeProfile },
 })
 VolunteerProfileTab.navigationOptions = {

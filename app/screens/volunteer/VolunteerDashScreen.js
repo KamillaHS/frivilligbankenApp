@@ -7,9 +7,9 @@ import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const USERSTATUS_URL = 'http://kamilla-test.000webhostapp.com/app/checkUserStatus.php';
-const MEMBERJOBS_URL = 'http://kamilla-test.000webhostapp.com/app/userMemberJobs.php';
-const NAME_URL = 'http://kamilla-test.000webhostapp.com/app/getVolunteerName.php';
+const USERSTATUS_URL = 'http://kamilla-server.000webhostapp.com/app/checkUserStatus.php';
+const MEMBERJOBS_URL = 'http://kamilla-server.000webhostapp.com/app/userMemberJobs.php';
+const NAME_URL = 'http://kamilla-server.000webhostapp.com/app/getVolunteerName.php';
 
 class VolunteerDashScreen extends Component {
 
@@ -74,7 +74,7 @@ class VolunteerDashScreen extends Component {
                 </View>
 
                 <View style={{width: '100%'}}>
-                    <TouchableOpacity style={userStatus.Interests > 0 ? {display: 'none'} : styles.fillInterest}>
+                    <TouchableOpacity style={userStatus.Interests > 0 ? {display: 'none'} : styles.fillInterest} onPress={() => this.props.navigation.navigate('EditInterests')}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Text style={[styles.text, {fontSize: 18}]}>Din Profil er Inaktiv</Text>
                         <Icon

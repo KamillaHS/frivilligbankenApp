@@ -7,10 +7,10 @@ import 'moment/locale/da';
 moment.locale('da');
 
 
-const VOLUNTEER_URL = 'http://kamilla-test.000webhostapp.com/app/volunteerInfo.php';
-const USERINTERESTS_URL = 'http://kamilla-test.000webhostapp.com/app/volunteerInterests.php';
-const USERMEMBERSHIPS_URL = 'http://kamilla-test.000webhostapp.com/app/userMemberships.php';
-const USREGIFTCARDS_URL = 'http://kamilla-test.000webhostapp.com/app/userGiftcards.php';
+const VOLUNTEER_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInfo.php';
+const USERINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInterests.php';
+const USERMEMBERSHIPS_URL = 'http://kamilla-server.000webhostapp.com/app/userMemberships.php';
+const USREGIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/userGiftcards.php';
 
 class VolunteerProfile extends Component {
     static navigationOptions =  ({ navigation }) => { 

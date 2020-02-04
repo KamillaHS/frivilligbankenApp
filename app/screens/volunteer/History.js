@@ -7,7 +7,7 @@ import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const JOBS_URL = 'http://kamilla-test.000webhostapp.com/app/jobHistory.php';
+const JOBS_URL = 'http://kamilla-server.000webhostapp.com/app/jobHistory.php';
 
 class History extends Component {
     static navigationOptions = {

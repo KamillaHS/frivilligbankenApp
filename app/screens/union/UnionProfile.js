@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
-UNION_URL = 'http://kamilla-test.000webhostapp.com/app/union/unionInfo.php';
+UNION_URL = 'http://kamilla-server.000webhostapp.com/app/union/unionInfo.php';
 
 class UnionProfile extends Component {
 

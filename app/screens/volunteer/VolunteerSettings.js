@@ -5,7 +5,7 @@ import SwitchToggle from 'react-native-switch-toggle';
 import ToggleSwitch from 'rn-toggle-switch'
 import { isConfigurationAvailable } from "expo/build/AR";
 
-const LOGOUT_URL = 'http://kamilla-test.000webhostapp.com/app/logout.php';
+const LOGOUT_URL = 'http://kamilla-server.000webhostapp.com/app/logout.php';
 
 class VolunteerSettings extends Component {
 
@@ -64,6 +64,7 @@ class VolunteerSettings extends Component {
                     <Button
                         title="Rediger Interesser"
                         buttonStyle={styles.blueButton}
+                        onPress={() => this.props.navigation.navigate('EditInterests')}
                     />
 
                     <Button

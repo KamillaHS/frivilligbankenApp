@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, } from "react-native";
 import { Button } from 'react-native-elements';
 
-const DEBUG_URL = 'http://kamilla-test.000webhostapp.com/app/debug.php';
+const DEBUG_URL = 'http://kamilla-server.000webhostapp.com/app/debug.php';
 
 class DebugScreen extends Component {
     state = { 

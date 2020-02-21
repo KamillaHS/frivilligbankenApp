@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground, Modal, TouchableHighlight, Platform } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
 import moment from 'moment';
@@ -40,10 +40,15 @@ class VolunteerProfile extends Component {
     }};
 
     state = { 
-        userData: [],
-        userInterests: [],
-        userMemberships: [],
-        userGiftcards: [],
+      modalVisible: false,
+      userData: [],
+      userInterests: [],
+      userMemberships: [],
+      userGiftcards: [],
+    }
+
+    setModalVisible(visible) {
+      this.setState({modalVisible: visible});
     }
 
     async getUser() {
@@ -172,7 +177,39 @@ class VolunteerProfile extends Component {
                     <Button 
                       buttonStyle={styles.blueButton}
                       title='CV'
+                      onPress={() => { this.setModalVisible(true) }}
                     />
+
+                    <Modal
+                        animationType="slide"
+                        visible={this.state.modalVisible}
+                        transparent={true}
+                        onRequestClose={() => {
+                            Alert.alert('Modal has been closed.');
+                        }}>
+                        <View style={{marginTop: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.8)', marginBottom: 0}}>
+                            <View>
+                                <TouchableHighlight
+                                    onPress={() => {
+                                    this.setModalVisible(!this.state.modalVisible);
+                                    }}>
+                                    <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
+                                      <Icon
+                                        name="close"
+                                        type='material'
+                                        size={30}
+                                        color="white"
+                                      />
+                                    </View>
+                                </TouchableHighlight>
+
+                                <View style={{width: '100%', height: '95%'}}>
+                                  <Image source={{uri: userData.CV}} style={{position: 'relative', width: '100%', height: '100%'}} resizeMode='contain' />
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
+
                   </View>
                 </View>
 
@@ -204,7 +241,7 @@ class VolunteerProfile extends Component {
 
                 <View style={styles.area}>
                   <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Købte Gavekort</Text>
-                  <View styles={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+                  <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                   {
                     userGiftcards.map((item, i) => (
                       <TouchableOpacity style={[item.isUsed == 1 ? {display: 'none'} : styles.giftcard, item.isExpired == 1 ? {display: 'none'} : styles.giftcard]} key={i}>
@@ -220,6 +257,7 @@ class VolunteerProfile extends Component {
 
                 <View style={styles.area}>
                   <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Brugte Gavekort</Text>
+                  <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                   {
                     userGiftcards.map((item, i) => (
                       <TouchableOpacity style={item.isUsed == 1 ? styles.giftcard : {display: 'none'}} key={i}>
@@ -230,10 +268,12 @@ class VolunteerProfile extends Component {
                       </TouchableOpacity>
                     ))
                   }
+                  </View>
                 </View>
 
                 <View style={styles.area}>
                   <Text style={{fontSize: 18, color: '#4c4c4c', paddingBottom: 10}}>Udløbne Gavekort</Text>
+                  <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                   {
                     userGiftcards.map((item, i) => (
                       <TouchableOpacity style={item.isExpired == 1 ? styles.giftcard : {display: 'none'}} key={i}>
@@ -244,6 +284,7 @@ class VolunteerProfile extends Component {
                       </TouchableOpacity>
                     ))
                   }
+                  </View>
                 </View>
                 
             </ScrollView>
@@ -332,7 +373,7 @@ const styles = StyleSheet.create({
     giftcard: {
       height: 100,
       width: '45%',
-      backgroundColor: 'lightgrey',
+      backgroundColor: 'white',
       borderWidth: 1,
       borderColor: '#4c4c4c',
       borderRadius: 10,

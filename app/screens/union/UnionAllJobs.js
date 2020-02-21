@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image, TextInput } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
-const UNION_JOBS_URL = 'http://kamilla-server.000webhostapp.com/app/union/getUnionJobs.php';
+const JOBS_URL = 'http://kamilla-server.000webhostapp.com/app/allJobs.php';
 
-class UnionJobs extends Component {
+class UnionAllJobs extends Component {
 
     static navigationOptions = {
-        title: 'Mine Oprettede Jobs',
+        title: 'Alle Jobs',
         headerTitleStyle: {
             color: 'white',
           },
           headerStyle: {
             backgroundColor: '#517BBE',
           },
-          headerBackTitle: null,
+          headerTintColor: 'white',
       };
 
     state = { 
@@ -23,7 +23,7 @@ class UnionJobs extends Component {
 
     async getJobs() {
         try {
-            const response = await fetch(UNION_JOBS_URL)
+            const response = await fetch(JOBS_URL)
 
             this.setState({ jobsData: await response.json() })
         } catch (error) {
@@ -41,22 +41,66 @@ class UnionJobs extends Component {
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.noBGarea}>
-                    <Button 
-                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
-                        title='Opret Job'
-                        onPress={() => this.props.navigation.navigate('PostJob')}
-                    />
-                    <Button 
-                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
-                        title='Se Alle Jobs'
-                        onPress={() => this.props.navigation.navigate('UnionAllJobs')}
-                    />
+                    <Button
+                            onPress={() => Alert.alert('Manglende side', 'Du kan endnu ikke vælge dette filter')}
+                            buttonStyle={styles.filterButton}
+                            icon={
+                                <Icon
+                                name="account-balance"
+                                type='material'
+                                size={30}
+                                color="white"
+                                />
+                            }
+                        />
+
+                        <Button
+                            onPress={() => Alert.alert('Manglende side', 'Du kan endnu ikke vælge dette filter')}
+                            buttonStyle={styles.filterButton}
+                            icon={
+                                <Icon
+                                name="list"
+                                type='material'
+                                size={30}
+                                color="white"
+                                />
+                            }
+                        />
+
+                        <Button
+                            onPress={() => Alert.alert('Manglende side', 'Du kan endnu ikke vælge dette filter')}
+                            buttonStyle={styles.filterButton}
+                            icon={
+                                <Icon
+                                name="place"
+                                type='material'
+                                size={30}
+                                color="white"
+                                />
+                            }
+                        />
+                </View>
+
+                <View style={styles.noBGarea}>
+                    <View style={styles.searchField}>
+                        <Icon 
+                            name="search"
+                            type='material'
+                            size={30}
+                            color="#4c4c4c"
+                        />
+                        <TextInput  
+                            placeholder={'Søg'}
+                            placeholderTextColor='#4c4c4c'
+                            style={styles.searchInput}
+                        />
+                    </View>
                 </View>
 
                 <View style={ styles.area }>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingTop: 10, paddingRight: 10}}>
-                        <Text style={styles.text}>Mine Oprettede Jobs</Text>
-                        <Text style={styles.text}>Nye Ansøgere</Text>
+                        <Text style={styles.text}>Alle Jobs</Text>
+                        <Text style={styles.text}>Start Dato</Text>
                     </View>
 
                     {
@@ -85,7 +129,7 @@ class UnionJobs extends Component {
     }
 }
 
-export default UnionJobs;
+export default UnionAllJobs;
 
 const styles = StyleSheet.create({
     container:{
@@ -94,6 +138,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#E7EBF0',
     },
     noBGarea:{
+        flex:1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         width: '90%',
         marginBottom: 10
     },
@@ -102,6 +149,25 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingBottom: 10,
         width: '90%',
+    },
+    filterButton:{
+        backgroundColor:"#517BBE",
+        borderColor: 'white',
+        borderWidth: 2,
+        borderRadius:10,
+        height: 60,
+        width: '61%'
+    },
+    searchField: {
+        flex:1,
+        flexDirection: 'row',
+        width: '100%',
+        height: 40,
+        padding: 5,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: "#4c4c4c",
+        borderRadius: 10,
     },
     jobListItem:{
         flex:1,

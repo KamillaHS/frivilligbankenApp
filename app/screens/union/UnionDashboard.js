@@ -50,6 +50,7 @@ class UnionDashboard extends Component {
                     <Button 
                         buttonStyle={[styles.blueButton, {marginBottom: 10}]}
                         title='Opret Job'
+                        onPress={() => this.props.navigation.navigate('PostJob')}
                     />
                     <Button 
                         buttonStyle={[styles.blueButton, {marginBottom: 10}]}

@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     giftcard:{
         height: 200,
         width: '90%',
-        backgroundColor: 'lightgrey',
+        backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#4c4c4c',
         borderRadius: 10,

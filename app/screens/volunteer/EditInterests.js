@@ -6,7 +6,7 @@ import { HeaderBackButton } from "react-navigation-stack";
 const USERINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInterests.php';
 const INTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/getInterests.php';
 
-class Giftcard extends Component {
+class EditGiftcard extends Component {
 
     static navigationOptions = {
         title: 'Rediger Interesser',
@@ -97,7 +97,7 @@ class Giftcard extends Component {
     }
 }
 
-export default Giftcard;
+export default EditGiftcard;
 
 const styles = StyleSheet.create({
     container:{

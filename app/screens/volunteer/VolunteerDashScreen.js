@@ -103,7 +103,7 @@ class VolunteerDashScreen extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={userStatus.memberships > 0 ? styles.jobList : {display: 'none'}}>
+                    <View style={userStatus.Memberships > 0 ? styles.jobList : {display: 'none'}}>
                         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                             <Text style={styles.text}>Aktuelle Jobs</Text>
                             <Text style={styles.text}>Start dato</Text>
@@ -136,13 +136,13 @@ class VolunteerDashScreen extends Component {
                     </View>
                 </View>
 
-                <Button
+                {/* <Button
                     title="Press me"
                     buttonStyle={styles.greenButton}
                     onPress={() => Alert.alert('Godkendt', 'Du har nu søgt jobbet xxx')}
-                    />
+                /> */}
 
-                <Button
+                {/* <Button
                     title="Press me"
                     buttonStyle={styles.blueButton}
                     onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil søge jobbet xxx?', 
@@ -163,9 +163,9 @@ class VolunteerDashScreen extends Component {
                         },
                     ],
                     )}
-                    />
+                /> */}
 
-                <Button 
+                {/* <Button 
                     buttonStyle={styles.blueButton} 
                     icon={
                         <Icon
@@ -175,7 +175,7 @@ class VolunteerDashScreen extends Component {
                         color='white'
                         />
                     } 
-                />
+                /> */}
 
                 <Button 
                     title="Debug" 

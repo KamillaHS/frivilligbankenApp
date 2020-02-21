@@ -25,9 +25,11 @@ import ChangeProfile from './app/screens/ChangeProfile';
 
 import UnionDashboard from './app/screens/union/UnionDashboard';
 import UnionJobs from './app/screens/union/UnionJobs';
+import UnionAllJobs from './app/screens/union/UnionAllJobs';
 import UnionProfile from './app/screens/union/UnionProfile';
 import UnionSettings from './app/screens/union/UnionSettings';
 import UnionMembers from './app/screens/union/UnionMembers';
+import PostJob from './app/screens/union/PostJob';
 
 import SponsorDashboard from './app/screens/sponsor/SponsorDashboard';
 import SponsorGiftcards from './app/screens/sponsor/SponsorGiftcards';
@@ -107,6 +109,8 @@ const VolunteerTabs = createBottomTabNavigator(
 const UnionJobsTab = createStackNavigator({
   UnionJobs: { screen: UnionJobs },
   JobDescription: { screen: JobDescription},
+  PostJob: { screen: PostJob },
+  UnionAllJobs: { screen: UnionAllJobs },
 })
 UnionJobsTab.navigationOptions = {
   tabBarIcon: <Icon name="work" type='material' size={35} color="white" />
@@ -115,6 +119,7 @@ UnionJobsTab.navigationOptions = {
 const UnionHomeTab = createStackNavigator({
   UnionHome: { screen: UnionDashboard },
   UnionMembers: { screen: UnionMembers },
+  PostJob: { screen: PostJob },
 })
 UnionHomeTab.navigationOptions = {
   tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />

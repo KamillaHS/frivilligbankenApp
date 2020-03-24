@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, Image, ImageBackground, TouchableOpacity, AsyncStorage } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { stringify } from "qs";
 
 const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/allGiftcards.php';
+const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
 
 class GiftcardShop extends Component {
     static navigationOptions = {
@@ -18,7 +19,8 @@ class GiftcardShop extends Component {
     };
 
     state = { 
-        giftCardData: [] 
+        giftCardData: [],
+        jobHours: 0,
     }
 
     async getGiftCards() {
@@ -32,12 +34,23 @@ class GiftcardShop extends Component {
         }
     }
 
+    async getJobHours() {
+        AsyncStorage.getItem('VolunteerID');
+  
+        const response = await fetch(JOBHOURS_URL, {
+          credentials: 'include',
+        })
+  
+        this.setState({ jobHours: await response.json() })
+    }
+
     componentDidMount() {
         this.getGiftCards();
+        this.getJobHours();
     }
     
     render() {
-        const { giftCardData } = this.state;
+        const { giftCardData, jobHours } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -50,7 +63,7 @@ class GiftcardShop extends Component {
                             color='#4c4c4c'
                         />
                         <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
-                            55
+                            {jobHours.totalHours}
                         </Text>
                         { /* number is supposed to come from db */}
                     </View>

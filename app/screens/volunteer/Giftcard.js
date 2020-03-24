@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
 const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/singleGiftcard.php';
 const BUY_URL = 'http://kamilla-server.000webhostapp.com/app/buyGiftcard.php';
+const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
 
 class Giftcard extends Component {
 
@@ -21,7 +22,8 @@ class Giftcard extends Component {
 
     
     state = { 
-        giftcardData: [] 
+        giftcardData: [],
+        jobHours: 0,
     }
 
     async getGiftcard() {
@@ -34,6 +36,16 @@ class Giftcard extends Component {
         } catch (error) {
             console.error(error)  
         }
+    }
+
+    async getJobHours() {
+        AsyncStorage.getItem('VolunteerID');
+  
+        const response = await fetch(JOBHOURS_URL, {
+          credentials: 'include',
+        })
+  
+        this.setState({ jobHours: await response.json() })
     }
 
     async buy() {
@@ -52,15 +64,16 @@ class Giftcard extends Component {
 
     componentDidMount() {
         this.getGiftcard();
+        this.getJobHours();
     }
 
     
 
     render() {
-        const { giftcardData } = this.state;
-        const myPoints = 55;
+        const { giftcardData, jobHours } = this.state;
+        //const myPoints = 55;
 
-        const left = myPoints - giftcardData.Value;
+        const left = jobHours.totalHours - giftcardData.Value;
 
         if(left >= 0) {
             canBuy = true;
@@ -109,7 +122,7 @@ class Giftcard extends Component {
                                             size={25}
                                             color='#4c4c4c'
                                         />
-                                        <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{myPoints}</Text>
+                                        <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{jobHours.totalHours}</Text>
                                     </View>
                                 </View>
                                 <View style={{width: '5%'}}>

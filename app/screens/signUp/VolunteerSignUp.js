@@ -47,10 +47,10 @@ class VolunteerSignUp extends Component {
     async getCities(text) {
         try {
             const response = await fetch(CITIES_URL + '?q=' + text)
-            /*
+            
             this.setState({ citiesResult: await response.json() })
-            */
-           console.log(await response.text())
+            
+           //console.log(await response.text())
         } catch (error) {
             console.error(error)  
         }
@@ -89,6 +89,11 @@ class VolunteerSignUp extends Component {
             <View style={styles.container}>
                 <ImageBackground source={require('../../images/1088.jpg')} style={styles.background} />
                 
+                <Button 
+                    title="Tilbage" 
+                    onPress={() => this.props.navigation.navigate('Login')}
+                />
+
                 <ScrollView style={{width: '100%'}} contentContainerStyle={{alignItems: 'center', paddingVertical: 20,}}>
                     <Image source={require('../../../assets/logo.png')} style={[styles.logo, {marginTop: 50}]} />
 
@@ -186,33 +191,45 @@ class VolunteerSignUp extends Component {
                             Alert.alert('Modal has been closed.');
                         }}>
                         <View style={{marginTop: 22}}>
-                            <View>
-                                <Text>Vælg en by</Text>
-
-                                <View style={{}}>
-                                    <TextInput
-                                        onChangeText={text => {this.getCities(text)}}
-                                        placeholder={'Søg'}
-                                        placeholderTextColor='white'
-                                        keyboardType='default'
-                                        style={styles.input}
-                                    />
-
+                            <View style={{height: '100%', padding: 10}}>
+                                <View style={{height: '20%'}}>
+                                    <Text style={{fontSize: 18, fontWeight: 'bold', color: '#4c4c4c'}}>Vælg en by</Text>
                                     <TouchableHighlight
                                         onPress={() => {
                                         this.setModalVisible2(!this.state.modalVisible2);
                                         }}>
-                                        <Text>Luk</Text>
+                                        <View style={{marginRight: 0, marginLeft: 'auto', marginTop: -25}}>
+                                            <Icon
+                                                name="close"
+                                                type='material'
+                                                size={30}
+                                                color="#4c4c4c"
+                                            />
+                                        </View>
+                                        
                                     </TouchableHighlight>
                                 </View>
-                                
-                                {
-                                    citiesResult.map((item, i) => (
-                                        <TouchableOpacity key={i} onPress={() => {this.setState({postalCode: item.PostalCode, city: item.CityName}), this.setModalVisible2(false)}}>
-                                            <Text>{item.PostalCode}, {item.CityName}</Text>
-                                        </TouchableOpacity>
-                                    ))
-                                }
+
+                                <View style={{marginTop: -90, marginBottom: 'auto'}}>
+                                    <TextInput
+                                        autoFocus={true}
+                                        onChangeText={text => {this.getCities(text)}}
+                                        placeholder={'Indtast postnummer eller bynavn'}
+                                        placeholderTextColor='white'
+                                        keyboardType='default'
+                                        style={styles.searchInput}
+                                    />
+
+                                    <ScrollView style={{height: '75%', borderRadius: 10}}>
+                                        {
+                                            citiesResult.map((item, i) => (
+                                                <TouchableOpacity key={i} style={i % 2 == 1 || i % 2 == 2 ? styles.interestDark : styles.interestLight} onPress={() => {this.setState({postalCode: item.PostalCode, city: item.CityName}), this.setModalVisible2(false)}}>
+                                                    <Text style={{color: '#4c4c4c'}}>{item.PostalCode}, {item.CityName}</Text>
+                                                </TouchableOpacity>
+                                            ))
+                                        }
+                                    </ScrollView>
+                                </View>
                                 
                             </View>
                         </View>
@@ -308,14 +325,14 @@ const styles = StyleSheet.create({
         borderRadius:10,
         marginBottom: 10,
         width: 250,
-      },
-      blueButton: {
+    },
+    blueButton: {
         backgroundColor:"#517BBE",
         borderColor: 'white',
         borderWidth: 2,
         borderRadius:10,
-      },
-      input: {
+    },
+    input: {
         width: 250,
         height: 44,
         padding: 10,
@@ -323,11 +340,30 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
         marginBottom: 10,
         color: 'white'
-      },
-      passValRed: {
+    },
+    searchInput: {
+        width: '100%',
+        height: 44,
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        marginBottom: 10,
+        color: 'white'
+    },
+    passValRed: {
         color: 'red'
-      },
-      passValGreen: {
+    },
+    passValGreen: {
         color: 'green'
-      },
+    },
+    interestDark:{
+        backgroundColor: 'rgba(81,123,190,0.5)',
+        paddingHorizontal: 10,
+        paddingVertical: 20
+    },
+    interestLight:{
+        backgroundColor: 'rgba(81,123,190,0.2)',
+        paddingHorizontal: 10,
+        paddingVertical: 20
+    },
 });

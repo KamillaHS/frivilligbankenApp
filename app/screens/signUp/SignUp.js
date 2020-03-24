@@ -22,24 +22,25 @@ class SignUp extends Component {
             if(password != password2) {
                 Alert.alert('Password matcher ikke', 'De to indtastede passwords skal være det samme password')
             } else {
-                const response = await fetch(SIGNUP_URL, {
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: 'POST',
-                    body: JSON.stringify({ email, password }),
-                })
-                
-                const data = await response.json()
-                
-               
-                if (data.error) {
-                    alert(data.error)
-                } else {
+                try {
+                    const response = await fetch(SIGNUP_URL, {
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify({ email, password }),
+                    })
+                    
+                    const data = await response.json()
+
                     AsyncStorage.setItem('UserID', data.user.UserID)
                     this.props.navigation.navigate('SignUpMessage')
+
+                } catch (error) {
+                    console.error(error)  
                 }
+                
             }
         } else {
             Alert.alert('Tomme felter', 'Venligt indtast email og password for at kunne oprette en bruger')

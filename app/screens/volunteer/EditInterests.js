@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, AsyncStorage, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider, CheckBox } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
+//import { TouchableOpacity } from "react-native-gesture-handler";
 
 const USERINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInterests.php';
 const INTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/getInterests.php';
 
-class EditGiftcard extends Component {
+class EditInterests extends Component {
 
     static navigationOptions = {
         title: 'Rediger Interesser',
@@ -23,6 +24,8 @@ class EditGiftcard extends Component {
     state = { 
         userInterests: [],
         interestsData: [],
+        interests: [1, 2, 3, 4, 5],
+        newInterests: [],
         checkedId: -1,
     }
 
@@ -61,6 +64,8 @@ class EditGiftcard extends Component {
     render() {
         const { userInterests } = this.state;
         const { interestsData } = this.state;
+        const { newInterests } = this.state;
+        const { interests} = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -72,14 +77,14 @@ class EditGiftcard extends Component {
                         {
                         interestsData.map((item, i) => (
                             <View style={i % 4 == 1 || i % 4 == 2 ? styles.interestDark : styles.interestLight} key={i}>
-                            <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.InterestName}</Text>
+                                <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.InterestName}</Text>
 
-                            <CheckBox
-                                title={false}
-                                key={item.InterestID}
-                                checked={item.InterestID == this.state.checkedId}
-                                onPress={() => this.handleCheck(item.InterestID)}
-                            />
+                                <CheckBox
+                                    //title={false}
+                                    key={item.InterestID}
+                                    checked={item.InterestID == this.state.checkedId}
+                                    onPress={() => this.handleCheck(item.InterestID)}
+                                />
                             </View>
                         ))
                         }
@@ -97,7 +102,7 @@ class EditGiftcard extends Component {
     }
 }
 
-export default EditGiftcard;
+export default EditInterests;
 
 const styles = StyleSheet.create({
     container:{

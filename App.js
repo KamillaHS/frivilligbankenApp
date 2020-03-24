@@ -21,6 +21,7 @@ import Giftcard from './app/screens/volunteer/Giftcard';
 import VolunteerProfile from './app/screens/volunteer/VolunteerProfile';
 import VolunteerSettings from './app/screens/volunteer/VolunteerSettings';
 import EditInterests from './app/screens/volunteer/EditInterests';
+import EditVolunteer from './app/screens/volunteer/EditVolunteer';
 import ChangeProfile from './app/screens/ChangeProfile';
 
 import UnionDashboard from './app/screens/union/UnionDashboard';
@@ -37,6 +38,7 @@ import SingleGiftcard from './app/screens/sponsor/SingleGiftcard';
 import AllGiftcards from './app/screens/sponsor/AllGiftcards';
 import SponsorProfile from './app/screens/sponsor/SponsorProfile';
 import SponsorSettings from './app/screens/sponsor/SponsorSettings';
+import PostGiftcard from './app/screens/sponsor/PostGiftcard';
 
 import Debug from './app/screens/DebugScreen'
 
@@ -78,6 +80,7 @@ const VolunteerProfileTab = createStackNavigator({
   VolunteerProfile: { screen: VolunteerProfile },
   VolunteerSettings: { screen: VolunteerSettings },
   EditInterests: { screen: EditInterests },
+  EditVolunteer: { screen: EditVolunteer},
   ChangeProfile: { screen: ChangeProfile },
 })
 VolunteerProfileTab.navigationOptions = {
@@ -165,6 +168,7 @@ SponsorGiftcardTab.navigationOptions = {
 
 const SponsorHomeTab = createStackNavigator({
   SponsorHome: { screen: SponsorDashboard },
+  PostGiftcard: { screen: PostGiftcard },
 })
 SponsorHomeTab.navigationOptions = {
   tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />

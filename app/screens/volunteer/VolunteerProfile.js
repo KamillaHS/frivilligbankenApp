@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground, Modal, TouchableHighlight, Platform } from "react-native";
 import { Button, Icon } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -11,6 +12,7 @@ const VOLUNTEER_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInfo
 const USERINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInterests.php';
 const USERMEMBERSHIPS_URL = 'http://kamilla-server.000webhostapp.com/app/userMemberships.php';
 const USREGIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/userGiftcards.php';
+const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
 
 class VolunteerProfile extends Component {
     static navigationOptions =  ({ navigation }) => { 
@@ -45,6 +47,7 @@ class VolunteerProfile extends Component {
       userInterests: [],
       userMemberships: [],
       userGiftcards: [],
+      jobHours: 0,
     }
 
     setModalVisible(visible) {
@@ -108,21 +111,31 @@ class VolunteerProfile extends Component {
       this.setState({ userGiftcards: await response.json() })
     }
 
+    async getJobHours() {
+      AsyncStorage.getItem('VolunteerID');
+
+      const response = await fetch(JOBHOURS_URL, {
+        credentials: 'include',
+      })
+
+      this.setState({ jobHours: await response.json() })
+    }
+
     componentDidMount() {
         this.getUser();
         this.getUserInterests();
         this.getUserMemberships();
-        this.getUserGiftcards();
+        //this.getUserGiftcards();
+        this.getJobHours();
     }
     
     render() {
-        const { userData } = this.state;
-        const { userInterests } = this.state;
-        const { userMemberships } = this.state;
-        const { userGiftcards } = this.state;
+        const { userData, userInterests, userMemberships, userGiftcards, jobHours } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
+              <NavigationEvents onWillFocus={ () => this.getUserGiftcards() }/>
+
                 <View style={styles.noBGarea}>
                   <View style={styles.smallArea} > 
                       <Icon
@@ -144,7 +157,7 @@ class VolunteerProfile extends Component {
                           color='#4c4c4c'
                       />
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
-                          55
+                          {jobHours.totalHours}
                       </Text>
                       { /* number is supposed to come from db */} 
                   </View>
@@ -153,7 +166,7 @@ class VolunteerProfile extends Component {
                 <View style={styles.area}>
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                     <Image
-                      style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50}}
+                      style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white'}}
                       source={{uri: userData.VolunteerPic}}
                     />
                     <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{userData.FullName}</Text>

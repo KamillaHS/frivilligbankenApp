@@ -34,6 +34,7 @@ class JobDescription extends Component {
             const response = await fetch(JOB_URL + '?id=' + id)
 
             this.setState({ jobData: await response.json() })
+            //alert(await response.text())
 
         } catch (error) {
             console.error(error)  

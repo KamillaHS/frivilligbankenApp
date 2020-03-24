@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
+const SPONSOR_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/getSponsorName.php';
+
 class SponsorDashboard extends Component {
 
     static navigationOptions = {
@@ -14,17 +16,39 @@ class SponsorDashboard extends Component {
           },
       };
 
+    state = { 
+        sponsor: []
+    }
+
+    async getSponsor() {
+        try {
+            const response = await fetch(SPONSOR_URL)
+
+            this.setState({ sponsor: await response.json() })
+
+        } catch (error) {
+            console.error(error)  
+        }
+    }
+
+    componentDidMount() {
+        this.getSponsor();
+    }
+
     render() {
+        const { sponsor } = this.state;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}>
-                    <Text style={[styles.text, {fontSize: 18}]}>Velkommen Sponsor Navn</Text>
+                    <Text style={[styles.text, {fontSize: 18}]}>Velkommen {sponsor.SponsorName}</Text>
                 </View>
 
                 <View style={styles.noBGarea}>
                     <Button 
                         buttonStyle={[styles.blueButton, {marginBottom: 10}]}
                         title='Opret Gavekort'
+                        onPress={() => this.props.navigation.navigate('PostGiftcard')}
                     />
                 </View>
 

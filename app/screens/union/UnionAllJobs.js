@@ -105,7 +105,7 @@ class UnionAllJobs extends Component {
 
                     {
                         jobsData.map((item, key) => (
-                            <TouchableWithoutFeedback key={key.JobID} onPress={() => this.props.navigation.navigate('JobDescription', {id: item.JobID})}>
+                            <TouchableWithoutFeedback key={key.JobID} onPress={() => this.props.navigation.navigate('UnionJobDescription', {id: item.JobID})}>
                                 <View style={styles.jobListItem}>
                                     <View style={styles.jobLogo}>
                                         <Image

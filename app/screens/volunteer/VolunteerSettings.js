@@ -71,6 +71,7 @@ class VolunteerSettings extends Component {
                     <Button
                         title="Rediger Medlemskaber"
                         buttonStyle={styles.blueButton}
+                        onPress={() => this.props.navigation.navigate('EditMemberships')}
                     />
 
                     <Button

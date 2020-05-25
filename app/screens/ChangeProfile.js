@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } fr
 import { Button, Icon, Divider } from 'react-native-elements';
 
 const PROFILES_URL = 'http://kamilla-server.000webhostapp.com/app/getUserProfiles.php';
+const CURRENT_URL = 'http://kamilla-server.000webhostapp.com/app/getCurrentProfile.php';
 
 class ChangeProfile extends Component {
 
@@ -14,12 +15,13 @@ class ChangeProfile extends Component {
           headerStyle: {
             backgroundColor: '#517BBE',
           },
+          headerBackTitle: null,
           headerTintColor: 'white',
     };
 
     state = { 
         userProfiles: [],
-        currentID: []
+        currentProfile: [],
     }
 
     async getProfiles() {
@@ -33,50 +35,101 @@ class ChangeProfile extends Component {
         }
     }
 
+    async getCurrentProfile() {
+        try {
+            const response = await fetch(CURRENT_URL)
+
+            this.setState({ currentProfile: await response.json() })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     componentDidMount() {
         this.getProfiles();
+        this.getCurrentProfile();
     }
 
 
     render() {
-        const { userProfiles } = this.state;
+        const { userProfiles, currentProfile } = this.state;
         let type = this.props.navigation.getParam('type');
+        console.log(userProfiles);
+        console.log(currentProfile);
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}>
                     <Text style={styles.title}>Nuværende Profil</Text>
-                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('Home', {id: userProfiles.VolunteerID})}>
+
+                    <TouchableOpacity style={currentProfile.current == 'volunteer' ? styles.profileLine : {display: 'none'}} onPress={() => this.props.navigation.navigate('Home')}>
                         <View style={styles.lightTitle}>
                             <Text style={styles.text}>Frivillig</Text>
                         </View>
                         <View style={styles.darkName}>
-                            <Text style={styles.text}>Navn Navnesen</Text>
+                            <Text style={styles.text}>{currentProfile.FullName}</Text>
                         </View>
                     </TouchableOpacity>
 
-                    <Text style={styles.title}>Andre Profiler</Text>
-                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('UnionHome', {id: userProfiles.UnionID})}>
+                    <TouchableOpacity style={currentProfile.current == 'union' ? styles.profileLine : {display: 'none'}} onPress={() => this.props.navigation.navigate('UnionHome')}>
                         <View style={styles.lightTitle}>
                             <Text style={styles.text}>Forening</Text>
                         </View>
                         <View style={styles.darkName}>
-                            <Text style={styles.text}>Forening Navn</Text>
+                            <Text style={styles.text}>{currentProfile.UnionName}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.profileLine} onPress={() => this.props.navigation.navigate('SponsorHome', {id: userProfiles.SponsorID})}>
+
+                    <TouchableOpacity style={currentProfile.current == 'sponsor' ? styles.profileLine : {display: 'none'}} onPress={() => this.props.navigation.navigate('SponsorHome')}>
                         <View style={styles.lightTitle}>
                             <Text style={styles.text}>Sponsor</Text>
                         </View>
                         <View style={styles.darkName}>
-                            <Text style={styles.text}>Sponsor Navn</Text>
+                            <Text style={styles.text}>{currentProfile.SponsorName}</Text>
                         </View>
                     </TouchableOpacity>
+
+
+
+                    <Text style={styles.title}>Andre Profiler</Text>
+
+                    <TouchableOpacity style={currentProfile.current != 'volunteer' && userProfiles.VolunteerID && userProfiles.VolunteerID.length > 0 ? styles.profileLine : {display: 'none'}} onPress={() => this.props.navigation.navigate('Home')}>
+                        <View style={styles.lightTitle}>
+                            <Text style={styles.text}>Frivillig</Text>
+                        </View>
+                        <View style={styles.darkName}>
+                            <Text style={styles.text}>{userProfiles.FullName}</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={currentProfile.current != 'union' && userProfiles.UnionID && userProfiles.UnionID.length > 0 ? styles.profileLine : {display: 'none'}} onPress={() => this.props.navigation.navigate('UnionHome')}>
+                        <View style={styles.lightTitle}>
+                            <Text style={styles.text}>Forening</Text>
+                        </View>
+                        <View style={styles.darkName}>
+                            <Text style={styles.text}>{userProfiles.UnionName}</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={currentProfile.current != 'sponsor' && userProfiles.SponsorID && userProfiles.SponsorID.length > 0 ? styles.profileLine : {display: 'none'}} onPress={() => this.props.navigation.navigate('SponsorHome')}>
+                        <View style={styles.lightTitle}>
+                            <Text style={styles.text}>Sponsor</Text>
+                        </View>
+                        <View style={styles.darkName}>
+                            <Text style={styles.text}>{userProfiles.SponsorName}</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <View style={!userProfiles.UnionID && !userProfiles.SponsorID ? {marginLeft: 10, marginRight: 10} : {display: 'none'}}>
+                        <Text>Der findes ingen andre profiler for din bruger. Hvis du ønsker at oprette en profil som en forening eller som en sponsor, kan du gøre dette ved at trykke på knappen "Tilføj Ny Profil" nedenfor.</Text>
+                    </View>
+
                 </View>
                 <View style={styles.noBGarea}>
                     <Button 
                         title="Tilføj Ny Profil"
                         buttonStyle={styles.greenButton}
+                        onPress={() => this.props.navigation.navigate('AddNewProfile')}
                     />
                 </View>
             </ScrollView>

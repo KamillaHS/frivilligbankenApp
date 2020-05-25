@@ -1,67 +1,66 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image } from "react-native";
-import { Button, Icon, Divider } from 'react-native-elements';
+import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
+import { Button, Icon } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
-const UNION_JOBS_URL = 'http://kamilla-server.000webhostapp.com/app/union/getUnionJobs.php';
+const JOBSWITHAPPLICATIONS_URL = 'http://kamilla-server.000webhostapp.com/app/union/getJobsWithApplications.php';
 
-class UnionJobs extends Component {
+class JobApplications extends Component {
 
     static navigationOptions = {
-        title: 'Mine Oprettede Jobs',
+        title: 'Job Ansøgere',
         headerTitleStyle: {
             color: 'white',
-          },
-          headerStyle: {
+        },
+        headerStyle: {
             backgroundColor: '#517BBE',
-          },
-          headerBackTitle: null,
+        },
+        headerTintColor: 'white',
+        headerBackTitle: null,
       };
 
+
     state = { 
-        jobsData: [] 
+        jobs: []
     }
 
-    async getJobs() {
-        try {
-            const response = await fetch(UNION_JOBS_URL)
+    async getJobsWithApplications() {
+        const id = this.props.navigation.getParam('id');
+        const response = await fetch(JOBSWITHAPPLICATIONS_URL + '?id=' + id)
 
-            this.setState({ jobsData: await response.json() })
-        } catch (error) {
-            console.error(error)
-        }
+        this.setState({ jobs: await response.json() });
+        //console.log( await response.text() );
     }
+
 
     componentDidMount() {
-        this.getJobs();
+        //this.getJobsWithApplications();
     }
 
     render() {
-        const { jobsData } = this.state;
+        const { jobs } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles.noBGarea}>
-                    <Button 
-                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
-                        title='Opret Job'
-                        onPress={() => this.props.navigation.navigate('PostJob')}
-                    />
-                    <Button 
-                        buttonStyle={[styles.blueButton, {marginBottom: 10}]}
-                        title='Se Alle Jobs'
-                        onPress={() => this.props.navigation.navigate('UnionAllJobs')}
-                    />
-                </View>
+                <NavigationEvents onWillFocus={ () => this.getJobsWithApplications() }/>
 
-                <View style={ styles.area }>
-                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingTop: 10, paddingRight: 10}}>
+                <View style={styles.area}>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Text style={styles.text}>Mine Oprettede Jobs</Text>
                         <Text style={styles.text}>Nye Ansøgere</Text>
                     </View>
 
+                    {/*
+                        jobs.map((item, i) => (
+                            <TouchableOpacity key={i.JobID}>
+                                <Text>{item.Title}</Text>
+                            </TouchableOpacity>
+                        ))
+                    */}
+
                     {
-                        jobsData.map((item, key) => (
-                            <TouchableWithoutFeedback key={key.JobID} onPress={() => this.props.navigation.navigate('UnionJobDescription', {id: item.JobID})}>
+                    jobs.map((item, i) => (
+                        <TouchableOpacity key={i.JobID} onPress={() => this.props.navigation.navigate('UnionJobDescription', {id: item.JobID, route: 'application'})}>
                                 <View style={styles.jobListItem}>
                                     <View style={styles.jobLogo}>
                                         <Image
@@ -73,11 +72,11 @@ class UnionJobs extends Component {
                                         <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
                                     </View>
                                     <View style={{ width: 20, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                        <Text style={{color: '#4c4c4c' }} >1</Text>
+                                        <Text style={{color: '#4c4c4c' }} >{item.num}</Text>
                                     </View>
                                 </View>
-                            </TouchableWithoutFeedback>
-                        ))
+                        </TouchableOpacity>
+                    ))
                     }
                 </View>
             </ScrollView>
@@ -85,7 +84,7 @@ class UnionJobs extends Component {
     }
 }
 
-export default UnionJobs;
+export default JobApplications;
 
 const styles = StyleSheet.create({
     container:{
@@ -93,15 +92,29 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         backgroundColor: '#E7EBF0',
     },
+    area:{
+        backgroundColor: 'rgba(81,123,190,0.3)',
+        borderRadius: 10,
+        width: '90%',
+        padding: 10,
+        marginBottom: 10
+    },
+    text:{
+        color: '#4c4c4c',
+    },
     noBGarea:{
         width: '90%',
         marginBottom: 10
     },
-    area:{
-        backgroundColor: 'rgba(81,123,190,0.3)',
-        borderRadius: 10,
-        paddingBottom: 10,
-        width: '90%',
+    greenButton: {
+        backgroundColor:"#30A451",
+        borderRadius:10,
+        width: 100,
+    },
+    blueButton: {
+        backgroundColor:"#517BBE",
+        borderRadius:10,
+        width: '100%',
     },
     jobListItem:{
         flex:1,
@@ -110,14 +123,8 @@ const styles = StyleSheet.create({
         height: 60,
         padding: 5,
         color: '#4c4c4c',
-        marginLeft: 10,
-        marginRight: 10,
         marginTop: 10,
         borderRadius: 10,
-    },
-    text:{
-        color: '#4c4c4c',
-        fontSize: 15,
     },
     jobLogo:{
         height: 50,
@@ -126,9 +133,5 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#4c4c4c',
         borderRadius: 25,
-    },
-    blueButton: {
-        backgroundColor:"#517BBE",
-        borderRadius:10,
     },
 });

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
-const GIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/allGiftcards.php';
+const GIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/getSponsorGiftcards.php';
 
 class SponsorGiftcards extends Component {
 
@@ -72,7 +72,7 @@ class SponsorGiftcards extends Component {
                                         <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
                                     </View>
                                     <View style={{ width: 20, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                        <Text style={{color: '#4c4c4c' }} >0</Text>
+                                        <Text style={{color: '#4c4c4c' }} >{item.Amount}</Text>
                                     </View>
                                 </View>
                             </TouchableWithoutFeedback>

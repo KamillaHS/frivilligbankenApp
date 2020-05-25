@@ -6,6 +6,7 @@ import { HeaderBackButton } from "react-navigation-stack";
 
 const USERINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInterests.php';
 const INTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/getInterests.php';
+const UPDATEINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/updateInterests.php';
 
 class EditInterests extends Component {
 
@@ -32,8 +33,18 @@ class EditInterests extends Component {
     async getInterests() {
         try {
             const response = await fetch(INTERESTS_URL)
-
-            this.setState({ interestsData: await response.json() })
+            
+            const data = await response.json()
+            const interestsData = data.map((item) => {
+                const userInterests = this.state.userInterests
+             const index = userInterests.findIndex((itm) =>( itm.InterestID === item.InterestID) ) 
+             return { ...item, checked: index != -1}
+             })
+            
+            //const interestsData = await response.json();
+            console.log('interestsData', interestsData);
+            
+            this.setState({ interestsData })
 
         } catch (error) {
             console.error(error)
@@ -46,12 +57,37 @@ class EditInterests extends Component {
         const response = await fetch(USERINTERESTS_URL, {
           credentials: 'include',
         })
+
+        const userInterests = await response.json();
+        console.log('userInterests', userInterests);
+        
   
-        this.setState({ userInterests: await response.json() })
+        this.setState({ userInterests })
+        console.log('userInterests', response.json())
     }
 
-    handleCheck = (checkedId) => {
-        this.setState({checkedId})
+    handleCheck = (index) => {
+        const data = this.state.interestsData;
+        const curRowData = {...data[index], checked: !data[index].checked};
+        data.splice(index, 1, curRowData);
+        this.setState({interestsData: data});
+    }
+
+    saveChanges = async() => {
+        const checkedItems = this.state.interestsData.filter((item) => {return item.checked});
+
+        const response = await fetch(UPDATEINTERESTS_URL, {
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ checkedItems }),
+        })
+
+        const data = await response.json();
+        this.props.navigation.navigate('VolunteerProfile');
     }
 
     componentDidMount() {
@@ -77,13 +113,16 @@ class EditInterests extends Component {
                         {
                         interestsData.map((item, i) => (
                             <View style={i % 4 == 1 || i % 4 == 2 ? styles.interestDark : styles.interestLight} key={i}>
-                                <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.InterestName}</Text>
+                                <Text style={{flex: 1, fontSize: 16, color: '#4c4c4c'}}>{item.InterestName}</Text>
 
                                 <CheckBox
                                     //title={false}
                                     key={item.InterestID}
-                                    checked={item.InterestID == this.state.checkedId}
-                                    onPress={() => this.handleCheck(item.InterestID)}
+                                    checked={item.checked}
+                                    onPress={() => this.handleCheck(i)}
+                                    checkedIcon={'check-square'}
+                                    size={30}
+                                    checkedColor={'#517BBE'}
                                 />
                             </View>
                         ))
@@ -94,7 +133,8 @@ class EditInterests extends Component {
                         buttonStyle={styles.greenButton}
                         disabled={false}
                         title='Gem Ændringer'
-                        onPress={() => Alert.alert('Fanstastisk', 'Hvis denne knap virkede, ville dine ændringer nu blive gemt, og du ville blive omdirigeret til en anden side...')}
+                        onPress={this.saveChanges.bind(this)}
+                        //onPress={() => Alert.alert('Fanstastisk', 'Hvis denne knap virkede, ville dine ændringer nu blive gemt, og du ville blive omdirigeret til en anden side...')}
                     />
                 </View>
             </ScrollView>
@@ -123,11 +163,17 @@ const styles = StyleSheet.create({
         width: '50%',
         backgroundColor: 'rgba(255,255,255,0.3)',
         padding: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     interestLight:{
         width: '50%',
         backgroundColor: 'rgba(255,255,255,0.6)',
         padding: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     greenButton:{
         backgroundColor:"#30A451",

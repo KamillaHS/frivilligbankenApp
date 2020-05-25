@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 
+const SPONSOR_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/getSponsorInfo.php';
+
 class SponsorProfile extends Component {
 
     static navigationOptions =  ({ navigation }) => { 
@@ -30,42 +32,67 @@ class SponsorProfile extends Component {
             ),
     }};
 
+    state = { 
+      sponsorData: [],
+    }
+
+    async getSponsorInfo() {
+      try {
+          const response = await fetch(SPONSOR_URL)
+
+          this.setState({ sponsorData: await response.json() })
+      } catch (error) {
+          console.error(error)
+      }
+    }
+
+    componentDidMount() {
+      this.getSponsorInfo();
+    }
+
     render() {
+        const { sponsorData } = this.state;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
               <View style={styles.area}>
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                       <Image
-                        style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50}}
-                        source={{uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}}
+                        style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white'}}
+                        source={{uri: sponsorData.SponsorPic}}
+                        resizeMode="contain"
                       />
-                      <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>Forenings Navn</Text>
+                      <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{sponsorData.SponsorName}</Text>
                     </View>
 
                     <View style={styles.infoBox}>
                     <View style={styles.rows}>
                       <View style={{width: '40%'}}><Text style={styles.titles}>CVR</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>00000000</Text></View>
+                      <View style={{width: '60%'}}><Text style={styles.values}>{sponsorData.SponsorCVR}</Text></View>
                     </View>
                     <View style={styles.rows}>
                       <View style={{width: '40%'}}><Text style={styles.titles}>Email</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>mail@mail.com</Text></View>
+                      <View style={{width: '60%'}}><Text style={styles.values}>{sponsorData.SponsorEmail}</Text></View>
                     </View>
                     <View style={styles.rows}>
                       <View style={{width: '40%'}}><Text style={styles.titles}>Adresse</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>Randomvej 11</Text></View>
+                      <View style={{width: '60%'}}><Text style={styles.values}>{sponsorData.Address}</Text></View>
                     </View>
                     <View style={styles.rows}>
                       <View style={{width: '40%'}}><Text style={styles.titles}>By</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>0000, Ingensted</Text></View>
+                      <View style={{width: '60%'}}><Text style={styles.values}>{sponsorData.PostalCode}, {sponsorData.City}</Text></View>
                     </View>
                     <View style={styles.rows}>
                       <View style={{width: '40%'}}><Text style={styles.titles}>Telefon</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>00000000</Text></View>
+                      <View style={{width: '60%'}}><Text style={styles.values}>{sponsorData.Phone}</Text></View>
+                    </View>
+                    <View style={styles.rows}>
+                      <View style={{width: '40%'}}><Text style={styles.titles}>Status</Text></View>
+                      <View style={{width: '60%'}}><Text style={styles.values}>{sponsorData.Status}</Text></View>
                     </View>
                     <View style={styles.rows}>
                       <View style={{width: '40%'}}><Text style={styles.titles}>Hjemmeside</Text></View>
-                      <View style={{width: '60%'}}><Text style={styles.values}>www.hjemmeside.dk</Text></View>
+                      <View style={{width: '60%'}}><Text style={styles.values}>{sponsorData.Website}</Text></View>
                     </View>
                   </View>
               </View>

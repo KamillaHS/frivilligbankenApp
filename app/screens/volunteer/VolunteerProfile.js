@@ -13,6 +13,7 @@ const USERINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/volunteer
 const USERMEMBERSHIPS_URL = 'http://kamilla-server.000webhostapp.com/app/userMemberships.php';
 const USREGIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/userGiftcards.php';
 const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
+const EXPIREDGIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/giftcardExpire.php';
 
 class VolunteerProfile extends Component {
     static navigationOptions =  ({ navigation }) => { 
@@ -48,6 +49,7 @@ class VolunteerProfile extends Component {
       userMemberships: [],
       userGiftcards: [],
       jobHours: 0,
+      expiredGiftcards: [],
     }
 
     setModalVisible(visible) {
@@ -121,12 +123,19 @@ class VolunteerProfile extends Component {
       this.setState({ jobHours: await response.json() })
     }
 
+    async getExpiredGiftcards() {
+      const response = await fetch(EXPIREDGIFTCARDS_URL);
+
+      this.setState({ expiredGiftcards: await response.json() })
+    }
+
     componentDidMount() {
         this.getUser();
-        this.getUserInterests();
-        this.getUserMemberships();
+        //this.getUserInterests();
+        //this.getUserMemberships();
         //this.getUserGiftcards();
         this.getJobHours();
+        this.getExpiredGiftcards();
     }
     
     render() {
@@ -135,6 +144,8 @@ class VolunteerProfile extends Component {
         return(
             <ScrollView contentContainerStyle={styles.container}>
               <NavigationEvents onWillFocus={ () => this.getUserGiftcards() }/>
+              <NavigationEvents onWillFocus={ () => this.getUserInterests() }/>
+              <NavigationEvents onWillFocus={ () => this.getUserMemberships() }/>
 
                 <View style={styles.noBGarea}>
                   <View style={styles.smallArea} > 
@@ -257,7 +268,7 @@ class VolunteerProfile extends Component {
                   <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                   {
                     userGiftcards.map((item, i) => (
-                      <TouchableOpacity style={[item.isUsed == 1 ? {display: 'none'} : styles.giftcard, item.isExpired == 1 ? {display: 'none'} : styles.giftcard]} key={i}>
+                      <TouchableOpacity style={[item.isUsed == 1 ? {display: 'none'} : styles.giftcard, item.isExpired == 1 ? {display: 'none'} : styles.giftcard]} key={i} onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
                         <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
                           <Text style={{color: 'white', fontSize: 12 }}>Brug før: { moment(item.ExpirationDate).format('L') }</Text>     
@@ -273,7 +284,7 @@ class VolunteerProfile extends Component {
                   <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                   {
                     userGiftcards.map((item, i) => (
-                      <TouchableOpacity style={item.isUsed == 1 ? styles.giftcard : {display: 'none'}} key={i}>
+                      <TouchableOpacity style={item.isUsed == 1 ? styles.giftcard : {display: 'none'}} key={i}  onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
                         <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
                           <Text style={{color: 'white', fontSize: 12 }}>Brugt d. { moment(item.ExpirationDate).format('L') }</Text>     
@@ -289,7 +300,7 @@ class VolunteerProfile extends Component {
                   <View style={{flex:1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'}}>
                   {
                     userGiftcards.map((item, i) => (
-                      <TouchableOpacity style={item.isExpired == 1 ? styles.giftcard : {display: 'none'}} key={i}>
+                      <TouchableOpacity style={item.isExpired == 1 ? styles.giftcard : {display: 'none'}} key={i}  onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
                         <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
                           <Text style={{color: 'white', fontSize: 12 }}>Udløb d. { moment(item.ExpirationDate).format('L') }</Text>     

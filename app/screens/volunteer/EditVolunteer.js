@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, DatePickerIOS, DatePickerAndroid, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
+//import ImagePicker from 'react-native-image-picker';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -41,9 +42,143 @@ class EditVolunteer extends Component {
             text: '',
             modalVisible: false,
             modalVisible2: false,
+
+            filepath: {
+                data: '',
+                uri: ''
+            },
+            fileData: '',
+            fileUri: ''
         };
         this.setDate = this.setDate.bind(this);
-    }
+    };
+
+    /* IMAGE PICKER CODE STARTS HERE */
+    /*
+    chooseImage = () => {
+        let options = {
+          title: 'Select Image',
+          customButtons: [
+            { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+          ],
+          storageOptions: {
+            skipBackup: true,
+            path: 'images',
+          },
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+          console.log('Response = ', response);
+    
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+            alert(response.customButton);
+          } else {
+            const source = { uri: response.uri };
+    
+            // You can also display the image using data:
+            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+            // alert(JSON.stringify(response));s
+            console.log('response', JSON.stringify(response));
+            this.setState({
+              filePath: response,
+              fileData: response.data,
+              fileUri: response.uri
+            });
+          }
+        });
+      }
+    
+      launchCamera = () => {
+        let options = {
+          storageOptions: {
+            skipBackup: true,
+            path: 'images',
+          },
+        };
+        ImagePicker.launchCamera(options, (response) => {
+          console.log('Response = ', response);
+    
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+            alert(response.customButton);
+          } else {
+            const source = { uri: response.uri };
+            console.log('response', JSON.stringify(response));
+            this.setState({
+              filePath: response,
+              fileData: response.data,
+              fileUri: response.uri
+            });
+          }
+        });
+    
+      }
+    
+      launchImageLibrary = () => {
+        let options = {
+          storageOptions: {
+            skipBackup: true,
+            path: 'images',
+          },
+        };
+        ImagePicker.launchImageLibrary(options, (response) => {
+          console.log('Response = ', response);
+    
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+            alert(response.customButton);
+          } else {
+            const source = { uri: response.uri };
+            console.log('response', JSON.stringify(response));
+            this.setState({
+              filePath: response,
+              fileData: response.data,
+              fileUri: response.uri
+            });
+          }
+        });
+    
+      }
+    
+      renderFileData() {
+        if (this.state.fileData) {
+          return <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
+            style={styles.images}
+          />
+        } else {
+          return <Image source={require('./assets/dummy.png')}
+            style={styles.images}
+          />
+        }
+      }
+    
+      renderFileUri() {
+        if (this.state.fileUri) {
+          return <Image
+            source={{ uri: this.state.fileUri }}
+            style={styles.images}
+          />
+        } else {
+          return <Image
+            source={require('./assets/galeryImages.jpg')}
+            style={styles.images}
+          />
+        }
+      }
+    */
+    /* IMAGE PICKER CODE ENDS HERE */
 
     setDate(newDate) {
         this.setState({dob: newDate});
@@ -83,6 +218,33 @@ class EditVolunteer extends Component {
         }
     }
 
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+        }
+    };
+    
+    pickImage = async () => {
+        try {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });
+          if (!result.cancelled) {
+            this.setState({ profilePic: result.uri });
+          }
+    
+          console.log(result);
+        } catch (E) {
+          console.log(E);
+        }
+    };
+
     async onEditVolunteer() {
         const { fullName, dob, address, postalCode, city, phone, description, profilePic, cv } = this.state;
 
@@ -110,7 +272,7 @@ class EditVolunteer extends Component {
     }
 
     render() {
-        const { citiesResult } = this.state;
+        const { citiesResult, profilePic } = this.state;
         const { userData } = this.state;
 
         return(

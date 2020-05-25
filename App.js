@@ -11,6 +11,13 @@ import LoginScreen from './app/screens/LoginScreen';
 import SignUpScreen from './app/screens/signUp/SignUp';
 import SignUpMessage from './app/screens/signUp/SignUpMessage';
 import VolunteerSignUp from './app/screens/signUp/VolunteerSignUp';
+import UnionEasySignUp from './app/screens/signUp/UnionEasySignUp';
+import UnionSignUp from './app/screens/signUp/UnionSignUp';
+import SponsorEasySignUp from './app/screens/signUp/SponsorEasySignUp';
+import SponsorSignUp from './app/screens/signUp/SponsorSignUp';
+
+import ChangeProfile from './app/screens/ChangeProfile';
+import AddNewProfile from './app/screens/AddNewProfile';
 
 import Jobs from './app/screens/volunteer/Jobs';
 import JobDescription from './app/screens/volunteer/JobDescription';
@@ -22,7 +29,8 @@ import VolunteerProfile from './app/screens/volunteer/VolunteerProfile';
 import VolunteerSettings from './app/screens/volunteer/VolunteerSettings';
 import EditInterests from './app/screens/volunteer/EditInterests';
 import EditVolunteer from './app/screens/volunteer/EditVolunteer';
-import ChangeProfile from './app/screens/ChangeProfile';
+import EditMemberships from './app/screens/volunteer/EditMemberships';
+import BoughtGiftcard from './app/screens/volunteer/BoughtGiftcard';
 
 import UnionDashboard from './app/screens/union/UnionDashboard';
 import UnionJobs from './app/screens/union/UnionJobs';
@@ -30,7 +38,12 @@ import UnionAllJobs from './app/screens/union/UnionAllJobs';
 import UnionProfile from './app/screens/union/UnionProfile';
 import UnionSettings from './app/screens/union/UnionSettings';
 import UnionMembers from './app/screens/union/UnionMembers';
+import NewRequests from './app/screens/union/NewRequests';
+import VolunteerView from './app/screens/union/VolunteerView';
 import PostJob from './app/screens/union/PostJob';
+import UnionJobDescription from './app/screens/union/UnionJobDescription';
+import JobApplications from './app/screens/union/JobApplications';
+import AssignHours from './app/screens/union/AssignHours';
 
 import SponsorDashboard from './app/screens/sponsor/SponsorDashboard';
 import SponsorGiftcards from './app/screens/sponsor/SponsorGiftcards';
@@ -39,6 +52,11 @@ import AllGiftcards from './app/screens/sponsor/AllGiftcards';
 import SponsorProfile from './app/screens/sponsor/SponsorProfile';
 import SponsorSettings from './app/screens/sponsor/SponsorSettings';
 import PostGiftcard from './app/screens/sponsor/PostGiftcard';
+import GiftcardStatsMade from './app/screens/sponsor/GiftcardStatsMade';
+import GiftcardStatsBought from './app/screens/sponsor/GiftcardStatsBought';
+import GiftcardStatsUsed from './app/screens/sponsor/GiftcardStatsUsed';
+import GiftcardStatsUnused from './app/screens/sponsor/GiftcardStatsUnused';
+import GiftcardStatsExpired from './app/screens/sponsor/GiftcardStatsExpired';
 
 import Debug from './app/screens/DebugScreen'
 
@@ -62,6 +80,8 @@ HistoryTab.navigationOptions = {
 const HomeTab = createStackNavigator({
   Home: { screen: VolunteerDashScreen },
   JobDescription: { screen: JobDescription},
+  EditInterests: { screen: EditInterests },
+  EditMemberships: { screen: EditMemberships},
   Debug: { screen: Debug},
 })
 HomeTab.navigationOptions = {
@@ -80,8 +100,15 @@ const VolunteerProfileTab = createStackNavigator({
   VolunteerProfile: { screen: VolunteerProfile },
   VolunteerSettings: { screen: VolunteerSettings },
   EditInterests: { screen: EditInterests },
+  EditMemberships: { screen: EditMemberships},
   EditVolunteer: { screen: EditVolunteer},
   ChangeProfile: { screen: ChangeProfile },
+  AddNewProfile: { screen: AddNewProfile },
+  SponsorEasySignUp: { screen: SponsorEasySignUp },
+  SponsorSignUp: { screen: SponsorSignUp },
+  UnionEasySignUp: { screen: UnionEasySignUp },
+  UnionSignUp: { screen: UnionSignUp },
+  BoughtGiftcard: { screen: BoughtGiftcard }
 })
 VolunteerProfileTab.navigationOptions = {
   tabBarIcon: <Icon name="person" type='material' size={35} color="white" />
@@ -111,7 +138,8 @@ const VolunteerTabs = createBottomTabNavigator(
 
 const UnionJobsTab = createStackNavigator({
   UnionJobs: { screen: UnionJobs },
-  JobDescription: { screen: JobDescription},
+  UnionJobDescription: { screen: UnionJobDescription},
+  VolunteerView: { screen: VolunteerView },
   PostJob: { screen: PostJob },
   UnionAllJobs: { screen: UnionAllJobs },
 })
@@ -122,7 +150,12 @@ UnionJobsTab.navigationOptions = {
 const UnionHomeTab = createStackNavigator({
   UnionHome: { screen: UnionDashboard },
   UnionMembers: { screen: UnionMembers },
+  NewRequests: { screen: NewRequests },
+  VolunteerView: { screen: VolunteerView },
   PostJob: { screen: PostJob },
+  UnionJobDescription: { screen: UnionJobDescription},
+  JobApplications: { screen: JobApplications },
+  AssignHours: { screen: AssignHours },
 })
 UnionHomeTab.navigationOptions = {
   tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />
@@ -132,6 +165,7 @@ const UnionProfileTab = createStackNavigator({
   UnionProfile: { screen: UnionProfile },
   UnionSettings: { screen: UnionSettings },
   ChangeProfile: { screen: ChangeProfile },
+  UnionJobDescription: { screen: UnionJobDescription},
 })
 UnionProfileTab.navigationOptions = {
   tabBarIcon: <Icon name="person" type='material' size={35} color="white" />
@@ -169,6 +203,11 @@ SponsorGiftcardTab.navigationOptions = {
 const SponsorHomeTab = createStackNavigator({
   SponsorHome: { screen: SponsorDashboard },
   PostGiftcard: { screen: PostGiftcard },
+  GiftcardStatsMade: { screen: GiftcardStatsMade },
+  GiftcardStatsBought: { screen: GiftcardStatsBought },
+  GiftcardStatsUsed: { screen: GiftcardStatsUsed },
+  GiftcardStatsUnused: { screen: GiftcardStatsUnused },
+  GiftcardStatsExpired: { screen: GiftcardStatsExpired },
 })
 SponsorHomeTab.navigationOptions = {
   tabBarIcon: <Image source={require('./assets/logo.png')} style={{width: 38, height: 35}} />

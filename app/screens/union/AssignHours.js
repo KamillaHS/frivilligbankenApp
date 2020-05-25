@@ -1,0 +1,129 @@
+import React, { Component } from "react";
+import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
+import { Button, Icon } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
+
+const JOBSWITHCONFIRMED_URL = 'http://kamilla-server.000webhostapp.com/app/union/getJobsWithConfirmed.php';
+
+class AssignHours extends Component {
+
+    static navigationOptions = {
+        title: 'Tildel Arbejdstimer',
+        headerTitleStyle: {
+            color: 'white',
+        },
+        headerStyle: {
+            backgroundColor: '#517BBE',
+        },
+        headerTintColor: 'white',
+        headerBackTitle: null,
+      };
+
+
+    state = { 
+        jobs: []
+    }
+
+    async getJobsWithConfirmed() {
+        const id = this.props.navigation.getParam('id');
+        const response = await fetch(JOBSWITHCONFIRMED_URL)
+
+        this.setState({ jobs: await response.json() });
+        //console.log( await response.text() );
+    }
+
+
+    componentDidMount() {
+        //this.getJobsWithApplications();
+    }
+
+    render() {
+        const { jobs } = this.state;
+
+        return(
+            <ScrollView contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getJobsWithConfirmed() }/>
+
+                <View style={styles.area}>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Text style={styles.text}>Mine Oprettede Jobs</Text>
+                        <Text style={styles.text}>Godkendte Frivillige</Text>
+                    </View>
+
+                    {
+                    jobs.map((item, i) => (
+                        <TouchableOpacity key={i.JobID} onPress={() => this.props.navigation.navigate('UnionJobDescription', {id: item.JobID, route: 'hours'})}>
+                                <View style={styles.jobListItem}>
+                                    <View style={styles.jobLogo}>
+                                        <Image
+                                            style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
+                                            source={{uri: item.UnionLogo}}
+                                        />
+                                    </View>
+                                    <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
+                                        <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                    </View>
+                                    <View style={{ width: 20, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                        <Text style={{color: '#4c4c4c' }} >{item.num}</Text>
+                                    </View>
+                                </View>
+                        </TouchableOpacity>
+                    ))
+                    }
+                </View>
+            </ScrollView>
+        )
+    }
+}
+
+export default AssignHours;
+
+const styles = StyleSheet.create({
+    container:{
+        alignItems: 'center',
+        paddingVertical: 20,
+        backgroundColor: '#E7EBF0',
+    },
+    area:{
+        backgroundColor: 'rgba(81,123,190,0.3)',
+        borderRadius: 10,
+        width: '90%',
+        padding: 10,
+        marginBottom: 10
+    },
+    text:{
+        color: '#4c4c4c',
+    },
+    noBGarea:{
+        width: '90%',
+        marginBottom: 10
+    },
+    greenButton: {
+        backgroundColor:"#30A451",
+        borderRadius:10,
+        width: 100,
+    },
+    blueButton: {
+        backgroundColor:"#517BBE",
+        borderRadius:10,
+        width: '100%',
+    },
+    jobListItem:{
+        flex:1,
+        flexDirection: 'row',
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        height: 60,
+        padding: 5,
+        color: '#4c4c4c',
+        marginTop: 10,
+        borderRadius: 10,
+    },
+    jobLogo:{
+        height: 50,
+        width: 50,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#4c4c4c',
+        borderRadius: 25,
+    },
+});

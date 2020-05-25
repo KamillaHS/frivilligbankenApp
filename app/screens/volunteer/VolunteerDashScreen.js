@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, AsyncStorage, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -53,13 +54,13 @@ class VolunteerDashScreen extends Component {
             credentials: 'include',
         });
         
-        this.setState({ name: await response.json() })
+        this.setState({ name: await response.text() })
     }
 
     componentDidMount() {
         this.getUserStatus();
         this.getMemberJobs();
-        this.getName();
+        //this.getName();
     }
 
     render() {
@@ -69,6 +70,8 @@ class VolunteerDashScreen extends Component {
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getName() }/> 
+
                 <View style={styles.area}>
                     <Text style={[styles.text, {fontSize: 18}]}>Velkommen {name.FullName}</Text>
                 </View>

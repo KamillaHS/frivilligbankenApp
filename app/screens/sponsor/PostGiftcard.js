@@ -30,12 +30,13 @@ class PostGiftcard extends Component {
             description: '',
             requirements: '',
             amount: '',
-            value: '',
+            valueP: '',
+            valueM: '',
         };
     }
 
-    async createJob() {
-        const { title, amount, value, description, requirements } = this.state;
+    async createGiftcard() {
+        const { title, amount, valueP, valueM, description, requirements } = this.state;
 
         try {
             if(this.state.title != '' && this.state.amount != '' && this.state.value != '') {
@@ -45,16 +46,10 @@ class PostGiftcard extends Component {
                         'Content-Type': 'application/json'
                     },
                     method: 'POST',
-                    body: JSON.stringify({ title, amount, value, description, requirements }),
+                    body: JSON.stringify({ title, amount, valueP, valueM, description, requirements }),
                 })
                 
                 const data = await response.json();
-                
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    this.props.navigation.navigate('SponsorDashboard');
-                }
                 
             } else {
                 Alert.alert('Tomme felter', 'Venligst udfyld alle felter.');
@@ -62,10 +57,11 @@ class PostGiftcard extends Component {
         } catch(error) {
             console.error(error);
         }
+        this.props.navigation.navigate('SponsorDashboard');
     }
 
     render() {
-        const { title, amount, value, description, requirements } = this.state;
+        const { title, amount, valueP, valueM, description, requirements } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -75,7 +71,7 @@ class PostGiftcard extends Component {
                     <TextInput
                         value={title}
                         onChangeText={(title) => this.setState({title})}
-                        placeholder={'Titel'}
+                        placeholder={'Eks. 100kr til badetøjsafdelingen'}
                         placeholderTextColor='#4c4c4c'
                         keyboardType='default'
                         style={styles.input}
@@ -85,17 +81,30 @@ class PostGiftcard extends Component {
                     <TextInput
                         value={amount}
                         onChangeText={(amount) => this.setState({amount})}
-                        placeholder={'00'}
+                        placeholder={'Maks antal gavekort, der kan "købes"'}
                         placeholderTextColor='#4c4c4c'
                         keyboardType='number-pad'
                         style={styles.input}
                     />
 
-                    <Text>Pris i Point</Text>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <Text>Pris i Point</Text>
+                        <Text style={{color: 'rgba(0,0,0,0.5)', paddingLeft: 5}}>(OBS 1 time = 60 point)</Text>
+                    </View>
                     <TextInput
-                        value={value}
-                        onChangeText={(value) => this.setState({value})}
-                        placeholder={'00'}
+                        value={valueP}
+                        onChangeText={(valueP) => this.setState({valueP})}
+                        placeholder={'Værdien som man skal "købe" gavekortet for'}
+                        placeholderTextColor='#4c4c4c'
+                        keyboardType='number-pad'
+                        style={styles.input}
+                    />
+
+                    <Text>Værdi i DKK</Text>
+                    <TextInput
+                        value={valueM}
+                        onChangeText={(valueM) => this.setState({valueM})}
+                        placeholder={'Gavekortets værdi, eks. 100kr'}
                         placeholderTextColor='#4c4c4c'
                         keyboardType='number-pad'
                         style={styles.input}
@@ -128,7 +137,7 @@ class PostGiftcard extends Component {
                     <Button 
                         buttonStyle={styles.greenButton}
                         title='Opret Gavekort'
-                        onPress={this.createJob.bind(this)}
+                        onPress={this.createGiftcard.bind(this)}
                     />
                 </View>
             </ScrollView>

@@ -218,6 +218,7 @@ class EditVolunteer extends Component {
         }
     }
 
+    /*
     getPermissionAsync = async () => {
         if (Constants.platform.ios) {
           const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -244,6 +245,7 @@ class EditVolunteer extends Component {
           console.log(E);
         }
     };
+    */
 
     async onEditVolunteer() {
         const { fullName, dob, address, postalCode, city, phone, description, profilePic, cv } = this.state;
@@ -257,13 +259,14 @@ class EditVolunteer extends Component {
           body: JSON.stringify({ fullName, dob, address, postalCode, city, phone, description, profilePic, cv }),
         })
         
-        const data = await responose.json()
-
+        const data = await responose.json();
+/*
         if (data.error) {
             alert(data.error)
         } else {
             this.props.navigation.navigate('VolunteerProfile')
         }
+        */
         
     }
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Icon } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 const SPONSOR_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/getSponsorName.php';
 const SIMPLESTATS_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/getSimpleStats.php';
@@ -46,7 +47,7 @@ class SponsorDashboard extends Component {
 
     componentDidMount() {
         this.getSponsor();
-        this.getSimpleStats();
+        //this.getSimpleStats();
     }
 
     render() {
@@ -54,6 +55,8 @@ class SponsorDashboard extends Component {
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getSimpleStats() }/> 
+
                 <View style={styles.area}>
                     <Text style={[styles.text, {fontSize: 18}]}>Velkommen {sponsor.SponsorName}</Text>
                 </View>

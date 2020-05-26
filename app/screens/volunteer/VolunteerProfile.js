@@ -130,7 +130,7 @@ class VolunteerProfile extends Component {
     }
 
     componentDidMount() {
-        this.getUser();
+        //this.getUser();
         //this.getUserInterests();
         //this.getUserMemberships();
         //this.getUserGiftcards();
@@ -143,6 +143,7 @@ class VolunteerProfile extends Component {
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
+              <NavigationEvents onWillFocus={ () => this.getUser() }/>
               <NavigationEvents onWillFocus={ () => this.getUserGiftcards() }/>
               <NavigationEvents onWillFocus={ () => this.getUserInterests() }/>
               <NavigationEvents onWillFocus={ () => this.getUserMemberships() }/>

@@ -5,7 +5,8 @@ import { HeaderBackButton } from "react-navigation-stack";
 
 const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/singleGiftcard.php';
 const BUY_URL = 'http://kamilla-server.000webhostapp.com/app/buyGiftcard.php';
-const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
+//const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
+const USERPOINTS_URL = 'http://kamilla-server.000webhostapp.com/app/userPoints.php';
 
 class Giftcard extends Component {
 
@@ -23,7 +24,7 @@ class Giftcard extends Component {
     
     state = { 
         giftcardData: [],
-        jobHours: 0,
+        userPoints: 0,
     }
 
     async getGiftcard() {
@@ -38,14 +39,14 @@ class Giftcard extends Component {
         }
     }
 
-    async getJobHours() {
+    async getUserPoints() {
         AsyncStorage.getItem('VolunteerID');
   
-        const response = await fetch(JOBHOURS_URL, {
+        const response = await fetch(USERPOINTS_URL, {
           credentials: 'include',
         })
   
-        this.setState({ jobHours: await response.json() })
+        this.setState({ userPoints: await response.json() })
     }
 
     async buy() {
@@ -64,16 +65,16 @@ class Giftcard extends Component {
 
     componentDidMount() {
         this.getGiftcard();
-        this.getJobHours();
+        this.getUserPoints();
     }
 
     
 
     render() {
-        const { giftcardData, jobHours } = this.state;
+        const { giftcardData, userPoints } = this.state;
         //const myPoints = 55;
 
-        const left = jobHours.totalHours - giftcardData.Value;
+        const left = userPoints.Points - giftcardData.ValueP;
 
         if(left >= 0) {
             canBuy = true;
@@ -100,7 +101,7 @@ class Giftcard extends Component {
                                     size={25}
                                     color='#4c4c4c'
                                 />
-                                <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{ giftcardData.Value }</Text>
+                                <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{ giftcardData.ValueP }</Text>
                             </View>
                         </View>
 
@@ -122,7 +123,7 @@ class Giftcard extends Component {
                                             size={25}
                                             color='#4c4c4c'
                                         />
-                                        <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{jobHours.totalHours}</Text>
+                                        <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{userPoints.Points}</Text>
                                     </View>
                                 </View>
                                 <View style={{width: '5%'}}>
@@ -144,7 +145,7 @@ class Giftcard extends Component {
                                             size={25}
                                             color='#4c4c4c'
                                         />
-                                        <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{giftcardData.Value}</Text>
+                                        <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{giftcardData.ValueP}</Text>
                                     </View>
                                 </View>
                                 <View style={{width: '5%'}}>
@@ -174,7 +175,7 @@ class Giftcard extends Component {
                                 buttonStyle={styles.greenButton}
                                 disabled={!canBuy}
                                 title='Byt for point'
-                                onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil bytte ' + giftcardData.Value +' point for gavekortet: ' + giftcardData.Title + '?', 
+                                onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil bytte ' + giftcardData.ValueP +' point for gavekortet: ' + giftcardData.Title + '?', 
                                 [
                                     {
                                     text: 'Ja, fortsæt',

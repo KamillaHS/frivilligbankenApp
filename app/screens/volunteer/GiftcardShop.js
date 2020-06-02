@@ -4,7 +4,8 @@ import { Button, Icon, Divider } from 'react-native-elements';
 import { stringify } from "qs";
 
 const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/allGiftcards.php';
-const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
+//const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
+const USERPOINTS_URL = 'http://kamilla-server.000webhostapp.com/app/userPoints.php';
 
 class GiftcardShop extends Component {
     static navigationOptions = {
@@ -20,7 +21,7 @@ class GiftcardShop extends Component {
 
     state = { 
         giftCardData: [],
-        jobHours: 0,
+        userPoints: 0,
     }
 
     async getGiftCards() {
@@ -34,23 +35,23 @@ class GiftcardShop extends Component {
         }
     }
 
-    async getJobHours() {
+    async getUserPoints() {
         AsyncStorage.getItem('VolunteerID');
   
-        const response = await fetch(JOBHOURS_URL, {
+        const response = await fetch(USERPOINTS_URL, {
           credentials: 'include',
         })
   
-        this.setState({ jobHours: await response.json() })
+        this.setState({ userPoints: await response.json() })
     }
 
     componentDidMount() {
         this.getGiftCards();
-        this.getJobHours();
+        this.getUserPoints();
     }
     
     render() {
-        const { giftCardData, jobHours } = this.state;
+        const { giftCardData, userPoints } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -63,7 +64,7 @@ class GiftcardShop extends Component {
                             color='#4c4c4c'
                         />
                         <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
-                            {jobHours.totalHours}
+                            {userPoints.Points}
                         </Text>
                         { /* number is supposed to come from db */}
                     </View>
@@ -82,7 +83,7 @@ class GiftcardShop extends Component {
                                             size={25}
                                             color='white'
                                         />
-                                        <Text style={{color: 'white', fontSize: 18, padding: 1}}>{ item.Value }</Text>
+                                        <Text style={{color: 'white', fontSize: 18, padding: 1}}>{ item.ValueP }</Text>
                                     </View>
                                 </View>
                             </View>

@@ -127,16 +127,16 @@ class BoughtGiftcard extends Component {
                                 textColor="#4c4c4c"
                                 okButton={{ visible: false, duration: 400 }}
                                 onVerified={() => {
-                                    this.setState({ isUnlocked: true }), 
+                                     
                                             Alert.alert('Bekræft', 'Er du sikker på at du vil bruge gavekortet ' + giftcardData.Title + '? Denne handling kan ikke fortrydes og burde kun godkendes af en ekspedient i den pågældende butik.', [
                                             {
                                                 text: 'Ja, fortsæt',
-                                                onPress: () => this.useGiftcard(),
+                                                onPress: () => {this.useGiftcard(), this.setState({ isUnlocked: true })},
                                                 style: 'default'
                                             },
                                             {
                                                 text: 'Nej, luk',
-                                                onPress: () => console.log('Cancel pressed'),
+                                                onPress: () => this.setState({ isUnlocked: false }),
                                                 style: 'cancel',
                                             },
                                         ])

@@ -69,7 +69,7 @@ class SponsorGiftcards extends Component {
                                         />
                                     </View>
                                     <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
-                                        <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                        <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     </View>
                                     <View style={{ width: 20, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
                                         <Text style={{color: '#4c4c4c' }} >{item.Amount}</Text>

@@ -108,7 +108,7 @@ class AllGiftcards extends Component {
                             <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{ borderRadius: 10 }} />
                             <View style={styles.cardInfo}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <Text style={{color: 'white', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                    <Text style={{color: 'white', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', padding: 2}}>
                                         <Icon
                                             type='material' 

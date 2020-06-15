@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, DatePickerIOS, DatePickerAndroid, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -28,9 +32,59 @@ class VolunteerSignUp extends Component {
             text: '',
             modalVisible: false,
             modalVisible2: false,
+
+            image: null,
+            imageBase64: null,
+            cvImage: null,
+            cvImageBase64: null,
         };
         this.setDate = this.setDate.bind(this);
     }
+
+    /* IMAGE PICKER CODE STARTS HERE */
+    
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+        }
+      }
+    
+      _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          base64: true,
+        });
+    
+        console.log(result.base64);
+    
+        if (!result.cancelled) {
+          this.setState({ image: result.uri });
+          this.setState({ imageBase64: result.base64 });
+        }
+      };
+  
+      _pickCV = async () => {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+            //aspect: [4, 3],
+            base64: true,
+          });
+      
+          console.log(result.base64);
+      
+          if (!result.cancelled) {
+            this.setState({ cvImage: result.uri });
+            this.setState({ cvImageBase64: result.base64 });
+          }
+        };
+  
+      /* IMAGE PICKER CODE ENDS HERE */
 
     setDate(newDate) {
         this.setState({dob: newDate});
@@ -57,7 +111,7 @@ class VolunteerSignUp extends Component {
     }
 
     async onMakeVolunteer() {
-        const { fullName, dob, address, postalCode, city, phone, description, profilePic, cv } = this.state;
+        const { fullName, dob, address, postalCode, city, phone, description, imageBase64, cvImageBase64 } = this.state;
 
         if(this.state.fullName != '' && this.state.dob != '' && this.state.postalCode != '') {
             const responose = await fetch(VOLSIGNUP_URL, {
@@ -66,10 +120,10 @@ class VolunteerSignUp extends Component {
                     'Content-Type': 'application/json'
                 },
                 method: 'POST',
-                body: JSON.stringify({ fullName, dob, address, postalCode, city, phone, description, profilePic, cv }),
+                body: JSON.stringify({ fullName, dob, address, postalCode, city, phone, description, imageBase64, cvImageBase64 }),
             })
             
-            const data = alert(await responose.text())
+            const data = await responose.json();
 
             if (data.error) {
                 alert(data.error)
@@ -82,9 +136,16 @@ class VolunteerSignUp extends Component {
         }
     }
 
+    componentDidMount() {
+        this.getPermissionAsync();
+    }
+
     render() {
         const { fullName, dob, address, postalCode, city, phone, description, profilePic, cv } = this.state;
         const { citiesResult } = this.state;
+
+        let { image, imageBase64, cvImage, cvImageBase64 } = this.state;
+
         return(
             <View style={styles.container}>
                 <ImageBackground source={require('../../images/1088.jpg')} style={styles.background} />
@@ -254,6 +315,7 @@ class VolunteerSignUp extends Component {
                         style={styles.input}
                     />
                     
+                    {/*
                     <TextInput
                         value={profilePic}
                         onChangeText={(profilePic) => this.setState({profilePic})}
@@ -262,7 +324,21 @@ class VolunteerSignUp extends Component {
                         keyboardType='default'
                         style={styles.input}
                     />
+                    */}
+
+                    <View style={[styles.input, {flex:1, flexDirection: 'row', padding: 0}]}>
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            {image &&
+                            <Image source={{ uri: image }} style={{ height: 44, maxHeight: 44, width: '100%', borderRadius: 10, backgroundColor: 'white', marginRight: 5 }} />}
+                        </View>
+                        <Button 
+                            buttonStyle={styles.blueButton}
+                            title='Upload Profilbillede'
+                            onPress={this._pickImage}
+                        />
+                    </View>
                     
+                    {/*
                     <TextInput
                         value={cv}
                         onChangeText={(cv) => this.setState({cv})}
@@ -271,6 +347,19 @@ class VolunteerSignUp extends Component {
                         keyboardType='default'
                         style={styles.input}
                     />
+                    */}
+
+                    <View style={[styles.input, {flex:1, flexDirection: 'row', padding: 0}]}>
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            {cvImage &&
+                            <Image source={{ uri: cvImage }} style={{ height: 44, maxHeight: 44, width: '100%', borderRadius: 10, backgroundColor: 'white', marginRight: 5 }} />}
+                        </View>
+                        <Button 
+                            buttonStyle={styles.blueButton}
+                            title='Upload CV'
+                            onPress={this._pickCV}
+                        />
+                    </View>
 
                     <Button 
                         title="Opret Frivillig Profil" 

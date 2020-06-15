@@ -52,6 +52,7 @@ class UnionSettings extends Component {
                     <Button
                         title="Rediger Information"
                         buttonStyle={styles.blueButton}
+                        onPress={() => this.props.navigation.navigate('EditUnion')}
                     />
 
                     <Button

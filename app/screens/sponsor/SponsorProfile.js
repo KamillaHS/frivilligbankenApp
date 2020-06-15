@@ -52,6 +52,7 @@ class SponsorProfile extends Component {
 
     render() {
         const { sponsorData } = this.state;
+        const encodedPicture = sponsorData.SponsorPic;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -59,7 +60,8 @@ class SponsorProfile extends Component {
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                       <Image
                         style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white'}}
-                        source={{uri: sponsorData.SponsorPic}}
+                        //source={{uri: sponsorData.SponsorPic}}
+                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                         resizeMode="contain"
                       />
                       <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{sponsorData.SponsorName}</Text>

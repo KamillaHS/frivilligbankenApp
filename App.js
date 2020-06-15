@@ -44,6 +44,7 @@ import PostJob from './app/screens/union/PostJob';
 import UnionJobDescription from './app/screens/union/UnionJobDescription';
 import JobApplications from './app/screens/union/JobApplications';
 import AssignHours from './app/screens/union/AssignHours';
+import EditUnion from './app/screens/union/EditUnion';
 
 import SponsorDashboard from './app/screens/sponsor/SponsorDashboard';
 import SponsorGiftcards from './app/screens/sponsor/SponsorGiftcards';
@@ -57,6 +58,7 @@ import GiftcardStatsBought from './app/screens/sponsor/GiftcardStatsBought';
 import GiftcardStatsUsed from './app/screens/sponsor/GiftcardStatsUsed';
 import GiftcardStatsUnused from './app/screens/sponsor/GiftcardStatsUnused';
 import GiftcardStatsExpired from './app/screens/sponsor/GiftcardStatsExpired';
+import EditSponsor from './app/screens/sponsor/EditSponsor';
 
 import Debug from './app/screens/DebugScreen'
 
@@ -166,6 +168,7 @@ const UnionProfileTab = createStackNavigator({
   UnionSettings: { screen: UnionSettings },
   ChangeProfile: { screen: ChangeProfile },
   UnionJobDescription: { screen: UnionJobDescription},
+  EditUnion: { screen: EditUnion},
 })
 UnionProfileTab.navigationOptions = {
   tabBarIcon: <Icon name="person" type='material' size={35} color="white" />
@@ -217,6 +220,7 @@ const SponsorProfileTab = createStackNavigator({
   SponsorProfile: { screen: SponsorProfile },
   SponsorSettings: { screen: SponsorSettings },
   ChangeProfile: { screen: ChangeProfile },
+  EditSponsor: { screen: EditSponsor},
 })
 SponsorProfileTab.navigationOptions = {
   tabBarIcon: <Icon name="person" type='material' size={35} color="white" />

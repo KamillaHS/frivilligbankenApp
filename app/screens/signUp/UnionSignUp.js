@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, DatePickerIOS, DatePickerAndroid, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -41,7 +44,39 @@ class UnionSignUp extends Component {
         apiData: [],
 
         modalVisible: false,
+
+        logoImage: null,
+        logoImageBase64: null,
     }
+
+    /* IMAGE PICKER CODE STARTS HERE */
+    
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+        }
+      }
+    
+    _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          base64: true,
+        });
+    
+        console.log(result.base64);
+    
+        if (!result.cancelled) {
+          this.setState({ logoImage: result.uri });
+          this.setState({ logoImageBase64: result.base64 });
+        }
+    };
+  
+    /* IMAGE PICKER CODE ENDS HERE */
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
@@ -67,13 +102,15 @@ class UnionSignUp extends Component {
 
             cvr = this.props.navigation.getParam('cvr', 'null');
             website = this.props.navigation.getParam('website', 'null');
-            logo = this.props.navigation.getParam('logo', 'null');
-            console.log(cvr, website, logo);
+            logoImage = this.props.navigation.getParam('logoImage', 'null');
+            logoImageBase64 = this.props.navigation.getParam('logoImageBase64', 'null');
+            console.log(cvr, website, logoImage, logoImageBase64);
             //alert(cvr + ", " + website + ", " + logo);
 
             this.setState({ cvr: cvr });
             this.setState({ website: website });
-            this.setState({ logo: logo });
+            this.setState({ logoImage: logoImage });
+            this.setState({ logoImageBase64: logoImageBase64 });
         } catch (error) {
           console.error(error)
         }
@@ -93,7 +130,7 @@ class UnionSignUp extends Component {
 
     
     async onMakeUnion() {
-        var { apiData, cvr, unionName, unionEmail, address, postalCode, city, phone, website, description, logo } = this.state;
+        var { apiData, cvr, unionName, unionEmail, address, postalCode, city, phone, website, description, logoImageBase64 } = this.state;
         if(unionName == null || unionName == '') {
             unionName = apiData.name;
         }
@@ -114,27 +151,26 @@ class UnionSignUp extends Component {
         }
 
         if(this.state.description != '') {
-            const responose = await fetch(UNIONSIGNUP_URL, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({ cvr, unionName, unionEmail, address, postalCode, city, phone, website, description, logo }),
-            })
-            
-            const data = await responose.json()
+            try {
+                const responose = await fetch(UNIONSIGNUP_URL, {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({ cvr, unionName, unionEmail, address, postalCode, city, phone, website, description, logoImageBase64 }),
+                })
+                
+                const data = await responose.json();
 
-            this.props.navigation.navigate('UnionTabs')
-
-            /*
-            if (data.error) {
-                alert(data.error)
-            } else {
-                this.props.navigation.navigate('SponsorTabs')
+                if (data.error) {
+                    alert(data.error)
+                } else {
+                    this.props.navigation.navigate('UnionTabs')
+                } 
+            } catch (error) {
+                console.error(error)
             }
-            */
-            
         } else {
             Alert.alert('Tomme felter', 'Venligt sørg for at alle felter er udfyldt.')
         }
@@ -150,6 +186,9 @@ class UnionSignUp extends Component {
         const { cvr, website, description, logo } = this.state;
         const { citiesResult } = this.state;
         const { apiData } = this.state;
+
+        let { logoImage, logoImageBase64 } = this.state;
+
         return(
             <View style={styles.container}>
                 <ImageBackground source={require('../../images/1088.jpg')} style={styles.background} />
@@ -291,6 +330,7 @@ class UnionSignUp extends Component {
                         style={styles.input}
                     />
 
+                    {/*
                     <TextInput
                         value={logo}
                         onChangeText={(logo) => this.setState({logo})}
@@ -299,6 +339,19 @@ class UnionSignUp extends Component {
                         keyboardType='default'
                         style={styles.input}
                     />
+                    */}
+
+                    <View style={[styles.input, {flex:1, flexDirection: 'row', padding: 0}]}>
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            {logoImage &&
+                            <Image source={{ uri: logoImage }} style={{ height: 44, maxHeight: 44, width: '100%', borderRadius: 10, backgroundColor: 'white', marginRight: 5 }} />}
+                        </View>
+                        <Button 
+                            buttonStyle={styles.blueButton}
+                            title='Upload Logo'
+                            onPress={this._pickImage}
+                        />
+                    </View>
 
                     <Button 
                         title="Opret Forenings Profil" 

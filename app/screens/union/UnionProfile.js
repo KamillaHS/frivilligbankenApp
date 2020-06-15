@@ -57,6 +57,7 @@ class UnionProfile extends Component {
 
   render() {
     const { unionData } = this.state;
+    const encodedPicture = unionData.UnionLogo;
 
     return(
       <ScrollView contentContainerStyle={styles.container}>
@@ -64,7 +65,8 @@ class UnionProfile extends Component {
           <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
             <Image
               style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50}}
-              source={{uri: unionData.UnionLogo}}
+              //source={{uri: unionData.UnionLogo}}
+              source={{uri: `data:image/gif;base64,${encodedPicture}`}}
             />
             <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{unionData.UnionName}</Text>
           </View>

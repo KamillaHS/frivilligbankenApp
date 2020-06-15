@@ -32,10 +32,14 @@ class SignUp extends Component {
                         body: JSON.stringify({ email, password }),
                     })
                     
-                    const data = await response.json()
+                    const data = await response.json();
 
-                    AsyncStorage.setItem('UserID', data.user.UserID)
-                    this.props.navigation.navigate('SignUpMessage')
+                    if(data.error === 'USER_ALREADY_EXISTS') {
+                        alert('Der er allerede en bruger tilknyttet den indtastede email');
+                    } else {
+                        //AsyncStorage.setItem('UserID', data.user.UserID)
+                        this.props.navigation.navigate('SignUpMessage')
+                    }
 
                 } catch (error) {
                     console.error(error)  

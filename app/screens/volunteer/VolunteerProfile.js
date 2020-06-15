@@ -140,6 +140,8 @@ class VolunteerProfile extends Component {
     
     render() {
         const { userData, userInterests, userMemberships, userGiftcards, jobHours } = this.state;
+        const encodedPicture = userData.VolunteerPic;
+        const encodedCV = userData.CV;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -179,7 +181,8 @@ class VolunteerProfile extends Component {
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                     <Image
                       style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white'}}
-                      source={{uri: userData.VolunteerPic}}
+                      //source={{uri: userData.VolunteerPic}}
+                      source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                     />
                     <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{userData.FullName}</Text>
                   </View>
@@ -229,7 +232,12 @@ class VolunteerProfile extends Component {
                                 </TouchableHighlight>
 
                                 <View style={{width: '100%', height: '95%'}}>
-                                  <Image source={{uri: userData.CV}} style={{position: 'relative', width: '100%', height: '100%'}} resizeMode='contain' />
+                                  <Image 
+                                    //source={{uri: userData.CV}} 
+                                    source={{uri: `data:image/gif;base64,${encodedCV}`}}
+                                    style={{position: 'relative', width: '100%', height: '100%'}} 
+                                    resizeMode='contain' 
+                                  />
                                 </View>
                             </View>
                         </View>

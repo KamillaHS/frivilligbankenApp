@@ -67,7 +67,7 @@ class GiftcardStatsUnused extends Component {
                     {/*
                         giftcards.map((item, i) => (
                             <View key={i.GiftcardID} style={i % 2 == 1 || i % 2 == 2 ? [styles.giftcardListItem, {backgroundColor: 'rgba(255,255,255,0.3)'}] : [styles.giftcardListItem, {backgroundColor: 'rgba(255,255,255,0.6)'}]}>
-                                <Text style={[styles.text], {width: '55%'}}>{item.Title}</Text>
+                                <Text style={[styles.text], {width: '55%'}} numberOfLines={1} ellipsizeMode='tail'>{item.Title}</Text>
                                 <Text style={[styles.text], {width: '20%', textAlign: 'right'}}>{item.TotalAmount}</Text>
                                 <Text style={[styles.text], {width: '25%', textAlign: 'right'}}>{item.ValueM}</Text>
                             </View>

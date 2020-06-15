@@ -1,7 +1,9 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, DatePickerIOS, DatePickerAndroid, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
-//import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -43,141 +45,57 @@ class EditVolunteer extends Component {
             modalVisible: false,
             modalVisible2: false,
 
-            filepath: {
-                data: '',
-                uri: ''
-            },
-            fileData: '',
-            fileUri: ''
+            image: null,
+            imageBase64: null,
+            cvImage: null,
+            cvImageBase64: null,
         };
         this.setDate = this.setDate.bind(this);
     };
 
     /* IMAGE PICKER CODE STARTS HERE */
-    /*
-    chooseImage = () => {
-        let options = {
-          title: 'Select Image',
-          customButtons: [
-            { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-          ],
-          storageOptions: {
-            skipBackup: true,
-            path: 'images',
-          },
-        };
-        ImagePicker.showImagePicker(options, (response) => {
-          console.log('Response = ', response);
     
-          if (response.didCancel) {
-            console.log('User cancelled image picker');
-          } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
-          } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
-            alert(response.customButton);
-          } else {
-            const source = { uri: response.uri };
-    
-            // You can also display the image using data:
-            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-            // alert(JSON.stringify(response));s
-            console.log('response', JSON.stringify(response));
-            this.setState({
-              filePath: response,
-              fileData: response.data,
-              fileUri: response.uri
-            });
-          }
-        });
-      }
-    
-      launchCamera = () => {
-        let options = {
-          storageOptions: {
-            skipBackup: true,
-            path: 'images',
-          },
-        };
-        ImagePicker.launchCamera(options, (response) => {
-          console.log('Response = ', response);
-    
-          if (response.didCancel) {
-            console.log('User cancelled image picker');
-          } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
-          } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
-            alert(response.customButton);
-          } else {
-            const source = { uri: response.uri };
-            console.log('response', JSON.stringify(response));
-            this.setState({
-              filePath: response,
-              fileData: response.data,
-              fileUri: response.uri
-            });
-          }
-        });
-    
-      }
-    
-      launchImageLibrary = () => {
-        let options = {
-          storageOptions: {
-            skipBackup: true,
-            path: 'images',
-          },
-        };
-        ImagePicker.launchImageLibrary(options, (response) => {
-          console.log('Response = ', response);
-    
-          if (response.didCancel) {
-            console.log('User cancelled image picker');
-          } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
-          } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
-            alert(response.customButton);
-          } else {
-            const source = { uri: response.uri };
-            console.log('response', JSON.stringify(response));
-            this.setState({
-              filePath: response,
-              fileData: response.data,
-              fileUri: response.uri
-            });
-          }
-        });
-    
-      }
-    
-      renderFileData() {
-        if (this.state.fileData) {
-          return <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
-            style={styles.images}
-          />
-        } else {
-          return <Image source={require('./assets/dummy.png')}
-            style={styles.images}
-          />
+    getPermissionAsync = async () => {
+      if (Constants.platform.ios) {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
         }
       }
-    
-      renderFileUri() {
-        if (this.state.fileUri) {
-          return <Image
-            source={{ uri: this.state.fileUri }}
-            style={styles.images}
-          />
-        } else {
-          return <Image
-            source={require('./assets/galeryImages.jpg')}
-            style={styles.images}
-          />
-        }
+    }
+  
+    _pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        base64: true,
+      });
+  
+      console.log(result.base64);
+  
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+        this.setState({ imageBase64: result.base64 });
       }
-    */
+    };
+
+    _pickCV = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: false,
+          //aspect: [4, 3],
+          base64: true,
+        });
+    
+        console.log(result.base64);
+    
+        if (!result.cancelled) {
+          this.setState({ cvImage: result.uri });
+          this.setState({ cvImageBase64: result.base64 });
+        }
+      };
+
     /* IMAGE PICKER CODE ENDS HERE */
 
     setDate(newDate) {
@@ -227,28 +145,10 @@ class EditVolunteer extends Component {
           }
         }
     };
-    
-    pickImage = async () => {
-        try {
-          let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-          });
-          if (!result.cancelled) {
-            this.setState({ profilePic: result.uri });
-          }
-    
-          console.log(result);
-        } catch (E) {
-          console.log(E);
-        }
-    };
     */
 
     async onEditVolunteer() {
-        const { fullName, dob, address, postalCode, city, phone, description, profilePic, cv } = this.state;
+        const { fullName, dob, address, postalCode, city, phone, description, imageBase64, cvImageBase64 } = this.state;
 
         const responose = await fetch(VOLEDIT_URL, {
           headers: {
@@ -256,27 +156,29 @@ class EditVolunteer extends Component {
               'Content-Type': 'application/json'
           },
           method: 'POST',
-          body: JSON.stringify({ fullName, dob, address, postalCode, city, phone, description, profilePic, cv }),
+          body: JSON.stringify({ fullName, dob, address, postalCode, city, phone, description, imageBase64, cvImageBase64 }),
         })
         
-        const data = await responose.json();
-/*
-        if (data.error) {
-            alert(data.error)
-        } else {
-            this.props.navigation.navigate('VolunteerProfile')
-        }
-        */
+        const data = alert(await responose.text());
+
+ 
+        this.props.navigation.navigate('VolunteerProfile');
+        
         
     }
 
     componentDidMount() {
         this.getUser();
+        this.getPermissionAsync();
     }
 
     render() {
         const { citiesResult, profilePic } = this.state;
         const { userData } = this.state;
+        let { image, imageBase64, cvImage, cvImageBase64 } = this.state;
+
+        const encodedPicture = userData.VolunteerPic;
+        const encodedCV = userData.CV;
 
         return(
           <ScrollView style={{width: '100%'}} contentContainerStyle={{alignItems: 'center', paddingVertical: 20,}}>
@@ -284,13 +186,21 @@ class EditVolunteer extends Component {
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
                     <Image
                       style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white', marginRight: 20}}
-                      source={{uri: userData.VolunteerPic}}
+                      //source={{uri: userData.VolunteerPic}}
+                      source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                     />
                     <Button 
                       buttonStyle={styles.blueButton}
                       title='Upload nyt billede'
+                      onPress={this._pickImage}
                     />
+
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', position: 'absolute' }}>
+                        {image &&
+                        <Image source={{ uri: image }} style={{ width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50 }} />}
+                    </View>
                   </View>
+
               
                   <Text>Fulde Navn</Text>
                   <TextInput
@@ -453,12 +363,20 @@ class EditVolunteer extends Component {
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
                     <Image
                       style={{flex:1, width: 100, height: 80, maxHeight: 100, maxWidth: 100, borderRadius: 10, backgroundColor: 'white', marginRight: 20}}
-                      source={{uri: userData.CV}}
+                      //source={{uri: userData.CV}}
+                      source={{uri: `data:image/gif;base64,${encodedCV}`}}
                     />
                     <Button 
                       buttonStyle={styles.blueButton}
                       title='Upload nyt CV'
+                      onPress={this._pickCV}
                     />
+
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', position: 'absolute' }}>
+                        {cvImage &&
+                        <Image source={{ uri: cvImage }} style={{ width: 100, height: 80, maxHeight: 100, maxWidth: 100, borderRadius: 10 }} />}
+                    </View>
+
                   </View>
 
                   <Button 

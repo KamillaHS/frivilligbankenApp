@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, DatePickerIOS, DatePickerAndroid, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 
 import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const SPONSORSIGNUP_URL = 'http://kamilla-server.000webhostapp.com/app/makeVolProfile.php';
 const CVR_API = 'https://cvrapi.dk/api?country=dk&vat=';
 
 class SponsorEasySignUp extends Component {
@@ -31,7 +33,39 @@ class SponsorEasySignUp extends Component {
         text: '',
 
         modalVisible: false,
+
+        logoImage: null,
+        logoImageBase64: null,
     }
+
+    /* IMAGE PICKER CODE STARTS HERE */
+    
+    getPermissionAsync = async () => {
+        if (Constants.platform.ios) {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+        }
+      }
+    
+      _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          base64: true,
+        });
+    
+        console.log(result.base64);
+    
+        if (!result.cancelled) {
+          this.setState({ logoImage: result.uri });
+          this.setState({ logoImageBase64: result.base64 });
+        }
+      };
+  
+      /* IMAGE PICKER CODE ENDS HERE */
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
@@ -57,7 +91,7 @@ class SponsorEasySignUp extends Component {
 
     
     async onMakeSponsor() {
-        const { cvr, website, logo } = this.state;
+        const { cvr, website, logoImage, logoImageBase64 } = this.state;
 
         if(this.state.cvr != '' && this.state.website != '') {
             try {
@@ -65,7 +99,7 @@ class SponsorEasySignUp extends Component {
                 //myWebsite = await AsyncStorage.setItem('CVR', website);
                 //myLogo = await AsyncStorage.setItem('CVR', logo);
 
-                this.props.navigation.navigate('SponsorSignUp', { cvr, website, logo })
+                this.props.navigation.navigate('SponsorSignUp', { cvr, website, logoImage, logoImageBase64 })
             } catch (error) {
                 console.error(error)
                 }
@@ -81,6 +115,8 @@ class SponsorEasySignUp extends Component {
         const { apiData } = this.state;
         console.log("apiData", apiData);
 
+        let { logoImage, logoImageBase64 } = this.state;
+
         return(
             <View style={styles.container}>
                 <ImageBackground source={require('../../images/1088.jpg')} style={styles.background} />
@@ -95,15 +131,18 @@ class SponsorEasySignUp extends Component {
                             onChangeText={(cvr) => this.setState({cvr})}
                             placeholderTextColor='white'
                             keyboardType='phone-pad'
-                            style={styles.searchInput}
+                            style={styles.input}
                         />
+                        {/*
                         <Button 
                             title="GO" 
                             buttonStyle={{borderRadius: 10, backgroundColor: '#4c4c4c'}}
                             onPress={this.getInfo.bind(this)}
                         />
+                        */}
                     </View>
 
+                    {/*
                     <View style={styles.area}>
                         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5}}>
                             <Text style={styles.titles}>Navn/Firma</Text>
@@ -130,6 +169,7 @@ class SponsorEasySignUp extends Component {
                             <Text style={styles.values}>{apiData.phone}</Text>
                         </View>
                     </View>
+                    */}
 
                     <TextInput
                         value={website}
@@ -140,6 +180,7 @@ class SponsorEasySignUp extends Component {
                         style={styles.input}
                     />
 
+                    {/*
                     <TextInput
                         value={logo}
                         onChangeText={(logo) => this.setState({logo})}
@@ -148,6 +189,19 @@ class SponsorEasySignUp extends Component {
                         keyboardType='default'
                         style={styles.input}
                     />
+                    */}
+
+                    <View style={[styles.input, {flex:1, flexDirection: 'row', padding: 0}]}>
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            {logoImage &&
+                            <Image source={{ uri: logoImage }} style={{ height: 44, maxHeight: 44, width: '100%', borderRadius: 10, backgroundColor: 'white', marginRight: 5 }} />}
+                        </View>
+                        <Button 
+                            buttonStyle={styles.blueButton}
+                            title='Upload Logo'
+                            onPress={this._pickImage}
+                        />
+                    </View>
 
                     <Button 
                         title="Fortsæt" 

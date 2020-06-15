@@ -62,7 +62,7 @@ class History extends Component {
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
-                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>
@@ -89,7 +89,7 @@ class History extends Component {
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
-                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>
@@ -115,7 +115,7 @@ class History extends Component {
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
-                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>
@@ -138,7 +138,7 @@ class History extends Component {
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
-                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ item.Title }</Text>
+                                    <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     <Divider style={{ backgroundColor: '#4c4c4c', height: 2 }} />
                                     <Text style={{color: '#4c4c4c'}}>{ item.AreaName }</Text>
                                 </View>

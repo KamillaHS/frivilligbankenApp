@@ -42,15 +42,7 @@ class SingleGiftcard extends Component {
 
     render() {
         const { giftcardData } = this.state;
-        const myPoints = 55;
-
-        const left = myPoints - giftcardData.Value;
-
-        if(left >= 0) {
-            canBuy = true;
-        } else {
-            canBuy = false
-        }
+        const encodedPicture = giftcardData.SponsorPic;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -58,7 +50,8 @@ class SingleGiftcard extends Component {
                     <View style={styles.giftCardLogo}>
                         <Image
                             style={{flex:1, width: undefined, height: undefined, borderRadius: 10}}
-                            source={{uri: giftcardData.SponsorPic}}
+                            //source={{uri: giftcardData.SponsorPic}}
+                            source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                         />
                     </View>
                     <View style={{padding: 10}}>
@@ -71,7 +64,7 @@ class SingleGiftcard extends Component {
                                     size={25}
                                     color='#4c4c4c'
                                 />
-                                <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{ giftcardData.Value }</Text>
+                                <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{ giftcardData.ValueP }</Text>
                             </View>
                         </View>
 
@@ -80,7 +73,7 @@ class SingleGiftcard extends Component {
                             <Text style={styles.text}>{giftcardData.SponsorName}</Text>
                         </View>
 
-                        <Text style={{color: '#4c4c4c', fontSize: 15, marginTop: 5}}>Beskrivelse kommer her. Ikke sat i db endnu.</Text>
+                        <Text style={{color: '#4c4c4c', fontSize: 15, marginTop: 5}}>{giftcardData.Description}</Text>
 
                     </View>
                 </View>

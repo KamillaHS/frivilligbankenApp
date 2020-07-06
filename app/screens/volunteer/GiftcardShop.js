@@ -53,6 +53,8 @@ class GiftcardShop extends Component {
     render() {
         const { giftCardData, userPoints } = this.state;
 
+        const encodedPicture = giftCardData.SponsorPic;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}>
@@ -72,7 +74,11 @@ class GiftcardShop extends Component {
                 {
                     giftCardData.map((item, i) => (
                         <TouchableOpacity style={styles.giftcard} key={i} onPress={() => this.props.navigation.navigate('Giftcard', {id: item.GiftcardID})}>
-                            <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{ borderRadius: 10 }} />
+                            <ImageBackground 
+                                //source={{uri: item.SponsorPic}} 
+                                source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                style={styles.cardImg} 
+                                imageStyle={{ borderRadius: 10 }} />
                             <View style={styles.cardInfo}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <Text style={{color: 'white', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>

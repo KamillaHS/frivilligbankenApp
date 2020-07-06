@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 const SPONSOR_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/getSponsorInfo.php';
 
@@ -56,6 +57,7 @@ class SponsorProfile extends Component {
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
+              <NavigationEvents onWillFocus={ () => this.getSponsorInfo() }/>
               <View style={styles.area}>
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                       <Image

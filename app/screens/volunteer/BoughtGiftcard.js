@@ -71,6 +71,7 @@ class BoughtGiftcard extends Component {
 
     render() {
         const { giftcardData, jobHours, isUnlocked } = this.state;
+        const encodedPicture = giftcardData.SponsorPic;
         //const myPoints = 55;
 
         const left = jobHours.totalHours - giftcardData.Value;
@@ -87,7 +88,8 @@ class BoughtGiftcard extends Component {
                     <View style={styles.giftCardLogo}>
                         <Image
                             style={{flex:1, width: undefined, height: undefined, borderRadius: 10}}
-                            source={{uri: giftcardData.SponsorPic}}
+                            //source={{uri: giftcardData.SponsorPic}}
+                            source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                         />
                     </View>
                     <View style={{padding: 10}}>

@@ -9,8 +9,8 @@ import moment from 'moment';
 import 'moment/locale/da';
 moment.locale('da');
 
-const VOLUNTEER_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInfo.php';
-const VOLEDIT_URL = 'http://kamilla-server.000webhostapp.com/app/editVolProfile.php';
+const UNION_URL = 'http://kamilla-server.000webhostapp.com/app/union/unionInfo.php';
+const UNIONEDIT_URL = 'http://kamilla-server.000webhostapp.com/app/union/editUnionProfile.php';
 const CITIES_URL = 'http://kamilla-server.000webhostapp.com/app/getCities.php';
 
 class EditUnion extends Component {
@@ -29,28 +29,24 @@ class EditUnion extends Component {
         super(props);
 
         this.state= {
-            userData: [],
-            fullName: '',
-            dob: new Date(),
+            unionData: [],
+            unionName: '',
+            unionEmail: '',
             address: '',
             postalCode: '',
             city: '',
             phone: '',
+            website: '',
             description: '',
-            profilePic: '',
-            cv: '',
+            unionLogo: '',
 
             citiesResult: [],
             text: '',
             modalVisible: false,
-            modalVisible2: false,
 
-            image: null,
-            imageBase64: null,
-            cvImage: null,
-            cvImageBase64: null,
+            logo: null,
+            logoBase64: null,
         };
-        this.setDate = this.setDate.bind(this);
     };
 
     /* IMAGE PICKER CODE STARTS HERE */
@@ -75,50 +71,24 @@ class EditUnion extends Component {
       console.log(result.base64);
   
       if (!result.cancelled) {
-        this.setState({ image: result.uri });
-        this.setState({ imageBase64: result.base64 });
+        this.setState({ logo: result.uri });
+        this.setState({ logoBase64: result.base64 });
       }
     };
 
-    _pickCV = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: false,
-          //aspect: [4, 3],
-          base64: true,
-        });
-    
-        console.log(result.base64);
-    
-        if (!result.cancelled) {
-          this.setState({ cvImage: result.uri });
-          this.setState({ cvImageBase64: result.base64 });
-        }
-      };
-
     /* IMAGE PICKER CODE ENDS HERE */
-
-    setDate(newDate) {
-        this.setState({dob: newDate});
-    }
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
     }
 
-    setModalVisible2(visible) {
-        this.setState({modalVisible2: visible});
-    }
-
-    async getUser() {
+    async getUnion() {
       try {
-        AsyncStorage.getItem('UserID');
-
-        const response = await fetch(VOLUNTEER_URL, {
+        const response = await fetch(UNION_URL, {
           credentials: 'include',
         })
       
-        this.setState({ userData: await response.json() })
+        this.setState({ unionData: await response.json() })
         
       } 
       catch (error) {
@@ -136,55 +106,187 @@ class EditUnion extends Component {
         }
     }
 
-    /*
-    getPermissionAsync = async () => {
-        if (Constants.platform.ios) {
-          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-          if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-          }
-        }
-    };
-    */
+    async onEditUnion() {
+        const { unionName, unionEmail, address, postalCode, city, phone, website, description, logoBase64 } = this.state;
 
-    async onEditVolunteer() {
-        const { fullName, dob, address, postalCode, city, phone, description, imageBase64, cvImageBase64 } = this.state;
-
-        const responose = await fetch(VOLEDIT_URL, {
+        const responose = await fetch(UNIONEDIT_URL, {
           headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json'
           },
           method: 'POST',
-          body: JSON.stringify({ fullName, dob, address, postalCode, city, phone, description, imageBase64, cvImageBase64 }),
+          body: JSON.stringify({ unionName, unionEmail, address, postalCode, city, phone, website, description, logoBase64 }),
         })
         
-        const data = alert(await responose.text());
+        const data = await responose.json();
 
  
-        this.props.navigation.navigate('VolunteerProfile');
+        this.props.navigation.navigate('UnionProfile');
         
         
     }
 
     componentDidMount() {
-        this.getUser();
+        this.getUnion();
         this.getPermissionAsync();
     }
 
     render() {
-        const { citiesResult, profilePic } = this.state;
-        const { userData } = this.state;
-        let { image, imageBase64, cvImage, cvImageBase64 } = this.state;
+        const { citiesResult } = this.state;
+        const { unionData } = this.state;
+        let { logo, logoBase64 } = this.state;
 
-        const encodedPicture = userData.VolunteerPic;
-        const encodedCV = userData.CV;
+        const encodedPicture = unionData.UnionLogo;
 
         return(
           <ScrollView style={{width: '100%'}} contentContainerStyle={{alignItems: 'center', paddingVertical: 20,}}>
-            <View>
-                <Text>Rediger Forening !!</Text>
-            </View>
+              <View style={styles.area}> 
+                  <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
+                    <Image
+                      style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white', marginRight: 20}}
+                      source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                    />
+                    <Button 
+                      buttonStyle={styles.blueButton}
+                      title='Upload nyt billede'
+                      onPress={this._pickImage}
+                    />
+
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', position: 'absolute' }}>
+                        {logo &&
+                        <Image source={{ uri: logo }} style={{ width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50 }} />}
+                    </View>
+                  </View>
+
+              
+                  <Text>Forening Navn</Text>
+                  <TextInput
+                      defaultValue={unionData.UnionName}
+                      onChangeText={(unionName) => this.setState({unionName})}
+                      keyboardType='default'
+                      style={styles.input}
+                  />
+
+                  <Text>Email</Text>
+                  <TextInput
+                      defaultValue={unionData.UnionEmail}
+                      onChangeText={(unionEmail) => this.setState({unionEmail})}
+                      keyboardType='default'
+                      style={styles.input}
+                  />
+
+                  <Text>Adresse</Text>
+                  <TextInput
+                      defaultValue={unionData.Address}
+                      onChangeText={(address) => this.setState({address})}
+                      keyboardType='default'
+                      style={styles.input}
+                  />
+
+                  <Text>By</Text>
+                  <TouchableOpacity 
+                      onPress={() => {
+                          if(Platform.OS == 'ios') {
+                              this.setModalVisible(true);
+                          } else if(Platform.OS == 'android') {
+
+                          }
+                  }}>
+                      <TextInput
+                          defaultValue={unionData.PostalCode, unionData.City}
+                          keyboardType='default'
+                          style={styles.input}
+                          editable={false}
+                          pointerEvents='none'
+                      />
+                  </TouchableOpacity>
+
+
+                  <Modal
+                      animationType="slide"
+                      visible={this.state.modalVisible}
+                      transparent={false}
+                      onRequestClose={() => {
+                          Alert.alert('Modal has been closed.');
+                      }}>
+                      <View style={{marginTop: 22}}>
+                          <View style={{height: '100%', padding: 10}}>
+                              <View style={{height: '20%'}}>
+                                  <Text style={{fontSize: 18, fontWeight: 'bold', color: '#4c4c4c'}}>Vælg en by</Text>
+                                  <TouchableHighlight
+                                      onPress={() => {
+                                      this.setModalVisible(!this.state.modalVisible);
+                                      }}>
+                                      <View style={{marginRight: 0, marginLeft: 'auto', marginTop: -25}}>
+                                          <Icon
+                                              name="close"
+                                              type='material'
+                                              size={30}
+                                              color="#4c4c4c"
+                                          />
+                                      </View>
+                                      
+                                  </TouchableHighlight>
+                              </View>
+
+                              <View style={{marginTop: -90, marginBottom: 'auto'}}>
+                                  <TextInput
+                                      autoFocus={true}
+                                      onChangeText={text => {this.getCities(text)}}
+                                      placeholder={'Indtast postnummer eller bynavn'}
+                                      placeholderTextColor='white'
+                                      keyboardType='default'
+                                      style={styles.searchInput}
+                                  />
+
+                                  <ScrollView style={{height: '75%', borderRadius: 10}}>
+                                      {
+                                          citiesResult.map((item, i) => (
+                                              <TouchableOpacity key={i} style={i % 2 == 1 || i % 2 == 2 ? styles.interestDark : styles.interestLight} onPress={() => {this.setState({postalCode: item.PostalCode, city: item.CityName}), this.setModalVisible(false)}}>
+                                                  <Text style={{color: '#4c4c4c'}}>{item.PostalCode}, {item.CityName}</Text>
+                                              </TouchableOpacity>
+                                          ))
+                                      }
+                                  </ScrollView>
+                              </View>
+                              
+                          </View>
+                      </View>
+                  </Modal>
+
+
+                  <Text>Telefon</Text>
+                  <TextInput
+                      defaultValue={unionData.Phone}
+                      onChangeText={(phone) => this.setState({phone})}
+                      keyboardType='phone-pad'
+                      style={styles.input}
+                  />
+
+                  <Text>Hjemmeside</Text>
+                  <TextInput
+                      defaultValue={unionData.Website}
+                      onChangeText={(website) => this.setState({website})}
+                      keyboardType='default'
+                      style={styles.input}
+                  />
+
+                  <Text>Beskrivelse</Text>
+                  <TextInput
+                      defaultValue={unionData.Description}
+                      onChangeText={(description) => this.setState({description})}
+                      keyboardType='default'
+                      style={styles.input}
+                  />
+
+                  <Button 
+                      title="Gem Ændringer" 
+                      buttonStyle={styles.greenButton}
+                      onPress={this.onEditUnion.bind(this)}
+                  />
+
+
+              </View>
           </ScrollView>
         )
     }

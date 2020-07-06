@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from "react-native";
+import { Image, AsyncStorage } from "react-native";
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -272,9 +272,44 @@ const RootStack = createStackNavigator(
   }, 
 )
 
+/* login url */ const CHECKLOGIN_URL = 'http://kamilla-server.000webhostapp.com/app/checkLogin.php';
+
 const AppContainer = createAppContainer(RootStack);
 
 class App extends Component {
+/*
+  state = { 
+    checkLogin: '',
+  }
+*/
+  /* check login */
+/*
+  async loginCheck() {
+    const { checkLogin } = this.state;
+
+    try {
+        const response = await fetch(CHECKLOGIN_URL)
+        
+        this.setState({ checkLogin: await response.json() })
+    } catch (error) {
+        console.error(error)  
+    }
+
+    if(checkLogin.loggedIn == 'false') {
+      this.props.navigation.navigate('LoginScreen');
+    } else if(checkLogin.loggedIn == 'true') {
+
+      if(checkLogin.profile == 'none') {
+        this.props.navigation.navigate('LoginScreen');
+      }
+
+    }
+  }
+
+  componentDidMount() {
+    this.loginCheck();
+}
+*/
   render() {
     return <AppContainer {...navigationPersistence}/>;
   }

@@ -68,6 +68,8 @@ class VolunteerDashScreen extends Component {
         const { memberJobs } = this.state;
         const { name } = this.state;
 
+        const encodedPicture = memberJobs.UnionLogo;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getName() }/> 
@@ -117,7 +119,8 @@ class VolunteerDashScreen extends Component {
                                     <View style={styles.jobLogo}>
                                         <Image
                                             style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                            source={{uri: item.UnionLogo}}
+                                            //source={{uri: item.UnionLogo}}
+                                            source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                         />
                                     </View>
                                     <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>

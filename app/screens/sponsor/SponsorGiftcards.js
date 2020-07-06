@@ -38,6 +38,8 @@ class SponsorGiftcards extends Component {
     render() {
         const { giftcardsData } = this.state;
 
+        const encodedPicture = giftcardsData.SponsorPic;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.noBGarea}>
@@ -65,7 +67,8 @@ class SponsorGiftcards extends Component {
                                     <View style={styles.giftcardPic}>
                                         <Image
                                             style={{flex:1, width: undefined, height: undefined, borderRadius: 10}}
-                                            source={{uri: item.SponsorPic}}
+                                            //source={{uri: item.SponsorPic}}
+                                            source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                         />
                                     </View>
                                     <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>

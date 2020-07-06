@@ -159,7 +159,7 @@ class EditVolunteer extends Component {
           body: JSON.stringify({ fullName, dob, address, postalCode, city, phone, description, imageBase64, cvImageBase64 }),
         })
         
-        const data = alert(await responose.text());
+        const data = await responose.json();
 
  
         this.props.navigation.navigate('VolunteerProfile');

@@ -40,8 +40,11 @@ class AllGiftcards extends Component {
     render() {
         const { giftcardsData } = this.state;
 
+        const encodedPicture = giftcardsData.SponsorPic;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
+                {/*
                 <View style={styles.noBGarea}>
                     <Button
                         onPress={() => Alert.alert('Manglende side', 'Du kan endnu ikke vælge dette filter')}
@@ -101,11 +104,16 @@ class AllGiftcards extends Component {
 
                     
                 </View>
+                */}
 
                 {
                     giftcardsData.map((item, i) => (
                         <TouchableOpacity style={styles.giftcard} key={i} onPress={() => this.props.navigation.navigate('SingleGiftcard', {id: item.GiftcardID})}>
-                            <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{ borderRadius: 10 }} />
+                            <ImageBackground 
+                                //source={{uri: item.SponsorPic}} 
+                                source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                style={styles.cardImg} 
+                                imageStyle={{ borderRadius: 10 }} />
                             <View style={styles.cardInfo}>
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <Text style={{color: 'white', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>

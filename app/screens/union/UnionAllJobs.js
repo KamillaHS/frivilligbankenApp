@@ -38,8 +38,11 @@ class UnionAllJobs extends Component {
     render() {
         const { jobsData } = this.state;
 
+        const encodedPicture = jobsData.UnionLogo;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
+                {/*
                 <View style={styles.noBGarea}>
                     <Button
                             onPress={() => Alert.alert('Manglende side', 'Du kan endnu ikke vælge dette filter')}
@@ -96,6 +99,7 @@ class UnionAllJobs extends Component {
                         />
                     </View>
                 </View>
+                */}
 
                 <View style={ styles.area }>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 10, paddingTop: 10, paddingRight: 10}}>
@@ -110,7 +114,8 @@ class UnionAllJobs extends Component {
                                     <View style={styles.jobLogo}>
                                         <Image
                                             style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                            source={{uri: item.UnionLogo}}
+                                            //source={{uri: item.UnionLogo}}
+                                            source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                         />
                                     </View>
                                     <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>

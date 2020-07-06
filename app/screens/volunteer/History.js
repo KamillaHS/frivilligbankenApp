@@ -44,6 +44,9 @@ class History extends Component {
 
     render() {
         const { historyData } = this.state;
+
+        const encodedPicture = historyData.UnionLogo;
+        
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getJobs() }/> 
@@ -58,7 +61,8 @@ class History extends Component {
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                        source={{uri: item.UnionLogo}}
+                                        //source={{uri: item.UnionLogo}}
+                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
@@ -85,7 +89,8 @@ class History extends Component {
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                        source={{uri: item.UnionLogo}}
+                                        //source={{uri: item.UnionLogo}}
+                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
@@ -111,7 +116,8 @@ class History extends Component {
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                        source={{uri: item.UnionLogo}}
+                                        //source={{uri: item.UnionLogo}}
+                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
@@ -134,7 +140,8 @@ class History extends Component {
                                 <View style={styles.jobLogo}>
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                        source={{uri: item.UnionLogo}}
+                                        //source={{uri: item.UnionLogo}}
+                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>

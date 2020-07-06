@@ -54,6 +54,8 @@ class UnionMembers extends Component {
     render() {
         const { members, requests } = this.state;
 
+        const encodedPicture = members.VolunteerPic;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getMembers() }/>
@@ -97,7 +99,8 @@ class UnionMembers extends Component {
                                         <View style={styles.volunteerPic}>
                                             <Image 
                                                 style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                                source={{uri: item.VolunteerPic}}
+                                                //source={{uri: item.VolunteerPic}}
+                                                source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                                             />
                                         </View>
                                         <View style={{width: '60%', justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>

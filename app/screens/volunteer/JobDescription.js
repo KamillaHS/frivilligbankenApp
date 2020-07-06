@@ -64,6 +64,8 @@ class JobDescription extends Component {
     render() {
         const { jobData } = this.state;
 
+        const encodedPicture = jobData.UnionLogo;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}> 
@@ -71,7 +73,8 @@ class JobDescription extends Component {
                         <View style={styles.jobLogo}>
                             <Image
                                 style={{flex:1, width: undefined, height: undefined, borderRadius: 50}}
-                                source={{uri: jobData.UnionLogo}}
+                                //source={{uri: jobData.UnionLogo}}
+                                source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                             />
                         </View>
                         <View style={{ padding: 10, maxWidth: '70%'}}>

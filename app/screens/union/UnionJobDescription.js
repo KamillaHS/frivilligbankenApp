@@ -135,6 +135,10 @@ class UnionJobDescription extends Component {
         const { jobData, applicants, confirmed, hoursValue } = this.state;
         const route = this.props.navigation.getParam('route');
 
+        const encodedJobPicture = jobData.UnionLogo;
+        const encodedVolPicture = applicants.VolunteerPic;
+        const encodedVol2Picture = confirmed.VolunteerPic;
+
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getApplicants() }/>
@@ -145,7 +149,8 @@ class UnionJobDescription extends Component {
                         <View style={styles.jobLogo}>
                             <Image
                                 style={{flex:1, width: undefined, height: undefined, borderRadius: 50}}
-                                source={{uri: jobData.UnionLogo}}
+                                //source={{uri: jobData.UnionLogo}}
+                                source={{uri: `data:image/gif;base64,${encodedJobPicture}`}}
                             />
                         </View>
                         <View style={{ padding: 10, maxWidth: '70%'}}>
@@ -199,7 +204,8 @@ class UnionJobDescription extends Component {
                                             <View style={styles.profileImage}>
                                                 <Image
                                                     style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                                    source={{uri: item.VolunteerPic}}
+                                                    //source={{uri: item.VolunteerPic}}
+                                                    source={{uri: `data:image/gif;base64,${encodedVolPicture}`}}
                                                 />
                                             </View>
                                             <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
@@ -223,7 +229,8 @@ class UnionJobDescription extends Component {
                                             <View style={styles.profileImage}>
                                                 <Image
                                                     style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                                    source={{uri: item.VolunteerPic}}
+                                                    //source={{uri: item.VolunteerPic}}
+                                                    source={{uri: `data:image/gif;base64,${encodedVolPicture}`}}
                                                 />
                                             </View>
                                             <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
@@ -242,7 +249,8 @@ class UnionJobDescription extends Component {
                                             <View style={styles.profileImage}>
                                                 <Image
                                                     style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                                    source={{uri: item.VolunteerPic}}
+                                                    //source={{uri: item.VolunteerPic}}
+                                                    source={{uri: `data:image/gif;base64,${encodedVolPicture}`}}
                                                 />
                                             </View>
                                             <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
@@ -281,7 +289,8 @@ class UnionJobDescription extends Component {
                                         <View style={styles.profileImage}>
                                             <Image
                                                 style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
-                                                source={{uri: item.VolunteerPic}}
+                                                //source={{uri: item.VolunteerPic}}
+                                                source={{uri: `data:image/gif;base64,${encodedVol2Picture}`}}
                                             />
                                         </View>
                                         <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>

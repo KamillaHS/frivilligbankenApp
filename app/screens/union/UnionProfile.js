@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage } from "react-native";
 import { Button, Icon } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 UNION_URL = 'http://kamilla-server.000webhostapp.com/app/union/unionInfo.php';
 
@@ -61,10 +62,11 @@ class UnionProfile extends Component {
 
     return(
       <ScrollView contentContainerStyle={styles.container}>
+        <NavigationEvents onWillFocus={ () => this.getUnion() }/>
         <View style={styles.area}>
           <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50}}
+              style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white'}}
               //source={{uri: unionData.UnionLogo}}
               source={{uri: `data:image/gif;base64,${encodedPicture}`}}
             />

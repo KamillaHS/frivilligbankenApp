@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 
 const LOGIN_URL = 'http://kamilla-server.000webhostapp.com/app/userLogin.php';
@@ -49,7 +49,7 @@ class LoginScreen extends Component {
             <View style={styles.container}>
                 <ImageBackground source={require('../images/1088.jpg')} style={styles.background} />
                 
-                <View>
+                <KeyboardAvoidingView behavior="padding">
                     <Image source={require('../../assets/logo.png')} style={styles.logo} />
                     
                     <TextInput
@@ -88,7 +88,7 @@ class LoginScreen extends Component {
                         title="Debug" 
                         onPress={() => this.props.navigation.navigate('Debug')}
                     />
-                </View>
+                </KeyboardAvoidingView>
 
             </View>
         )

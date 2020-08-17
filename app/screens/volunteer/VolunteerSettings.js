@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Switch, TouchableOpacity, As
 import { Button, Icon, ThemeConsumer } from 'react-native-elements';
 import SwitchToggle from 'react-native-switch-toggle';
 import ToggleSwitch from 'rn-toggle-switch'
-import { isConfigurationAvailable } from "expo/build/AR";
+//import { isConfigurationAvailable } from "expo/build/AR";
 
 const LOGOUT_URL = 'http://kamilla-server.000webhostapp.com/app/logout.php';
 

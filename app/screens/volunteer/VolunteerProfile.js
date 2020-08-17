@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground, Modal, TouchableHighlight, Platform } from "react-native";
+import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground, Modal, TouchableHighlight, Platform, Dimensions, Animated } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
+import { PinchGestureHandler } from 'react-native-gesture-handler'; 
+import { State } from 'react-native-reanimated';
+import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -14,6 +17,8 @@ const USERMEMBERSHIPS_URL = 'http://kamilla-server.000webhostapp.com/app/userMem
 const USREGIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/userGiftcards.php';
 const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
 const EXPIREDGIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/giftcardExpire.php';
+
+const { width } = Dimensions.get('window')
 
 class VolunteerProfile extends Component {
     static navigationOptions =  ({ navigation }) => { 
@@ -50,6 +55,7 @@ class VolunteerProfile extends Component {
       userGiftcards: [],
       jobHours: 0,
       expiredGiftcards: [],
+      scale: new Animated.Value(1),
     }
 
     setModalVisible(visible) {
@@ -129,19 +135,42 @@ class VolunteerProfile extends Component {
       this.setState({ expiredGiftcards: await response.json() })
     }
 
-    componentDidMount() {
-        //this.getUser();
-        //this.getUserInterests();
-        //this.getUserMemberships();
-        //this.getUserGiftcards();
-        this.getJobHours();
-        this.getExpiredGiftcards();
+    onZoomEvent = Animated.event(
+      [
+        {
+          nativeEvent: { scale: this.state.scale }
+        }
+      ],
+      {
+        useNativeDriver: true
+      }
+    )
+
+    onZoomStateChange = event => {
+      if (event.nativeEvent.oldState === State.ACTIVE) {
+        Animated.spring(this.state.scale, {
+          toValue: 1,
+          useNativeDriver: true
+        }).start()
+      }
     }
+
+    componentDidMount() {
+      //this.getUser();
+      //this.getUserInterests();
+      //this.getUserMemberships();
+      //this.getUserGiftcards();
+      this.getJobHours();
+      this.getExpiredGiftcards();
+  }
     
     render() {
         const { userData, userInterests, userMemberships, userGiftcards, jobHours } = this.state;
         const encodedPicture = userData.VolunteerPic;
         const encodedCV = userData.CV;
+
+        const encodedLogo = userGiftcards.SponsorPic;
+        
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -161,7 +190,6 @@ class VolunteerProfile extends Component {
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
                           {userData.Points}
                       </Text>
-                      { /* number is supposed to come from db */} 
                   </View>
                   <View style={styles.smallArea}> 
                       <Icon
@@ -173,7 +201,6 @@ class VolunteerProfile extends Component {
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
                           {jobHours.totalHours}
                       </Text>
-                      { /* number is supposed to come from db */} 
                   </View>
                 </View>
 
@@ -232,13 +259,39 @@ class VolunteerProfile extends Component {
                                 </TouchableHighlight>
 
                                 <View style={{width: '100%', height: '95%'}}>
-                                  <Image 
-                                    //source={{uri: userData.CV}} 
-                                    source={{uri: `data:image/gif;base64,${encodedCV}`}}
-                                    style={{position: 'relative', width: '100%', height: '100%'}} 
-                                    resizeMode='contain' 
-                                  />
+                                  <View style={{flex: 1, overflow: 'hidden'}}>
+                                    <ReactNativeZoomableView
+                                      zoomEnabled={true}
+                                      maxZoom={1.5}
+                                      minZoom={1}
+                                      zoomStep={0.25}
+                                      initialZoom={1}
+                                      bindToBorders={true}
+                                      onZoomAfter={this.logOutZoomState}
+                                      style={styles.zoomableView}
+                                      captureEvent={true}
+                                    >
+                                      <Image
+                                        style={{position: 'relative', width: '100%', height: '100%'}}
+                                        source={{uri: `data:image/gif;base64,${encodedCV}`}}
+                                        //resizeMode="stretch"
+                                      />
+                                    </ReactNativeZoomableView>
+                                  </View>
+                                  {/*
+                                  <PinchGestureHandler
+                                    onGestureEvent={this.onZoomEvent}
+                                    onHandlerStateChange={this.onZoomStateChange}>
+                                    <Animated.Image 
+                                      //source={{uri: userData.CV}} 
+                                      source={{uri: `data:image/gif;base64,${encodedCV}`}}
+                                      style={{position: 'relative', width: width, height: '100%', transform: [{ scale: this.state.scale }]}} 
+                                      resizeMode='contain' 
+                                    />
+                                  </PinchGestureHandler>
+                                  */}
                                 </View>
+
                             </View>
                         </View>
                     </Modal>
@@ -278,7 +331,11 @@ class VolunteerProfile extends Component {
                   {
                     userGiftcards.map((item, i) => (
                       <TouchableOpacity style={[item.isUsed == 1 ? {display: 'none'} : styles.giftcard, item.isExpired == 1 ? {display: 'none'} : styles.giftcard]} key={i} onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
-                        <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
+                        <ImageBackground 
+                          //source={{uri: item.SponsorPic}} 
+                          source={{uri: `data:image/gif;base64,${encodedLogo}`}}
+                          style={styles.cardImg} 
+                          imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
                           <Text style={{color: 'white', fontSize: 12 }}>Brug før: { moment(item.ExpirationDate).format('L') }</Text>     
                         </View>
@@ -294,7 +351,11 @@ class VolunteerProfile extends Component {
                   {
                     userGiftcards.map((item, i) => (
                       <TouchableOpacity style={item.isUsed == 1 ? styles.giftcard : {display: 'none'}} key={i}  onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
-                        <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
+                        <ImageBackground 
+                          //source={{uri: item.SponsorPic}} 
+                          source={{uri: `data:image/gif;base64,${encodedLogo}`}}
+                          style={styles.cardImg} 
+                          imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
                           <Text style={{color: 'white', fontSize: 12 }}>Brugt d. { moment(item.ExpirationDate).format('L') }</Text>     
                         </View>
@@ -310,7 +371,11 @@ class VolunteerProfile extends Component {
                   {
                     userGiftcards.map((item, i) => (
                       <TouchableOpacity style={item.isExpired == 1 ? styles.giftcard : {display: 'none'}} key={i}  onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
-                        <ImageBackground source={{uri: item.SponsorPic}} style={styles.cardImg} imageStyle={{borderRadius: 10}} />
+                        <ImageBackground 
+                          //source={{uri: item.SponsorPic}} 
+                          source={{uri: `data:image/gif;base64,${encodedLogo}`}}
+                          style={styles.cardImg} 
+                          imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
                           <Text style={{color: 'white', fontSize: 12 }}>Udløb d. { moment(item.ExpirationDate).format('L') }</Text>     
                         </View>

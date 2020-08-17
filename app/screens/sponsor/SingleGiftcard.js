@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
-const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/singleGiftcard.php';
+const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/giftcardView.php';
 
 class SingleGiftcard extends Component {
 
@@ -76,6 +76,28 @@ class SingleGiftcard extends Component {
                         <Text style={{color: '#4c4c4c', fontSize: 15, marginTop: 5}}>{giftcardData.Description}</Text>
 
                     </View>
+                    <View style={ giftcardData.SponsorID == giftcardData.sponsorID ? {padding:10} : {display: 'none'}}>
+                        <View style={[styles.infoLight, {borderTopLeftRadius: 10, borderTopRightRadius: 10}]}>
+                            <Text style={[styles.text, {fontWeight: 'bold'}]}>Oprettede: </Text>
+                            <Text style={[styles.text, {marginRight: 0, marginLeft: 'auto'}]}>{giftcardData.Made}</Text>
+                        </View>
+                        <View style={styles.infoDark}>
+                            <Text style={[styles.text, {fontWeight: 'bold'}]}>Købte: </Text>
+                            <Text style={[styles.text, {marginRight: 0, marginLeft: 'auto'}]}>{giftcardData.Bought}</Text>
+                        </View>
+                        <View style={styles.infoLight}>
+                            <Text style={[styles.text, {fontWeight: 'bold'}]}>Brugte: </Text>
+                            <Text style={[styles.text, {marginRight: 0, marginLeft: 'auto'}]}>{giftcardData.Used}</Text>
+                        </View>
+                        <View style={styles.infoDark}>
+                            <Text style={[styles.text, {fontWeight: 'bold'}]}>Ubrugte: </Text>
+                            <Text style={[styles.text, {marginRight: 0, marginLeft: 'auto'}]}>{giftcardData.Unused}</Text>
+                        </View>
+                        <View style={[styles.infoLight, {borderBottomLeftRadius: 10, borderBottomRightRadius: 10}]}>
+                            <Text style={[styles.text, {fontWeight: 'bold'}]}>Udløbne: </Text>
+                            <Text style={[styles.text, {marginRight: 0, marginLeft: 'auto'}]}>{giftcardData.Expired}</Text>
+                        </View>
+                    </View>
                 </View>
             </ScrollView>
         )
@@ -113,11 +135,17 @@ const styles = StyleSheet.create({
         color: '#4c4c4c',
         fontSize: 15,
     },
-    textGreen:{
-        color: '#30A451',
+    infoLight:{
+        flex: 1, 
+        flexDirection: "row", 
+        backgroundColor: "rgba(255,255,255,0.6)",
+        padding: 10
     },
-    textRed: {
-        color: '#E84335',
+    infoDark:{
+        flex: 1, 
+        flexDirection: "row", 
+        backgroundColor: "rgba(255,255,255,0.3)",
+        padding: 10
     },
     greenButton:{
         backgroundColor:"#30A451",

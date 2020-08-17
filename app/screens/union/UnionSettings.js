@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Switch, TouchableOpacity } f
 import { Button, Icon } from 'react-native-elements';
 import SwitchToggle from 'react-native-switch-toggle';
 import ToggleSwitch from 'rn-toggle-switch'
-import { isConfigurationAvailable } from "expo/build/AR";
+//import { isConfigurationAvailable } from "expo/build/AR";
 
 
 class UnionSettings extends Component {

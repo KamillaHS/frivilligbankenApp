@@ -277,39 +277,35 @@ const RootStack = createStackNavigator(
 const AppContainer = createAppContainer(RootStack);
 
 class App extends Component {
-/*
+
   state = { 
     checkLogin: '',
   }
-*/
+
   /* check login */
-/*
+
   async loginCheck() {
     const { checkLogin } = this.state;
+    let logInState;
 
     try {
         const response = await fetch(CHECKLOGIN_URL)
-        
-        this.setState({ checkLogin: await response.json() })
+        logInState = await response.text();
+        //this.setState({ checkLogin: await response.json() })
     } catch (error) {
         console.error(error)  
     }
 
-    if(checkLogin.loggedIn == 'false') {
-      this.props.navigation.navigate('LoginScreen');
-    } else if(checkLogin.loggedIn == 'true') {
-
-      if(checkLogin.profile == 'none') {
-        this.props.navigation.navigate('LoginScreen');
-      }
-
+    if(!logInState.loggedIn) {
+      this.props.navigation.navigate('LoginScreen') 
     }
+
   }
 
   componentDidMount() {
     this.loginCheck();
 }
-*/
+
   render() {
     return <AppContainer {...navigationPersistence}/>;
   }

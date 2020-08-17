@@ -8,6 +8,7 @@ import 'moment/locale/da';
 moment.locale('da');
 
 const POSTJOB_URL = 'http://kamilla-server.000webhostapp.com/app/union/postJob.php';
+const CATEGORIES_URL = 'http://kamilla-server.000webhostapp.com/app/union/getCategories.php';
 
 class PostJob extends Component {
 
@@ -35,6 +36,7 @@ class PostJob extends Component {
             modalStartDate: false,
             modalEndDate: false,
             modalCategory: false,
+            categories: [],
         };
         this.setDate = this.setDate.bind(this);
     }
@@ -53,6 +55,12 @@ class PostJob extends Component {
 
     setModalCategory(visible) {
         this.setState({modalCategory: visible});
+    }
+
+    async getCategories() {
+        const response = await fetch(CATEGORIES_URL)
+  
+        this.setState({ categories: await response.json() })
     }
 
     async createJob() {
@@ -85,8 +93,12 @@ class PostJob extends Component {
         }
     }
 
+    componentDidMount() {
+        this.getCategories();
+    }
+
     render() {
-        const { title, start_date, end_date, category, description, requirements } = this.state;
+        const { title, start_date, end_date, category, description, requirements, categories } = this.state;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -244,7 +256,7 @@ class PostJob extends Component {
                                                 />
                                             </View>
                                         </TouchableHighlight>
-
+                                        
                                         <Picker
                                             selectedValue={'Vælg Kategori'}
                                             /*style={{height: 50, width: 100}}*/
@@ -252,9 +264,13 @@ class PostJob extends Component {
                                                 this.setState({category: itemValue})
                                             }>
                                             <Picker.Item label="Vælg Kategori" value="0" enabled="false" />
-                                            <Picker.Item label="Kategori 1" value="1" />
-                                            <Picker.Item label="Kategori 2" value="2" />
+                                            {
+                                                categories.map((item, i) => (
+                                                    <Picker.Item key={i} label={item.CategoryName} value={item.CategoryID} />
+                                                ))
+                                            }
                                         </Picker>
+                                        
                                         
                                     </View>
                                 </View>

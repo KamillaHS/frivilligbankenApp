@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 
 const SIGNUP_URL = 'http://kamilla-server.000webhostapp.com/app/signUp.php';
@@ -58,7 +58,7 @@ class SignUp extends Component {
             <View style={styles.container}>
                 <ImageBackground source={require('../../images/1088.jpg')} style={styles.background} />
                 
-                <View>
+                <KeyboardAvoidingView behavior="padding">
                     <Image source={require('../../../assets/logo.png')} style={styles.logo} />
 
                     <TextInput
@@ -98,7 +98,7 @@ class SignUp extends Component {
                         onPress={this.onSignUp.bind(this)}
                     />
 
-                </View>
+                </KeyboardAvoidingView>
 
             </View>
         )

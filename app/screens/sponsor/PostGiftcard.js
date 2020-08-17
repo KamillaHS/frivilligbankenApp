@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, TouchableOpacity, TouchableHighlight, Modal, DatePickerIOS, Platform } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, TouchableOpacity, TouchableHighlight, Modal, DatePickerIOS, Platform, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
@@ -64,6 +64,7 @@ class PostGiftcard extends Component {
         const { title, amount, valueP, valueM, description, requirements } = this.state;
 
         return(
+            <KeyboardAvoidingView behaviour="padding">
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}> 
 
@@ -141,6 +142,7 @@ class PostGiftcard extends Component {
                     />
                 </View>
             </ScrollView>
+            </KeyboardAvoidingView>
         )
     }
 }

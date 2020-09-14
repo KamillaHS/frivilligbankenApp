@@ -101,8 +101,8 @@ class UnionJobDescription extends Component {
                 body: JSON.stringify({ hoursValue }),
             })
     
-            const data = alert(await response.text());
-            this.props.navigation.navigate('UnionJobDescription');
+            const data = await response.text();
+            //this.props.navigation.navigate('UnionJobDescription');
         } else {
             Alert.alert('Advarsel', 'Indtast venligst et gyldigt antal timer')
         }
@@ -136,8 +136,8 @@ class UnionJobDescription extends Component {
         const route = this.props.navigation.getParam('route');
 
         const encodedJobPicture = jobData.UnionLogo;
-        const encodedVolPicture = applicants.VolunteerPic;
-        const encodedVol2Picture = confirmed.VolunteerPic;
+        //const encodedVolPicture = applicants.VolunteerPic;
+        //const encodedVol2Picture = confirmed.VolunteerPic;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -205,7 +205,7 @@ class UnionJobDescription extends Component {
                                                 <Image
                                                     style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                                     //source={{uri: item.VolunteerPic}}
-                                                    source={{uri: `data:image/gif;base64,${encodedVolPicture}`}}
+                                                    source={{uri: `data:image/gif;base64,${item.VolunteerPic}`}}
                                                 />
                                             </View>
                                             <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
@@ -230,7 +230,7 @@ class UnionJobDescription extends Component {
                                                 <Image
                                                     style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                                     //source={{uri: item.VolunteerPic}}
-                                                    source={{uri: `data:image/gif;base64,${encodedVolPicture}`}}
+                                                    source={{uri: `data:image/gif;base64,${item.VolunteerPic}`}}
                                                 />
                                             </View>
                                             <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
@@ -250,7 +250,7 @@ class UnionJobDescription extends Component {
                                                 <Image
                                                     style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                                     //source={{uri: item.VolunteerPic}}
-                                                    source={{uri: `data:image/gif;base64,${encodedVolPicture}`}}
+                                                    source={{uri: `data:image/gif;base64,${item.VolunteerPic}`}}
                                                 />
                                             </View>
                                             <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
@@ -290,7 +290,7 @@ class UnionJobDescription extends Component {
                                             <Image
                                                 style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                                 //source={{uri: item.VolunteerPic}}
-                                                source={{uri: `data:image/gif;base64,${encodedVol2Picture}`}}
+                                                source={{uri: `data:image/gif;base64,${item.VolunteerPic}`}}
                                             />
                                         </View>
                                         <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
@@ -318,7 +318,26 @@ class UnionJobDescription extends Component {
                                             <Button 
                                                 buttonStyle={[styles.greenButton, {width: 'auto'}]}
                                                 title='Godkend'
-                                                onPress={() => this.addHours(item.VolunteerID, item.JobID)}
+                                                onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil give ' + item.FullName + ' ' + hoursValue + ' timer?', [
+                                                    {
+                                                        text: 'Ja, fortsæt',
+                                                        onPress: () => {
+                                                            this.addHours(item.VolunteerID, item.JobID), 
+                                                            this.setState({jobData: [], confirmed: [], hoursValue: 0}), 
+                                                            this.getJob(),
+                                                            this.getConfirmed(),
+                                                            this.forceUpdate()},
+                                                        style: 'default'
+                                                        
+                                                    },
+                                                    {
+                                                        text: 'Nej, luk',
+                                                        onPress: () => { console.log('nothing happened, and that was intented') },
+                                                        style: 'cancel',
+                                                    },
+                                                ])
+                                                } 
+                                                
                                             />
                                         </View>
 

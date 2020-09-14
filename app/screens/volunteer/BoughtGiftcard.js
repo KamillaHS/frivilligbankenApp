@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 import RNSwipeVerify from 'react-native-swipe-verify'
@@ -138,7 +138,7 @@ class BoughtGiftcard extends Component {
                                             },
                                             {
                                                 text: 'Nej, luk',
-                                                onPress: () => this.setState({ isUnlocked: false }),
+                                                onPress: () => { this.swipeVerify3.reset(), this.setState({ isUnlocked: false })},
                                                 style: 'cancel',
                                             },
                                         ])
@@ -154,13 +154,13 @@ class BoughtGiftcard extends Component {
                             >
                 
                             <Text>{isUnlocked ? 'Gavekortet er nu brugt' : 'Swipe for at bruge gavekortet'}</Text>
+
                 
                         </RNSwipeVerify>
                     </View>
 
 
                     </View>
-
                     
                 </View>
             </ScrollView>

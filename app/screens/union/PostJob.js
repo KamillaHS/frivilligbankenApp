@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, TouchableOpacity, TouchableHighlight, Modal, DatePickerIOS, Platform } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, TouchableOpacity, TouchableHighlight, Modal, DatePickerIOS, Platform, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 
@@ -101,7 +101,8 @@ class PostJob extends Component {
         const { title, start_date, end_date, category, description, requirements, categories } = this.state;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView>
+            <KeyboardAvoidingView behavior="padding">
                 <View style={styles.area}> 
 
                     <Text>Jobtitel</Text>
@@ -306,6 +307,7 @@ class PostJob extends Component {
                         onPress={this.createJob.bind(this)}
                     />
                 </View>
+            </KeyboardAvoidingView>
             </ScrollView>
         )
     }

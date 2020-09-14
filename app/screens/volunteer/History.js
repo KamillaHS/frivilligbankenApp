@@ -45,7 +45,7 @@ class History extends Component {
     render() {
         const { historyData } = this.state;
 
-        const encodedPicture = historyData.UnionLogo;
+        //const encodedPicture = historyData.UnionLogo;
         
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -62,7 +62,7 @@ class History extends Component {
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         //source={{uri: item.UnionLogo}}
-                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                        source={{uri: `data:image/gif;base64,${item.UnionLogo}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
@@ -90,7 +90,7 @@ class History extends Component {
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         //source={{uri: item.UnionLogo}}
-                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                        source={{uri: `data:image/gif;base64,${item.UnionLogo}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
@@ -117,7 +117,7 @@ class History extends Component {
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         //source={{uri: item.UnionLogo}}
-                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                        source={{uri: `data:image/gif;base64,${item.UnionLogo}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>
@@ -141,7 +141,7 @@ class History extends Component {
                                     <Image
                                         style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                         //source={{uri: item.UnionLogo}}
-                                        source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                        source={{uri: `data:image/gif;base64,${item.UnionLogo}`}}
                                     />
                                 </View>
                                 <View style={{ justifyContent: 'space-between', paddingLeft: 5, paddingRight: 5, maxWidth: '60%' }}>

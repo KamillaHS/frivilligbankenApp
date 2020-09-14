@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground, Modal, TouchableHighlight, Platform, Dimensions, Animated } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
-import { PinchGestureHandler } from 'react-native-gesture-handler'; 
-import { State } from 'react-native-reanimated';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 
 import moment from 'moment';
@@ -55,7 +53,6 @@ class VolunteerProfile extends Component {
       userGiftcards: [],
       jobHours: 0,
       expiredGiftcards: [],
-      scale: new Animated.Value(1),
     }
 
     setModalVisible(visible) {
@@ -135,26 +132,6 @@ class VolunteerProfile extends Component {
       this.setState({ expiredGiftcards: await response.json() })
     }
 
-    onZoomEvent = Animated.event(
-      [
-        {
-          nativeEvent: { scale: this.state.scale }
-        }
-      ],
-      {
-        useNativeDriver: true
-      }
-    )
-
-    onZoomStateChange = event => {
-      if (event.nativeEvent.oldState === State.ACTIVE) {
-        Animated.spring(this.state.scale, {
-          toValue: 1,
-          useNativeDriver: true
-        }).start()
-      }
-    }
-
     componentDidMount() {
       //this.getUser();
       //this.getUserInterests();
@@ -169,7 +146,7 @@ class VolunteerProfile extends Component {
         const encodedPicture = userData.VolunteerPic;
         const encodedCV = userData.CV;
 
-        const encodedLogo = userGiftcards.SponsorPic;
+        //const encodedLogo = userGiftcards.SponsorPic;
         
 
         return(
@@ -333,7 +310,7 @@ class VolunteerProfile extends Component {
                       <TouchableOpacity style={[item.isUsed == 1 ? {display: 'none'} : styles.giftcard, item.isExpired == 1 ? {display: 'none'} : styles.giftcard]} key={i} onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
                         <ImageBackground 
                           //source={{uri: item.SponsorPic}} 
-                          source={{uri: `data:image/gif;base64,${encodedLogo}`}}
+                          source={{uri: `data:image/gif;base64,${item.SponsorPic}`}}
                           style={styles.cardImg} 
                           imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
@@ -353,7 +330,7 @@ class VolunteerProfile extends Component {
                       <TouchableOpacity style={item.isUsed == 1 ? styles.giftcard : {display: 'none'}} key={i}  onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
                         <ImageBackground 
                           //source={{uri: item.SponsorPic}} 
-                          source={{uri: `data:image/gif;base64,${encodedLogo}`}}
+                          source={{uri: `data:image/gif;base64,${item.SponsorPic}`}}
                           style={styles.cardImg} 
                           imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   
@@ -373,7 +350,7 @@ class VolunteerProfile extends Component {
                       <TouchableOpacity style={item.isExpired == 1 ? styles.giftcard : {display: 'none'}} key={i}  onPress={() => this.props.navigation.navigate('BoughtGiftcard', {id: item.GiftcardID, purchaseId: item.PurchaseID})}>
                         <ImageBackground 
                           //source={{uri: item.SponsorPic}} 
-                          source={{uri: `data:image/gif;base64,${encodedLogo}`}}
+                          source={{uri: `data:image/gif;base64,${item.SponsorPic}`}}
                           style={styles.cardImg} 
                           imageStyle={{borderRadius: 10}} />
                         <View style={styles.cardInfo}>   

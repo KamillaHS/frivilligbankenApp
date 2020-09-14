@@ -283,7 +283,7 @@ class App extends Component {
   }
 
   /* check login */
-
+/*
   async loginCheck() {
     const { checkLogin } = this.state;
     let logInState;
@@ -305,7 +305,7 @@ class App extends Component {
   componentDidMount() {
     this.loginCheck();
 }
-
+*/
   render() {
     return <AppContainer {...navigationPersistence}/>;
   }

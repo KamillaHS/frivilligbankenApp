@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, TouchableHighlight, Image } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 import Swipeable from 'react-native-swipeable-row';
 
 const MEMBERS_URL = 'http://kamilla-server.000webhostapp.com/app/unionMembers.php';
-const UNIONREQUESTS_URL = 'http://kamilla-server.000webhostapp.com/app/union/unionRequests.php'
+const UNIONREQUESTS_URL = 'http://kamilla-server.000webhostapp.com/app/union/unionRequests.php';
+const DELETEMEMBER_URL = 'http://kamilla-server.000webhostapp.com/app/union/deleteMember.php';
 
 class UnionMembers extends Component {
 
@@ -46,6 +47,28 @@ class UnionMembers extends Component {
         }
     }
 
+    async deleteMember() {
+        try {
+            //const id = item.VolunteerID;
+            const response = await fetch(UNIONREQUESTS_URL // + '?volunteerID=' + id
+            , 
+            {
+                credentials: 'include',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+            })
+
+            const data = await response.json()
+            alert('du har nu slettet et medlem.');
+        } catch(error) {
+            console.error(error);
+            alert('du har ikke slettet et medlem.');
+        }
+    }
+
     componentDidMount() {
         //this.getMembers();
         //this.getNewRequests();
@@ -54,7 +77,34 @@ class UnionMembers extends Component {
     render() {
         const { members, requests } = this.state;
 
-        const encodedPicture = members.VolunteerPic;
+        //const encodedPicture = members.VolunteerPic;
+
+        const rightButtons = [
+            <TouchableHighlight 
+                style={{backgroundColor: '#E84335', margin: 10, marginLeft: 15, height: '85%', borderRadius: 10, justifyContent: 'center', alignItems: 'left', paddingLeft: 10}} 
+                onPress={() => Alert.alert('Bekræft Sletning', 'Er du sikker på at du vil slette dette medlem? Bemærk at medlemmet kun må slettes, hvis de har meldt sig ud af foreningen, eller ikke længere ønsker at bruge Frivilligbankens app. Hvis du er i tvivl kan du læse mere under vores regler og regulationer.', 
+                [
+                    {
+                    text: 'Ja, fortsæt',
+                    onPress: () => this.deleteMember(),
+                    style: 'default'
+                    },
+                    {
+                    text: 'Nej, luk',
+                    onPress: () => console.log('Cancel pressed'),
+                    style: 'cancel',
+                    },
+                ]
+                )}>
+                <Icon
+                      name="delete"
+                      type='material'
+                      size={30}
+                      color="white"
+                />
+                
+            </TouchableHighlight>
+          ];
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -91,16 +141,16 @@ class UnionMembers extends Component {
 
                     {
                         members.map((item, i) => (
-                            /*
+                            
                             <Swipeable rightButtons={rightButtons} rightButtonWidth={50}>
-                            */
+                            
                                 <TouchableOpacity key={i} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.VolunteerID})}>
                                     <View style={styles.listItem}>
                                         <View style={styles.volunteerPic}>
                                             <Image 
                                                 style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                                 //source={{uri: item.VolunteerPic}}
-                                                source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                                source={{uri: `data:image/gif;base64,${item.VolunteerPic}`}}
                                             />
                                         </View>
                                         <View style={{width: '60%', justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>
@@ -114,9 +164,9 @@ class UnionMembers extends Component {
                                         </View>
                                     </View>
                                 </TouchableOpacity>
-                                /*
+                                
                             </Swipeable>
-                            */
+                            
                         ))
                     }
                 </View>

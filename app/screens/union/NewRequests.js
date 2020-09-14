@@ -41,7 +41,7 @@ class NewRequests extends Component {
     render() {
         const { requests } = this.state;
 
-        const encodedPicture = requests.VolunteerPic;
+        //const encodedPicture = requests.VolunteerPic;
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -69,7 +69,7 @@ class NewRequests extends Component {
                                         <Image 
                                             style={{flex:1, width: undefined, height: undefined, borderRadius: 25}}
                                             //source={{uri: item.VolunteerPic}}
-                                            source={{uri: `data:image/gif;base64,${encodedPicture}`}}
+                                            source={{uri: `data:image/gif;base64,${item.volunteerPic}`}}
                                         />
                                     </View>
                                     <View style={{width: '60%', justifyContent: 'center', paddingLeft: 10, paddingRight: 10}}>

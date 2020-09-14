@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, TouchableOpacity, ImageBackground, Modal, TouchableHighlight, Platform } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
+import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -266,11 +267,26 @@ class VolunteerView extends Component {
                                 </TouchableHighlight>
 
                                 <View style={{width: '100%', height: '95%'}}>
-                                  <Image 
-                                    //source={{uri: userData.CV}} 
-                                    source={{uri: `data:image/gif;base64,${encodedCV}`}}
-                                    style={{position: 'relative', width: '100%', height: '100%'}} 
-                                    resizeMode='contain' />
+                                  <View style={{flex: 1, overflow: 'hidden'}}>
+                                      <ReactNativeZoomableView
+                                        zoomEnabled={true}
+                                        maxZoom={1.5}
+                                        minZoom={1}
+                                        zoomStep={0.25}
+                                        initialZoom={1}
+                                        bindToBorders={true}
+                                        onZoomAfter={this.logOutZoomState}
+                                        style={styles.zoomableView}
+                                        captureEvent={true}
+                                      >
+                                        <Image
+                                          style={{position: 'relative', width: '100%', height: '100%'}}
+                                          source={{uri: `data:image/gif;base64,${encodedCV}`}}
+                                          //resizeMode="stretch"
+                                        />
+                                      </ReactNativeZoomableView>
+                                    </View>
+
                                 </View>
                             </View>
                         </View>

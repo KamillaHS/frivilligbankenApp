@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, TouchableOpacity, TouchableHighlight, Modal, DatePickerIOS, Platform, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -101,8 +102,7 @@ class PostJob extends Component {
         const { title, start_date, end_date, category, description, requirements, categories } = this.state;
 
         return(
-            <ScrollView>
-            <KeyboardAvoidingView behavior="padding">
+            <KeyboardAwareScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}> 
 
                     <Text>Jobtitel</Text>
@@ -307,8 +307,7 @@ class PostJob extends Component {
                         onPress={this.createJob.bind(this)}
                     />
                 </View>
-            </KeyboardAvoidingView>
-            </ScrollView>
+            </KeyboardAwareScrollView>
         )
     }
 }

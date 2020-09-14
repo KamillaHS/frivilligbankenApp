@@ -144,7 +144,7 @@ class UnionMembers extends Component {
                             
                             <Swipeable rightButtons={rightButtons} rightButtonWidth={50}>
                             
-                                <TouchableOpacity key={i} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.VolunteerID})}>
+                                <TouchableOpacity key={i} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.volID})}>
                                     <View style={styles.listItem}>
                                         <View style={styles.volunteerPic}>
                                             <Image 
@@ -157,10 +157,10 @@ class UnionMembers extends Component {
                                             <Text style={styles.text}>{item.FullName}</Text>
                                         </View>
                                         <View style={{width: '15%', justifyContent: 'center'}}>
-                                            <Text style={styles.text}>0</Text>
+                                            <Text style={styles.text}>{item.jobCount}</Text>
                                         </View>
                                         <View style={{width: '15%', justifyContent: 'center'}}>
-                                            <Text style={styles.text}>0</Text>
+                                            <Text style={styles.text}>{item.hoursCount}</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, TouchableOpacity, TouchableHighlight, Modal, DatePickerIOS, Platform, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -50,6 +51,12 @@ class PostGiftcard extends Component {
                 })
                 
                 const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    this.props.navigation.navigate('SponsorHome');
+                }
                 
             } else {
                 Alert.alert('Tomme felter', 'Venligst udfyld alle felter.');
@@ -57,15 +64,14 @@ class PostGiftcard extends Component {
         } catch(error) {
             console.error(error);
         }
-        this.props.navigation.navigate('SponsorDashboard');
+        //this.props.navigation.navigate('SponsorDashboard');
     }
 
     render() {
         const { title, amount, valueP, valueM, description, requirements } = this.state;
 
         return(
-            <KeyboardAvoidingView behaviour="padding">
-            <ScrollView contentContainerStyle={styles.container}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.container}>
                 <View style={styles.area}> 
 
                     <Text>Titel på Gavekort</Text>
@@ -141,8 +147,7 @@ class PostGiftcard extends Component {
                         onPress={this.createGiftcard.bind(this)}
                     />
                 </View>
-            </ScrollView>
-            </KeyboardAvoidingView>
+            </KeyboardAwareScrollView>
         )
     }
 }

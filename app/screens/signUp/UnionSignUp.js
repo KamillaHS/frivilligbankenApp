@@ -4,6 +4,7 @@ import { Button, Icon, withTheme } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -190,7 +191,7 @@ class UnionSignUp extends Component {
         let { logoImage, logoImageBase64 } = this.state;
 
         return(
-            <View style={styles.container}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.container}>
                 <ImageBackground source={require('../../images/1088.jpg')} style={styles.background} />
 
                 <ScrollView style={{width: '100%'}} contentContainerStyle={{alignItems: 'center', paddingVertical: 20,}}>
@@ -361,7 +362,7 @@ class UnionSignUp extends Component {
 
                 </ScrollView>
 
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }

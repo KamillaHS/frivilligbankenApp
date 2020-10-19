@@ -46,6 +46,7 @@ class SponsorGiftcards extends Component {
                     <Button 
                         buttonStyle={[styles.blueButton, {marginBottom: 10}]}
                         title='Opret Gavekort'
+                        onPress={() => this.props.navigation.navigate('PostGiftcard')}
                     />
                     <Button 
                         buttonStyle={[styles.blueButton, {marginBottom: 10}]}

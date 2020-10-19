@@ -47,10 +47,11 @@ class UnionMembers extends Component {
         }
     }
 
-    async deleteMember() {
+    async deleteMember(id) {
+        console.log(id);
         try {
             //const id = item.VolunteerID;
-            const response = await fetch(UNIONREQUESTS_URL // + '?volunteerID=' + id
+            const response = await fetch(DELETEMEMBER_URL + '?volunteerID=' + id
             , 
             {
                 credentials: 'include',
@@ -79,32 +80,36 @@ class UnionMembers extends Component {
 
         //const encodedPicture = members.VolunteerPic;
 
-        const rightButtons = [
-            <TouchableHighlight 
-                style={{backgroundColor: '#E84335', margin: 10, marginLeft: 15, height: '85%', borderRadius: 10, justifyContent: 'center', alignItems: 'left', paddingLeft: 10}} 
-                onPress={() => Alert.alert('Bekræft Sletning', 'Er du sikker på at du vil slette dette medlem? Bemærk at medlemmet kun må slettes, hvis de har meldt sig ud af foreningen, eller ikke længere ønsker at bruge Frivilligbankens app. Hvis du er i tvivl kan du læse mere under vores regler og regulationer.', 
+        const rightButtons = (id) => {
+            return(
                 [
-                    {
-                    text: 'Ja, fortsæt',
-                    onPress: () => this.deleteMember(),
-                    style: 'default'
-                    },
-                    {
-                    text: 'Nej, luk',
-                    onPress: () => console.log('Cancel pressed'),
-                    style: 'cancel',
-                    },
-                ]
-                )}>
-                <Icon
-                      name="delete"
-                      type='material'
-                      size={30}
-                      color="white"
-                />
-                
-            </TouchableHighlight>
-          ];
+                    <TouchableHighlight 
+                        style={{backgroundColor: '#E84335', margin: 10, marginLeft: 15, height: '85%', borderRadius: 10, justifyContent: 'center', alignItems: 'left', paddingLeft: 10}} 
+                        onPress={() => Alert.alert('Bekræft Sletning', 'Er du sikker på at du vil slette dette medlem? Bemærk at medlemmet kun må slettes, hvis de har meldt sig ud af foreningen, eller ikke længere ønsker at bruge Frivilligbankens app. Hvis du er i tvivl kan du læse mere under vores regler og regulationer.', 
+                        [
+                            {
+                            text: 'Ja, fortsæt',
+                            onPress: () => {this.deleteMember(id), this.forceUpdate()},
+                            style: 'default'
+                            },
+                            {
+                            text: 'Nej, luk',
+                            onPress: () => console.log('Cancel pressed'),
+                            style: 'cancel',
+                            },
+                        ]
+                        )}>
+                        <Icon
+                              name="delete"
+                              type='material'
+                              size={30}
+                              color="white"
+                        />
+                        
+                    </TouchableHighlight>
+                  ]
+            )
+        } 
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
@@ -142,7 +147,7 @@ class UnionMembers extends Component {
                     {
                         members.map((item, i) => (
                             
-                            <Swipeable rightButtons={rightButtons} rightButtonWidth={50}>
+                            <Swipeable rightButtons={rightButtons(item.volID)} rightButtonWidth={50}>
                             
                                 <TouchableOpacity key={i} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.volID})}>
                                     <View style={styles.listItem}>

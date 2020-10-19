@@ -65,18 +65,16 @@ class UnionJobDescription extends Component {
             const response = await fetch(CONFIRMED_URL + '?id=' + id)
 
             this.setState({ confirmed: await response.json() })
-
+        
         } catch (error) {
             console.error(error)  
         }
     }
 
-    addToNum = () => {
-        if(this.state.hoursValue < 24) {
-            this.setState({ hoursValue: this.state.hoursValue + 1 });
-        } else {
-            Alert.alert('Ikke gyldig handling', 'Du kan ikke tildele flere timer end der er på et døgn.')
-        }
+    addToNum = (index, value) => {
+        const {confirmed} = this.state;
+        confirmed.splice(index, 1, {... confirmed[index], totalHours: value});
+        this.setState({confirmed});
     }
 
     removeFromNum = () => {
@@ -87,8 +85,8 @@ class UnionJobDescription extends Component {
         }
     }
 
-    async addHours(volID, jobID) {
-        const { hoursValue } = this.state;
+    async addHours(volID, jobID, hoursValue) {
+        //const { hoursValue } = this.state;
 
         if(hoursValue > 0) {
             const response = await fetch(ADDHOURS_URL + '?volID=' + volID + '&jobID=' + jobID, {
@@ -132,7 +130,8 @@ class UnionJobDescription extends Component {
     
 
     render() {
-        const { jobData, applicants, confirmed, hoursValue } = this.state;
+        const { jobData, applicants, confirmed } = this.state;
+        let { hoursValue } = this.state;
         const route = this.props.navigation.getParam('route');
 
         const encodedJobPicture = jobData.UnionLogo;
@@ -301,28 +300,32 @@ class UnionJobDescription extends Component {
                                         </View>
 
                                         <View style={styles.addHoursBox}> 
-                                            <TouchableOpacity style={styles.addOrRemove} onPress={this.removeFromNum}>
+                                            <TouchableOpacity style={styles.addOrRemove} onPress={() =>{const val = item.totalHours || 0
+                                                                                                        if(val>0) {this.addToNum(i, val-1)}
+                                                                                                        }}>
                                                 <Text style={styles.addOrRemoveText}>-</Text>
                                             </TouchableOpacity>
                                             <TextInput 
-                                                value={String(hoursValue)}
+                                                value={String(item.totalHours || 0)}
                                                 //onChangeText={(hoursValue) => this.setState({hoursValue})}
                                                 //placeholder={'0'}
                                                 placeholderTextColor='#4c4c4c'
                                                 keyboardType='numeric'
                                                 style={styles.hoursNum}
                                             />
-                                            <TouchableOpacity style={styles.addOrRemove} onPress={this.addToNum}>
-                                                <Text style={styles.addOrRemoveText}>+</Text>
+                                            <TouchableOpacity style={styles.addOrRemove} onPress={() =>{const val = item.totalHours || 0
+                                                                                                        this.addToNum(i, val+1) 
+                                                                                                        }}>
+                                            <Text style={styles.addOrRemoveText}>+</Text>
                                             </TouchableOpacity>
                                             <Button 
                                                 buttonStyle={[styles.greenButton, {width: 'auto'}]}
                                                 title='Godkend'
-                                                onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil give ' + item.FullName + ' ' + hoursValue + ' timer?', [
+                                                onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil give ' + item.FullName + ' ' + item.totalHours + ' timer?', [
                                                     {
                                                         text: 'Ja, fortsæt',
                                                         onPress: () => {
-                                                            this.addHours(item.VolunteerID, item.JobID), 
+                                                            this.addHours(item.VolunteerID, item.JobID, item.totalHours), 
                                                             this.setState({jobData: [], confirmed: [], hoursValue: 0}), 
                                                             this.getJob(),
                                                             this.getConfirmed(),

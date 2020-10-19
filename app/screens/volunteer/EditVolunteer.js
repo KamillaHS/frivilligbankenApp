@@ -4,6 +4,7 @@ import { Button, Icon, withTheme } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -181,7 +182,7 @@ class EditVolunteer extends Component {
         const encodedCV = userData.CV;
 
         return(
-          <ScrollView style={{width: '100%'}} contentContainerStyle={{alignItems: 'center', paddingVertical: 20,}}>
+          <KeyboardAwareScrollView contentContainerStyle={styles.container}>
               <View style={styles.area}> 
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
                     <Image
@@ -387,7 +388,7 @@ class EditVolunteer extends Component {
 
 
               </View>
-          </ScrollView>
+          </KeyboardAwareScrollView>
         )
     }
 }

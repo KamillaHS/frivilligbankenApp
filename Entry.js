@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, AsyncStorage, ActivityIndicator } from "react-native";
+import { Image, AsyncStorage } from "react-native";
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -260,6 +260,7 @@ const SignUp = createStackNavigator({
 
 const RootStack = createStackNavigator(
   {
+    Entry,
     Login: { screen: LoginScreen },
     SignUp,
     Debug: { screen: Debug},
@@ -278,11 +279,10 @@ const AppContainer = createAppContainer(RootStack);
 
 /* login url */ const CHECKLOGIN_URL = 'http://kamilla-server.000webhostapp.com/app/checkLogin.php';
 
-class App extends Component {
+class Entry extends Component {
 
   state = { 
     checkLogin: '',
-    loading: true, 
   }
 
   /* check login */
@@ -299,11 +299,11 @@ class App extends Component {
         console.error(error)  
     }
     console.log("test", logInState);
-    if(! logInState.loggedIn || logInState.loggedIn==='false') {
-      //this.props.navigation.navigate('Login') 
-      await AsyncStorage.removeItem('nav6');
+    if(! loggedInState.loggedIn || loggedInState.loggedIn==='false') {
+      this.props.navigation.navigate('Login') 
+    } else {
+      this.props.navigation.navigate('VolunteerTabs');
     }
-    this.setState({loading:false})
 
   }
 
@@ -312,12 +312,8 @@ class App extends Component {
 }
 
   render() {
-    const { loading } = this.state
-    if(loading) {
-      return <ActivityIndicator />
-    }
-    return <AppContainer {...navigationPersistence}/>;
+    return <View />;
   }
 };
 
-export default App;
+export default Entry;

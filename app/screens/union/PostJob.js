@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, TouchableOpacity, TouchableHighlight, Modal, DatePickerIOS, Platform, KeyboardAvoidingView } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Modal, Platform, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
+import {Picker} from '@react-native-community/picker';
 import { HeaderBackButton } from "react-navigation-stack";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -32,6 +34,7 @@ class PostJob extends Component {
             start_date: new Date(),
             end_date: new Date(),
             category: '',
+            categoryName: '',
             description: '',
             requirements: '',
             modalStartDate: false,
@@ -39,13 +42,13 @@ class PostJob extends Component {
             modalCategory: false,
             categories: [],
         };
-        this.setDate = this.setDate.bind(this);
+        //this.setDate = this.setDate.bind(this);
     }
-
+/*
     setDate(newDate) {
         this.setState({dob: newDate});
     }
-
+*/
     setModalStartDate(visible) {
         this.setState({modalStartDate: visible});
     }
@@ -99,7 +102,7 @@ class PostJob extends Component {
     }
 
     render() {
-        const { title, start_date, end_date, category, description, requirements, categories } = this.state;
+        const { title, start_date, end_date, category, categoryName, description, requirements, categories } = this.state;
 
         return(
             <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -158,11 +161,12 @@ class PostJob extends Component {
                                             </View>
                                         </TouchableHighlight>
 
-                                        <DatePickerIOS
-                                            date={this.state.start_date}
+                                        <DateTimePicker
+                                            value={this.state.start_date}
                                             mode='date'
-                                            maximumDate={moment().subtract(1, 'years').toDate()}
-                                            onDateChange={this.setDate}
+                                            display='default'
+                                            minimumDate={moment().toDate()}
+                                            onChange={(e, start_date) => this.setState({start_date})}
                                         />
                                     </View>
                                 </View>
@@ -172,7 +176,7 @@ class PostJob extends Component {
                     <TouchableOpacity 
                         onPress={() => {
                             if(Platform.OS == 'ios') {
-                                this.setModalStartDate(true);
+                                this.setModalEndDate(true);
                             } else if(Platform.OS == 'android') {
 
                             }
@@ -211,11 +215,11 @@ class PostJob extends Component {
                                             </View>
                                         </TouchableHighlight>
 
-                                        <DatePickerIOS
-                                            date={this.state.end_date}
+                                        <DateTimePicker
+                                            value={this.state.end_date}
                                             mode='date'
-                                            maximumDate={moment().subtract(14, 'years').toDate()}
-                                            onDateChange={this.setDate}
+                                            minimumDate={moment().toDate()}
+                                            onChange={(e, end_date) => this.setState({end_date})}
                                         />
                                     </View>
                                 </View>
@@ -225,7 +229,7 @@ class PostJob extends Component {
                     <TouchableOpacity 
                         onPress={() => {this.setModalCategory(true);}}>
                         <TextInput
-                            value={category}
+                            value={categoryName}
                             placeholder={'Vælg Kategori'}
                             placeholderTextColor='#4c4c4c'
                             keyboardType='default'
@@ -259,10 +263,10 @@ class PostJob extends Component {
                                         </TouchableHighlight>
                                         
                                         <Picker
-                                            selectedValue={'Vælg Kategori'}
+                                            selectedValue={this.state.category}
                                             /*style={{height: 50, width: 100}}*/
                                             onValueChange={(itemValue, itemIndex) =>
-                                                this.setState({category: itemValue})
+                                                this.setState({category: itemValue, categoryName: categories[itemIndex-1].CategoryName})
                                             }>
                                             <Picker.Item label="Vælg Kategori" value="0" enabled="false" />
                                             {

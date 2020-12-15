@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 const PROFILES_URL = 'http://kamilla-server.000webhostapp.com/app/getUserProfiles.php';
 
@@ -43,6 +44,8 @@ class AddNewProfile extends Component {
         console.log(userProfiles);
         return(
             <View style={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getProfiles() }/>
+
                 <View style={styles.noBGarea}>
                     <Text style={styles.text}>Hvilken type profil vil du oprette?</Text>
                     <Text style={styles.smallText}>Du kan maksimalt have tilknyttet én profil af hver type til én konto.</Text>

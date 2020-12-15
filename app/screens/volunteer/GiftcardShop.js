@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, ImageBackground, TouchableOpacity, AsyncStorage } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { stringify } from "qs";
+import { NavigationEvents } from 'react-navigation';
 
 const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/allGiftcards.php';
 //const JOBHOURS_URL = 'http://kamilla-server.000webhostapp.com/app/userJobHours.php';
@@ -46,8 +47,8 @@ class GiftcardShop extends Component {
     }
 
     componentDidMount() {
-        this.getGiftCards();
-        this.getUserPoints();
+        //this.getGiftCards();
+        //this.getUserPoints();
     }
     
     render() {
@@ -57,6 +58,9 @@ class GiftcardShop extends Component {
 
         return(
             <ScrollView contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getGiftCards() }/>
+                <NavigationEvents onWillFocus={ () => this.getUserPoints() }/>
+
                 <View style={styles.area}>
                     <View style={{flex:1, flexDirection: 'row', padding: 10}}>
                         <Icon
@@ -68,7 +72,6 @@ class GiftcardShop extends Component {
                         <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
                             {userPoints.Points}
                         </Text>
-                        { /* number is supposed to come from db */}
                     </View>
                 </View>
                 {

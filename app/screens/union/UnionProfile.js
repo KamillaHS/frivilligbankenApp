@@ -66,11 +66,11 @@ class UnionProfile extends Component {
         <View style={styles.area}>
           <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
             <Image
-              style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white'}}
+              style={{flex:1, minWidth: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white'}}
               //source={{uri: unionData.UnionLogo}}
               source={{uri: `data:image/gif;base64,${encodedPicture}`}}
             />
-            <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{unionData.UnionName}</Text>
+            <Text style={{flex: 0.5, fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{unionData.UnionName}</Text>
           </View>
 
           <View style={styles.infoBox}>

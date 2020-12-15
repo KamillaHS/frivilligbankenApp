@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, Touchab
 import { Button, Icon } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
+import * as Svg from 'react-native-svg';
+import SvgUri from 'react-native-svg-uri';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -158,25 +160,23 @@ class VolunteerProfile extends Component {
 
                 <View style={styles.noBGarea}>
                   <View style={styles.smallArea} > 
-                      <Icon
-                          type='material' 
-                          name="control-point" 
-                          size={30}
-                          color='#4c4c4c'
+                      <SvgUri
+                        width="30"
+                        height="30"
+                        source={require('../../../assets/PointsIcon.svg')}
                       />
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
-                          {userData.Points}
+                          {userData.Points > 0 ? userData.Points : '0'}
                       </Text>
                   </View>
                   <View style={styles.smallArea}> 
-                      <Icon
-                          type='material' 
-                          name="control-point" 
-                          size={30}
-                          color='#4c4c4c'
+                      <SvgUri
+                        showWebviewLoader={false}
+                        style={{ width: 30, height: 30 }}
+                        source={require('../../../assets/JobHours2.svg')}
                       />
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
-                          {jobHours.totalHours}
+                          {jobHours.totalHours > 0 ? jobHours.totalHours : '0'}
                       </Text>
                   </View>
                 </View>
@@ -188,7 +188,7 @@ class VolunteerProfile extends Component {
                       //source={{uri: userData.VolunteerPic}}
                       source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                     />
-                    <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{userData.FullName}</Text>
+                    <Text style={{flex: 0.5, fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{userData.FullName}</Text>
                   </View>
 
                   <View style={styles.infoBox}>

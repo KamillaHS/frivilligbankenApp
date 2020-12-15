@@ -11,7 +11,7 @@ const UPDATEMEMBERSHIPS_URL = 'http://kamilla-server.000webhostapp.com/app/updat
 class EditMemberships extends Component {
 
     static navigationOptions = {
-        title: 'Rediger Medlemskaber',
+        title: 'Tilføj Medlemskaber',
         headerTitleStyle: {
             color: 'white',
           },
@@ -60,7 +60,7 @@ class EditMemberships extends Component {
         const data = this.state.unions;
         const curRowData = {...data[index], checked: !data[index].checked};
         data.splice(index, 1, curRowData);
-        this.setState({unions: data});
+        this.setState({unions: data, unselectedUnion: data});
     }
 
     saveChanges = async() => {
@@ -121,11 +121,11 @@ class EditMemberships extends Component {
                     }
                 </View>
                 <View style={styles.area}>
-                    <Text>Andre foreninger her</Text>
+                    <Text>Foreninger du ikke er medlem af i appen</Text>
                     {
                         unselectedUnion.map(( union, i ) => (
                             <View style={i % 2== 1 || i % 2 == 2 ? styles.unionDark : styles.unionLight}>
-                                <Text style={{flex: 1, fontSize: 16, color: '#4c4c4c'}}> {union.UnionName} </Text>
+                                <Text style={{flex: 1, fontSize: 16, color: '#4c4c4c'}}>{union.UnionName}</Text>
                                 <CheckBox
                                     //title={false}
                                     key={i.UnionID}
@@ -138,14 +138,15 @@ class EditMemberships extends Component {
                             </View>
                         ))
                     }
-                </View>
 
                 <Button 
-                        buttonStyle={styles.greenButton}
-                        disabled={false}
-                        title='Gem Ændringer'
-                        onPress={this.saveChanges.bind(this)}
-                    />
+                    buttonStyle={styles.greenButton}
+                    disabled={false}
+                    title='Gem Ændringer'
+                    onPress={this.saveChanges.bind(this)}
+                />
+                </View>
+
             </ScrollView>
         )
     }
@@ -192,6 +193,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     greenButton:{
+        marginTop: 10,
         backgroundColor:"#30A451",
         borderRadius:10,
     },

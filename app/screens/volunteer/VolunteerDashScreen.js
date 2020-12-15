@@ -54,13 +54,13 @@ class VolunteerDashScreen extends Component {
             credentials: 'include',
         });
         
-        this.setState({ name: await response.text() })
+        this.setState({ name: await response.json() })
     }
 
     componentDidMount() {
         this.getUserStatus();
         this.getMemberJobs();
-        //this.getName();
+        this.getName();
     }
 
     render() {
@@ -73,6 +73,7 @@ class VolunteerDashScreen extends Component {
         return(
             <ScrollView contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getName() }/> 
+                <NavigationEvents onWillFocus={ () => this.getUserStatus() }/> 
 
                 <View style={styles.area}>
                     <Text style={[styles.text, {fontSize: 18}]}>Velkommen {name.FullName}</Text>
@@ -82,13 +83,6 @@ class VolunteerDashScreen extends Component {
                     <TouchableOpacity style={userStatus.Interests > 0 ? {display: 'none'} : styles.fillInterest} onPress={() => this.props.navigation.navigate('EditInterests')}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Text style={[styles.text, {fontSize: 18}]}>Din Profil er Inaktiv</Text>
-                        <Icon
-                            name='clear'
-                            type='material'
-                            size={25}
-                            color='#4c4c4c'
-                            
-                        />
                     </View>
                     <Text style={[styles.text, {fontSize: 15}]}>For at aktivere din profil skal du tilføje dine interesser. Klik her for at tilføje dine interesser.</Text>
                     </TouchableOpacity>
@@ -101,10 +95,10 @@ class VolunteerDashScreen extends Component {
                             <Text style={styles.text}>Start dato</Text>
                         </View>
                         
-                        <TouchableOpacity style={styles.noMemberships}>
+                        <TouchableOpacity style={styles.noMemberships} onPress={() => this.props.navigation.navigate('EditMemberships')}>
                             <Text style={[styles.text, {fontWeight: 'bold'}]}>Du er ikke medlem af en forening</Text>
                             <Text style={styles.text}>Du behøber ikke at være medlem af en forening, for at se og søge frivilligt arbejde. Du får dog kun vist aktuelle jobs, hvis du er medlem af en forening. </Text>
-                            <Text style={styles.text}>Klik her for at tilmelde dig en forening</Text>
+                            <Text style={styles.text}>Klik her for at tilføje en forening, som du er medlem af.</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -181,12 +175,13 @@ class VolunteerDashScreen extends Component {
                         color='white'
                         />
                     } 
-                /> */}
+                />
 
                 <Button 
                     title="Debug" 
                     onPress={() => this.props.navigation.navigate('Debug')}
                 />
+                */}
 
             </ScrollView>
         )

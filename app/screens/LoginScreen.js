@@ -70,7 +70,7 @@ class LoginScreen extends Component {
                         style={styles.input}
                     />
 
-                    <Text style={styles.underlined}>Glemt dit login?</Text>
+                    {/*<Text style={styles.underlined}>Glemt dit login?</Text>*/}
 
                     <Button 
                         title="Login" 
@@ -84,10 +84,12 @@ class LoginScreen extends Component {
                         onPress={() => this.props.navigation.navigate('SignUp')}
                     />
 
+                    {/*}
                     <Button 
                         title="Debug" 
                         onPress={() => this.props.navigation.navigate('Debug')}
                     />
+                    */}
                 </KeyboardAvoidingView>
 
             </View>

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, DatePickerIOS, DatePickerAndroid, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
+import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -32,7 +33,7 @@ class EditVolunteer extends Component {
         this.state= {
             userData: [],
             fullName: '',
-            dob: new Date(),
+            dob: null,
             address: '',
             postalCode: '',
             city: '',
@@ -51,7 +52,7 @@ class EditVolunteer extends Component {
             cvImage: null,
             cvImageBase64: null,
         };
-        this.setDate = this.setDate.bind(this);
+        //this.setDate = this.setDate.bind(this);
     };
 
     /* IMAGE PICKER CODE STARTS HERE */
@@ -99,9 +100,11 @@ class EditVolunteer extends Component {
 
     /* IMAGE PICKER CODE ENDS HERE */
 
+    /*
     setDate(newDate) {
         this.setState({dob: newDate});
     }
+    */
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
@@ -177,6 +180,7 @@ class EditVolunteer extends Component {
         const { citiesResult, profilePic } = this.state;
         const { userData } = this.state;
         let { image, imageBase64, cvImage, cvImageBase64 } = this.state;
+        const dob = this.state.dob || userData.DoB || new Date()
 
         const encodedPicture = userData.VolunteerPic;
         const encodedCV = userData.CV;
@@ -221,7 +225,8 @@ class EditVolunteer extends Component {
                           }
                   }}>
                       <TextInput
-                          defaultValue={moment(userData.DoB).format('L')}
+                          //value={moment(userData.DoB).format('L')}
+                          value={moment(dob).format('L')}
                           keyboardType='default'
                           style={styles.input}
                           editable={false}
@@ -254,11 +259,11 @@ class EditVolunteer extends Component {
                               </TouchableHighlight>
 
 
-                              <DatePickerIOS
-                                  date={this.state.dob}
+                              <DateTimePicker
+                                  value={new Date(dob)}
                                   mode='date'
-                                  maximumDate={moment().subtract(14, 'years').toDate()}
-                                  onDateChange={this.setDate}
+                                  maximumDate={moment().utc().subtract(14, 'years').toDate()}
+                                  onChange={(e, dob) => this.setState({dob})}
                               />
                           </View>
                       </View>

@@ -66,7 +66,7 @@ class SponsorProfile extends Component {
                         source={{uri: `data:image/gif;base64,${encodedPicture}`}}
                         resizeMode="contain"
                       />
-                      <Text style={{fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{sponsorData.SponsorName}</Text>
+                      <Text style={{flex: 0.5, fontSize: 20, paddingLeft: 10, color: '#4c4c4c'}}>{sponsorData.SponsorName}</Text>
                     </View>
 
                     <View style={styles.infoBox}>

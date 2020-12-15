@@ -69,7 +69,7 @@ class VolunteerSettings extends Component {
                     />
 
                     <Button
-                        title="Rediger Medlemskaber"
+                        title="Tilføj Medlemskaber"
                         buttonStyle={styles.blueButton}
                         onPress={() => this.props.navigation.navigate('EditMemberships')}
                     />
@@ -80,10 +80,12 @@ class VolunteerSettings extends Component {
                         onPress={() => this.props.navigation.navigate('ChangeProfile', {type: 'volunteer'})}
                     />
 
+                    {/*
                     <Button
                         title="Vis Administrator Profiler"
                         buttonStyle={styles.blueButton}
                     />
+                    */}
 
                     <Button
                         title="Log Ud"
@@ -91,6 +93,8 @@ class VolunteerSettings extends Component {
                         onPress={() => this.logout()}
                     />
                 </View>
+
+                {/*
 
                 <View style={styles.area}>
                     <View style={styles.switch}>
@@ -138,6 +142,7 @@ class VolunteerSettings extends Component {
                         <Text style={styles.text}>Andet Juridisk</Text>
                     </TouchableOpacity>
                 </View>
+                */}
 
             </ScrollView>
         )

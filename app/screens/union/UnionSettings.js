@@ -61,10 +61,12 @@ class UnionSettings extends Component {
                         onPress={() => this.props.navigation.navigate('ChangeProfile')}
                     />
 
+                    {/*
                     <Button
                         title="Tilføj/Slet Administratorer"
                         buttonStyle={styles.blueButton}
                     />
+                    */}
 
                     <Button
                         title="Log Ud"
@@ -72,6 +74,8 @@ class UnionSettings extends Component {
                         onPress={() => this.props.navigation.navigate('Login') }
                     />
                 </View>
+
+                {/*
 
                 <View style={styles.area}>
                     <View style={styles.switch}>
@@ -119,6 +123,8 @@ class UnionSettings extends Component {
                         <Text style={styles.text}>Andet Juridisk</Text>
                     </TouchableOpacity>
                 </View>
+
+                */}
 
             </ScrollView>
         )

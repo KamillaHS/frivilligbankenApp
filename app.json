@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Frivilligbanken",
+    "name": "Trivillig",
     "slug": "frivilligbankenApp",
     "privacy": "public",
     "platforms": [
@@ -13,7 +13,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -24,10 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "dk.frivilligbanken.app"
+      "bundleIdentifier": "dk.trivillig.app"
     },
     "android": {
-      "package": "dk.frivilligbanken.app"
+      "package": "dk.trivillig.app"
     }
   }
 }

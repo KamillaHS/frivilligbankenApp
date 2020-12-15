@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, DatePickerIOS, DatePickerAndroid, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
+import { Platform, Modal, View, Text, StyleSheet, Alert, TextInput, ScrollView, ImageBackground, Image, AsyncStorage, TouchableOpacity, TouchableHighlight } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 import moment from 'moment';
@@ -39,7 +40,7 @@ class VolunteerSignUp extends Component {
             cvImage: null,
             cvImageBase64: null,
         };
-        this.setDate = this.setDate.bind(this);
+        //this.setDate = this.setDate.bind(this);
     }
 
     /* IMAGE PICKER CODE STARTS HERE */
@@ -87,9 +88,11 @@ class VolunteerSignUp extends Component {
   
       /* IMAGE PICKER CODE ENDS HERE */
 
+    /*
     setDate(newDate) {
         this.setState({dob: newDate});
     }
+    */
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
@@ -151,10 +154,12 @@ class VolunteerSignUp extends Component {
             <KeyboardAwareScrollView contentContainerStyle={styles.container}>
                 <ImageBackground source={require('../../images/1088.jpg')} style={styles.background} />
                 
+                {/*
                 <Button 
                     title="Tilbage" 
                     onPress={() => this.props.navigation.navigate('Login')}
                 />
+                */}
 
                 <ScrollView style={{width: '100%'}} contentContainerStyle={{alignItems: 'center', paddingVertical: 20,}}>
                     <Image source={require('../../../assets/logo.png')} style={[styles.logo, {marginTop: 50}]} />
@@ -201,15 +206,22 @@ class VolunteerSignUp extends Component {
                                     onPress={() => {
                                     this.setModalVisible(!this.state.modalVisible);
                                     }}>
-                                    <Text>Hide Modal</Text>
+                                    <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
+                                        <Icon
+                                            name="close"
+                                            type='material'
+                                            size={30}
+                                            color="#4c4c4c"
+                                        />
+                                    </View>
                                 </TouchableHighlight>
 
 
-                                <DatePickerIOS
-                                    date={this.state.dob}
+                                <DateTimePicker
+                                    value={this.state.dob}
                                     mode='date'
-                                    maximumDate={moment().subtract(14, 'years').toDate()}
-                                    onDateChange={this.setDate}
+                                    maximumDate={moment().utc().subtract(14, 'years').toDate()}
+                                    onChange={(e, dob) => this.setState({dob})}
                                 />
                             </View>
                         </View>

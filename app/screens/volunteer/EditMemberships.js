@@ -17,6 +17,7 @@ class EditMemberships extends Component {
           },
           headerStyle: {
             backgroundColor: '#517BBE',
+            height: 60
           },
           headerTintColor: 'white',
     };
@@ -57,7 +58,7 @@ class EditMemberships extends Component {
     }
 
     handleCheck = (index) => {
-        const data = this.state.unions;
+        const data = this.state.unselectedUnion;
         const curRowData = {...data[index], checked: !data[index].checked};
         data.splice(index, 1, curRowData);
         this.setState({unions: data, unselectedUnion: data});

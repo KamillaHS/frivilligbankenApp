@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, AsyncStorage, ScrollView, Image, Touchab
 import { Button, Icon } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
-import * as Svg from 'react-native-svg';
+import WithLocalSvg from 'react-native-svg';
 import SvgUri from 'react-native-svg-uri';
 
 import moment from 'moment';
@@ -29,6 +29,7 @@ class VolunteerProfile extends Component {
           },
           headerStyle: {
             backgroundColor: '#517BBE',
+            height: 60
           },
           headerBackTitle: null,
           headerRight: (
@@ -160,20 +161,18 @@ class VolunteerProfile extends Component {
 
                 <View style={styles.noBGarea}>
                   <View style={styles.smallArea} > 
-                      <SvgUri
-                        width="30"
-                        height="30"
-                        source={require('../../../assets/PointsIcon.svg')}
+                      <Image
+                        style={{ width: 30, height: 30, marginRight: 5 }}
+                        source={require('../../../assets/PointsColor.png')}
                       />
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
                           {userData.Points > 0 ? userData.Points : '0'}
                       </Text>
                   </View>
                   <View style={styles.smallArea}> 
-                      <SvgUri
-                        showWebviewLoader={false}
-                        style={{ width: 30, height: 30 }}
-                        source={require('../../../assets/JobHours2.svg')}
+                      <Image
+                        style={{ width: 28, height: 28, marginRight: 5 }}
+                        source={require('../../../assets/JobHours2.png')}
                       />
                       <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
                           {jobHours.totalHours > 0 ? jobHours.totalHours : '0'}
@@ -219,7 +218,7 @@ class VolunteerProfile extends Component {
                         onRequestClose={() => {
                             Alert.alert('Modal has been closed.');
                         }}>
-                        <View style={{marginTop: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.8)', marginBottom: 0}}>
+                        <View style={{marginTop: 60, backgroundColor: 'rgba(0, 0, 0, 0.8)', marginBottom: 0}}>
                             <View>
                                 <TouchableHighlight
                                     onPress={() => {
@@ -251,7 +250,7 @@ class VolunteerProfile extends Component {
                                       <Image
                                         style={{position: 'relative', width: '100%', height: '100%'}}
                                         source={{uri: `data:image/gif;base64,${encodedCV}`}}
-                                        //resizeMode="stretch"
+                                        resizeMode="contain"
                                       />
                                     </ReactNativeZoomableView>
                                   </View>
@@ -294,8 +293,10 @@ class VolunteerProfile extends Component {
                   <View>
                   {
                       userMemberships.map((item, i) => (
-                        <View style={i % 2 == 0 ? styles.unionDark : styles.unionLight} key={i}>
-                          <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.UnionName}</Text>
+                        <View style={item.isConfirmed == 1 ? {flex: 0} : {display: 'none'}}>
+                          <View style={i % 2 == 0 ? styles.unionDark : styles.unionLight} key={i}>
+                            <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.UnionName}</Text>
+                          </View>
                         </View>
                       ))
                     }

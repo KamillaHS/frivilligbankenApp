@@ -128,6 +128,7 @@ const VolunteerTabs = createBottomTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: '#517BBE',
+        height: 60
       },
       showLabel: false,
       showIcon: true,

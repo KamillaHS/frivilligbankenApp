@@ -22,6 +22,7 @@ class BoughtGiftcard extends Component {
           },
           headerStyle: {
             backgroundColor: '#517BBE',
+            height: 60
           },
           headerTintColor: 'white',
     };
@@ -101,63 +102,80 @@ class BoughtGiftcard extends Component {
                         
                         <Text style={{color: '#4c4c4c', fontSize: 15, marginTop: 5}}>{"\n"}{giftcardData.Requirements}</Text>
                     
+                        <View style={giftcardData.isExpired == 1 ? {flex: 0, marginTop: 15, marginBottom: 5} : {display: 'none'}}>
+                                <Text style={{color: 'rgb(232,67,53)', fontSize: 30, fontWeight: 'bold', alignSelf: 'center', letterSpacing: 10}}>UDLØBET</Text>
+                        </View>
 
                         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5, marginTop: 20}}>
                             <Text style={{color: '#4c4c4c', fontSize: 18, fontWeight: 'bold'}}>Købs Dato</Text>
                             <Text style={{color: '#4c4c4c', fontSize: 18}}>{moment(giftcardData.PurchaseDate).format('L')}</Text>
                         </View>
-                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20}}>
-                            <Text style={{color: '#4c4c4c', fontSize: 18, fontWeight: 'bold'}}>Udløbs Dato</Text>
-                            <Text style={{color: '#4c4c4c', fontSize: 18}}>{moment(giftcardData.ExpirationDate).format('L')}</Text>
+
+                        <View style={giftcardData.isUsed == 1 && giftcardData.isExpired != 1 ? {flex: 0} : {display: 'none'}}>
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20}}>
+                                <Text style={{color: '#4c4c4c', fontSize: 18, fontWeight: 'bold'}}>Brugs Dato</Text>
+                                <Text style={{color: '#4c4c4c', fontSize: 18}}>{moment(giftcardData.UsageDate).format('L')}</Text>
+                            </View>
                         </View>
 
-                        <Text style={{color: '#4c4c4c', fontSize: 12, marginBottom: 20}}>
-                            For at bruge gavekortet, vis venligst dette købsbevis til ekspedienten ved kassen. 
-                            Ekspedienten vil derefter trykke på nedenstående knap for at godkende, at gavekortet er blevet brugt. 
-                            Når der er blevet trykket på knappen, kan dette ikke fortrydes. Venligst lad være med at trykke på knappen selv. 
-                            Hvis gavekortet er udløbet (se udløbs dato) kan gavekortet desværre ikke længere bruges.
-                        </Text>
+
+                        <View style={giftcardData.isUsed != 1 ? {flex: 0} : {display: 'none'}}>
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20}}>
+                                <Text style={{color: '#4c4c4c', fontSize: 18, fontWeight: 'bold'}}>Udløbs Dato</Text>
+                                <Text style={{color: '#4c4c4c', fontSize: 18}}>{moment(giftcardData.ExpirationDate).format('L')}</Text>
+                            </View>
+                        </View>
 
 
-                        <View style={{ marginTop: 20 }}>
-                            <RNSwipeVerify ref={ref => this.swipeVerify3 = ref}
-                                buttonSize={65}
-                                    //borderColor="rgba(48,164,81,0.3)"
-                                borderRadius="40"
-                                buttonColor="#30A451"
-                                backgroundColor="rgba(48,164,81,0.2)"
-                                textColor="#4c4c4c"
-                                okButton={{ visible: false, duration: 400 }}
-                                onVerified={() => {
-                                     
-                                            Alert.alert('Bekræft', 'Er du sikker på at du vil bruge gavekortet ' + giftcardData.Title + '? Denne handling kan ikke fortrydes og burde kun godkendes af en ekspedient i den pågældende butik.', [
-                                            {
-                                                text: 'Ja, fortsæt',
-                                                onPress: () => {this.useGiftcard(), this.setState({ isUnlocked: true })},
-                                                style: 'default'
-                                            },
-                                            {
-                                                text: 'Nej, luk',
-                                                onPress: () => { this.swipeVerify3.reset(), this.setState({ isUnlocked: false })},
-                                                style: 'cancel',
-                                            },
-                                        ])
-                                }}
-                                icon={
-                                    <Icon
-                                        name="redeem"
-                                        type='material'
-                                        size={30}
-                                        color="white"
-                                    />
-                                }
-                            >
-                
-                            <Text>{isUnlocked ? 'Gavekortet er nu brugt' : 'Swipe for at bruge gavekortet'}</Text>
+                        <View style={giftcardData.isUsed == 1 || giftcardData.isExpired == 1 ? {display: 'none'} : {flex: 0}}>
+                            <Text style={{color: '#4c4c4c', fontSize: 12, marginBottom: 20}}>
+                                For at bruge gavekortet, vis venligst dette købsbevis til ekspedienten ved kassen. 
+                                Ekspedienten vil derefter trykke på nedenstående knap for at godkende, at gavekortet er blevet brugt. 
+                                Når der er blevet trykket på knappen, kan dette ikke fortrydes. Venligst lad være med at trykke på knappen selv. 
+                                Hvis gavekortet er udløbet (se udløbs dato) kan gavekortet desværre ikke længere bruges.
+                            </Text>
 
-                
-                        </RNSwipeVerify>
-                    </View>
+                            <View style={{ marginTop: 20 }}>
+                                <RNSwipeVerify ref={ref => this.swipeVerify3 = ref}
+                                    buttonSize={65}
+                                        //borderColor="rgba(48,164,81,0.3)"
+                                    borderRadius="40"
+                                    buttonColor="#30A451"
+                                    backgroundColor="rgba(48,164,81,0.2)"
+                                    textColor="#4c4c4c"
+                                    okButton={{ visible: false, duration: 400 }}
+                                    onVerified={() => {
+                                        
+                                                Alert.alert('Bekræft', 'Er du sikker på at du vil bruge gavekortet ' + giftcardData.Title + '? Denne handling kan ikke fortrydes og burde kun godkendes af en ekspedient i den pågældende butik.', [
+                                                {
+                                                    text: 'Ja, fortsæt',
+                                                    onPress: () => {this.useGiftcard(), this.setState({ isUnlocked: true })},
+                                                    style: 'default'
+                                                },
+                                                {
+                                                    text: 'Nej, luk',
+                                                    onPress: () => { this.swipeVerify3.reset(), this.setState({ isUnlocked: false })},
+                                                    style: 'cancel',
+                                                },
+                                            ])
+                                    }}
+                                    icon={
+                                        <Icon
+                                            name="redeem"
+                                            type='material'
+                                            size={30}
+                                            color="white"
+                                        />
+                                    }
+                                >
+                    
+                                    <Text>{isUnlocked ? 'Gavekortet er nu brugt' : 'Swipe for at bruge gavekortet'}</Text>
+
+                                </RNSwipeVerify>
+                            </View>
+
+
+                        </View>
 
 
                     </View>

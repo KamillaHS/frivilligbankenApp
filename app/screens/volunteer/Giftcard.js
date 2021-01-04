@@ -17,6 +17,7 @@ class Giftcard extends Component {
           },
           headerStyle: {
             backgroundColor: '#517BBE',
+            height: 60
           },
           headerTintColor: 'white',
     };
@@ -96,11 +97,9 @@ class Giftcard extends Component {
                         <View style={{flex: 1, flexDirection: 'row'}}>
                             <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }}>{ giftcardData.Title }</Text>
                             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', padding: 2}}>
-                                <Icon
-                                    type='material' 
-                                    name="control-point" 
-                                    size={25}
-                                    color='#4c4c4c'
+                                <Image
+                                    style={{ width: 26, height: 26, marginRight: 5 }}
+                                    source={require('../../../assets/PointsColor.png')}
                                 />
                                 <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{ giftcardData.ValueP }</Text>
                             </View>
@@ -118,11 +117,9 @@ class Giftcard extends Component {
                                         <Text style={styles.text}>Mine Point</Text>
                                     </View>
                                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                                        <Icon
-                                            type='material' 
-                                            name="control-point" 
-                                            size={25}
-                                            color='#4c4c4c'
+                                        <Image
+                                            style={{ width: 26, height: 26, marginRight: 5 }}
+                                            source={require('../../../assets/PointsColor.png')}
                                         />
                                         <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{userPoints.Points}</Text>
                                     </View>
@@ -140,11 +137,9 @@ class Giftcard extends Component {
                                         <Text style={styles.text}>Gavekort Pris</Text>
                                     </View>
                                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                                        <Icon
-                                            type='material' 
-                                            name="control-point" 
-                                            size={25}
-                                            color='#4c4c4c'
+                                        <Image
+                                            style={{ width: 26, height: 26, marginRight: 5 }}
+                                            source={require('../../../assets/PointsColor.png')}
                                         />
                                         <Text style={{color: '#4c4c4c', fontSize: 18, padding: 1}}>{giftcardData.ValueP}</Text>
                                     </View>
@@ -162,11 +157,9 @@ class Giftcard extends Component {
                                         <Text style={styles.text}>Resterende</Text>
                                     </View>
                                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                                        <Icon
-                                            type='material' 
-                                            name="control-point" 
-                                            size={25}
-                                            color={canBuy ? '#30A451' : '#E84335'}
+                                        <Image
+                                            style={{ width: 26, height: 26, marginRight: 5 }}
+                                            source={require('../../../assets/PointsColor.png')}
                                         />
                                         <Text style={[{fontSize: 18, padding: 1}, canBuy ? styles.textGreen : styles.textRed]}>{left}</Text>
                                     </View>

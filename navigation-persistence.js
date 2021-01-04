@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-const key = 'nav6'
+const key = 'nav11'
 // const key = null
 
 export const loadNavigationState = key

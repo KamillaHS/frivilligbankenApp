@@ -16,6 +16,7 @@ class GiftcardShop extends Component {
           },
           headerStyle: {
             backgroundColor: '#517BBE',
+            height: 60
           },
           headerBackTitle: null,
     };
@@ -63,11 +64,9 @@ class GiftcardShop extends Component {
 
                 <View style={styles.area}>
                     <View style={{flex:1, flexDirection: 'row', padding: 10}}>
-                        <Icon
-                            type='material' 
-                            name="control-point" 
-                            size={30}
-                            color='#4c4c4c'
+                        <Image
+                            style={{ width: 30, height: 30, marginRight: 5 }}
+                            source={require('../../../assets/PointsColor.png')}
                         />
                         <Text style={{color: '#4c4c4c', fontSize: 18, padding: 3}}>
                             {userPoints.Points}
@@ -86,11 +85,9 @@ class GiftcardShop extends Component {
                                 <View style={{flex: 1, flexDirection: 'row'}}>
                                     <Text style={{color: 'white', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', padding: 2}}>
-                                        <Icon
-                                            type='material' 
-                                            name="control-point" 
-                                            size={25}
-                                            color='white'
+                                        <Image
+                                            style={{ width: 26, height: 26, marginRight: 5 }}
+                                            source={require('../../../assets/PointsColor.png')}
                                         />
                                         <Text style={{color: 'white', fontSize: 18, padding: 1}}>{ item.ValueP }</Text>
                                     </View>

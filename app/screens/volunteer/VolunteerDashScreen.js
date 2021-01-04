@@ -18,11 +18,13 @@ class VolunteerDashScreen extends Component {
         title: 'Forside',
         headerTitleStyle: {
             color: 'white',
-          },
-          headerStyle: {
+        },
+        headerStyle: {
             backgroundColor: '#517BBE',
-          },
-          headerBackTitle: null,
+            height: 60
+        },
+        headerBackTitle: null,
+        
     };
 
     state = {

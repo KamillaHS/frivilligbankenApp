@@ -15,6 +15,7 @@ class UnionProfile extends Component {
               },
               headerStyle: {
                 backgroundColor: '#517BBE',
+                height: 60
               },
               headerBackTitle: null,
               headerRight: (

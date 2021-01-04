@@ -14,6 +14,7 @@ class AssignHours extends Component {
         },
         headerStyle: {
             backgroundColor: '#517BBE',
+            height: 60
         },
         headerTintColor: 'white',
         headerBackTitle: null,

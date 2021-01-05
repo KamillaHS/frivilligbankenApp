@@ -185,6 +185,7 @@ const UnionTabs = createBottomTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: '#517BBE',
+        height: 60
       },
       showLabel: false,
       showIcon: true,
@@ -237,6 +238,7 @@ const SponsorTabs = createBottomTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: '#517BBE',
+        height: 60
       },
       showLabel: false,
       showIcon: true,

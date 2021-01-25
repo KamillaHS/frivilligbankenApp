@@ -85,7 +85,7 @@ class UnionMembers extends Component {
             return(
                 [
                     <TouchableHighlight 
-                        style={{backgroundColor: '#E84335', margin: 10, marginLeft: 15, height: '85%', borderRadius: 10, justifyContent: 'center', alignItems: 'left', paddingLeft: 10}} 
+                        style={{backgroundColor: '#E84335', margin: 10, marginLeft: 15, height: '85%', borderRadius: 10, justifyContent: 'center', alignItems: 'flex-start', paddingLeft: 10}} 
                         onPress={() => Alert.alert('Bekræft Sletning', 'Er du sikker på at du vil slette dette medlem? Bemærk at medlemmet kun må slettes, hvis de har meldt sig ud af foreningen, eller ikke længere ønsker at bruge Frivilligbankens app. Hvis du er i tvivl kan du læse mere under vores regler og regulationer.', 
                         [
                             {

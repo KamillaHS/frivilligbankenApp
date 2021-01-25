@@ -218,13 +218,13 @@ class VolunteerProfile extends Component {
                         onRequestClose={() => {
                             Alert.alert('Modal has been closed.');
                         }}>
-                        <View style={{marginTop: 60, backgroundColor: 'rgba(0, 0, 0, 0.8)', marginBottom: 0}}>
+                        <View style={{marginTop: 70, backgroundColor: 'rgba(0, 0, 0, 0.8)', marginBottom: 0}}>
                             <View>
                                 <TouchableHighlight
                                     onPress={() => {
                                     this.setModalVisible(!this.state.modalVisible);
                                     }}>
-                                    <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
+                                    <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 15}}>
                                       <Icon
                                         name="close"
                                         type='material'

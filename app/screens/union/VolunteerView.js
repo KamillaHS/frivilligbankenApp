@@ -251,13 +251,13 @@ class VolunteerView extends Component {
                         onRequestClose={() => {
                             Alert.alert('Modal has been closed.');
                         }}>
-                        <View style={{marginTop: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.8)', marginBottom: 0}}>
+                        <View style={{marginTop: 70, backgroundColor: 'rgba(0, 0, 0, 0.8)', marginBottom: 0}}>
                             <View>
                                 <TouchableHighlight
                                     onPress={() => {
                                     this.setModalVisible(!this.state.modalVisible);
                                     }}>
-                                    <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
+                                    <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 15}}>
                                       <Icon
                                         name="close"
                                         type='material'
@@ -283,7 +283,7 @@ class VolunteerView extends Component {
                                         <Image
                                           style={{position: 'relative', width: '100%', height: '100%'}}
                                           source={{uri: `data:image/gif;base64,${encodedCV}`}}
-                                          //resizeMode="stretch"
+                                          resizeMode="contain"
                                         />
                                       </ReactNativeZoomableView>
                                     </View>

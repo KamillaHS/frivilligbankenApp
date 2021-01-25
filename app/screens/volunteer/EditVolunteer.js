@@ -217,58 +217,14 @@ class EditVolunteer extends Component {
                   />
 
                   <Text>Fødselsdato</Text>
-                  <TouchableOpacity 
-                      onPress={() => {
-                          if(Platform.OS == 'ios') {
-                              this.setModalVisible(true);
-                          } else if(Platform.OS == 'android') {
+                  <DateTimePicker
+                     value={new Date(dob)}
+                     mode='date'
+                     style={styles.input}
+                     maximumDate={moment().utc().subtract(14, 'years').toDate()}
+                     onChange={(e, dob) => this.setState({dob})}
+                  />
 
-                          }
-                  }}>
-                      <TextInput
-                          //value={moment(userData.DoB).format('L')}
-                          value={moment(dob).format('L')}
-                          keyboardType='default'
-                          style={styles.input}
-                          editable={false}
-                          pointerEvents='none'
-                      />
-                  </TouchableOpacity>
-
-
-                  <Modal
-                      animationType="slide"
-                      visible={this.state.modalVisible}
-                      transparent={true}
-                      onRequestClose={() => {
-                          Alert.alert('Modal has been closed.');
-                      }}>
-                      <View style={{marginTop: 'auto', backgroundColor: 'white', marginBottom: 0}}>
-                          <View>
-                              <TouchableHighlight
-                                  onPress={() => {
-                                  this.setModalVisible(!this.state.modalVisible);
-                                  }}>
-                                  <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
-                                      <Icon
-                                          name="close"
-                                          type='material'
-                                          size={30}
-                                          color="#4c4c4c"
-                                      />
-                                    </View>
-                              </TouchableHighlight>
-
-
-                              <DateTimePicker
-                                  value={new Date(dob)}
-                                  mode='date'
-                                  maximumDate={moment().utc().subtract(14, 'years').toDate()}
-                                  onChange={(e, dob) => this.setState({dob})}
-                              />
-                          </View>
-                      </View>
-                  </Modal>
 
 
                   <Text>Adresse</Text>

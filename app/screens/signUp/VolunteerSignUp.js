@@ -173,60 +173,13 @@ class VolunteerSignUp extends Component {
                         style={styles.input}
                     />
 
-                    <TouchableOpacity 
-                        onPress={() => {
-                            if(Platform.OS == 'ios') {
-                                this.setModalVisible(true);
-                            } else if(Platform.OS == 'android') {
-
-                            }
-                    }}>
-                        <TextInput
-                            value={moment(this.state.dob).format('L')}
-                            placeholder={'Fødselsdato'}
-                            placeholderTextColor='white'
-                            keyboardType='default'
-                            style={styles.input}
-                            editable={false}
-                            pointerEvents='none'
-                        />
-                    </TouchableOpacity>
-
-
-                    <Modal
-                        animationType="slide"
-                        visible={this.state.modalVisible}
-                        transparent={true}
-                        onRequestClose={() => {
-                            Alert.alert('Modal has been closed.');
-                        }}>
-                        <View style={{marginTop: 'auto', backgroundColor: 'white', marginBottom: 0}}>
-                            <View>
-                                <TouchableHighlight
-                                    onPress={() => {
-                                    this.setModalVisible(!this.state.modalVisible);
-                                    }}>
-                                    <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
-                                        <Icon
-                                            name="close"
-                                            type='material'
-                                            size={30}
-                                            color="#4c4c4c"
-                                        />
-                                    </View>
-                                </TouchableHighlight>
-
-
-                                <DateTimePicker
-                                    value={this.state.dob}
-                                    mode='date'
-                                    maximumDate={moment().utc().subtract(14, 'years').toDate()}
-                                    onChange={(e, dob) => this.setState({dob})}
-                                />
-                            </View>
-                        </View>
-                    </Modal>
-
+                    <DateTimePicker
+                        value={this.state.dob}
+                        mode='date'
+                        style={styles.input}
+                        maximumDate={moment().utc().subtract(14, 'years').toDate()}
+                        onChange={(e, dob) => this.setState({dob})}
+                    />
 
                     <TextInput
                         value={address}

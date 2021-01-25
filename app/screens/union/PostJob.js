@@ -120,111 +120,25 @@ class PostJob extends Component {
                     />
 
                     <Text>Start Dato</Text>
-                    <TouchableOpacity 
-                        onPress={() => {
-                            if(Platform.OS == 'ios') {
-                                this.setModalStartDate(true);
-                            } else if(Platform.OS == 'android') {
-
-                            }
-                        }}>
-                        <TextInput
-                            value={moment(this.state.start_date).format('L')}
-                            placeholder={'00-00-0000'}
-                            placeholderTextColor='#4c4c4c'
-                            keyboardType='default'
-                            style={styles.input}
-                            editable={false}
-                            pointerEvents='none'
-                        />
-                    </TouchableOpacity>
-
-                            <Modal
-                                animationType="slide"
-                                visible={this.state.modalStartDate}
-                                transparent={true}
-                                onRequestClose={() => {
-                                    Alert.alert('Modal has been closed.');
-                                }}>
-                                <View style={{marginTop: 'auto', backgroundColor: 'white', marginBottom: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10}}>
-                                    <View>
-                                        <TouchableHighlight
-                                            onPress={() => {
-                                            this.setModalStartDate(!this.state.modalStartDate);
-                                            }}>
-                                            <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
-                                                <Icon
-                                                    name="close"
-                                                    type='material'
-                                                    size={30}
-                                                    color="#4c4c4c"
-                                                />
-                                            </View>
-                                        </TouchableHighlight>
-
-                                        <DateTimePicker
-                                            value={this.state.start_date}
-                                            mode='date'
-                                            display='default'
-                                            minimumDate={moment().toDate()}
-                                            onChange={(e, start_date) => this.setState({start_date})}
-                                        />
-                                    </View>
-                                </View>
-                            </Modal>
+                    <DateTimePicker
+                        value={this.state.start_date}
+                        mode='date'
+                        display='default'
+                        style={styles.input}
+                        minimumDate={moment().toDate()}
+                        onChange={(e, start_date) => this.setState({start_date})}
+                    />
+                                
 
                     <Text>Slut Dato</Text>
-                    <TouchableOpacity 
-                        onPress={() => {
-                            if(Platform.OS == 'ios') {
-                                this.setModalEndDate(true);
-                            } else if(Platform.OS == 'android') {
+                    <DateTimePicker
+                        value={this.state.end_date}
+                        mode='date'
+                        style={styles.input}
+                        minimumDate={moment().toDate()}
+                        onChange={(e, end_date) => this.setState({end_date})}
+                    />
 
-                            }
-                        }}>
-                        <TextInput
-                            value={moment(this.state.end_date).format('L')}
-                            placeholder={'00-00-0000'}
-                            placeholderTextColor='#4c4c4c'
-                            keyboardType='default'
-                            style={styles.input}
-                            editable={false}
-                            pointerEvents='none'
-                        />
-                    </TouchableOpacity>
-
-                            <Modal
-                                animationType="slide"
-                                visible={this.state.modalEndDate}
-                                transparent={true}
-                                onRequestClose={() => {
-                                    Alert.alert('Modal has been closed.');
-                                }}>
-                                <View style={{marginTop: 'auto', backgroundColor: 'white', marginBottom: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10}}>
-                                    <View>
-                                        <TouchableHighlight
-                                            onPress={() => {
-                                            this.setModalEndDate(!this.state.modalEndDate);
-                                            }}>
-                                            <View style={{marginRight: 10, marginLeft: 'auto', marginTop: 10}}>
-                                                <Icon
-                                                    name="close"
-                                                    type='material'
-                                                    size={30}
-                                                    color="#4c4c4c"
-                                                />
-                                            </View>
-                                        </TouchableHighlight>
-
-                                        <DateTimePicker
-                                            value={this.state.end_date}
-                                            mode='date'
-                                            minimumDate={moment().toDate()}
-                                            onChange={(e, end_date) => this.setState({end_date})}
-                                        />
-                                    </View>
-                                </View>
-                            </Modal>
 
                     <Text>Kategori</Text>
                     <TouchableOpacity 

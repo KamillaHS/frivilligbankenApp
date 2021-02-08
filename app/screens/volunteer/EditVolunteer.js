@@ -187,9 +187,8 @@ class EditVolunteer extends Component {
         const encodedCV = userData.CV;
 
         return(
-          <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+          <KeyboardAwareScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
               <View style={styles.area}> 
-                {/*
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
                     <Image
                       style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white', marginRight: 20}}
@@ -207,7 +206,6 @@ class EditVolunteer extends Component {
                         <Image source={{ uri: image }} style={{ width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50 }} />}
                     </View>
                   </View>
-                */}
 
               
                   <Text>Fulde Navn</Text>
@@ -226,8 +224,6 @@ class EditVolunteer extends Component {
                      maximumDate={moment().utc().subtract(14, 'years').toDate()}
                      onChange={(e, dob) => this.setState({dob})}
                   />
-
-
 
                   <Text>Adresse</Text>
                   <TextInput
@@ -324,7 +320,7 @@ class EditVolunteer extends Component {
                       keyboardType='default'
                       style={styles.input}
                   />
-                {/*
+
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
                     <Image
                       style={{flex:1, width: 100, height: 80, maxHeight: 100, maxWidth: 100, borderRadius: 10, backgroundColor: 'white', marginRight: 20}}
@@ -343,7 +339,7 @@ class EditVolunteer extends Component {
                     </View>
 
                   </View>
-                */}
+
                   <Button 
                       title="Gem Ændringer" 
                       buttonStyle={styles.greenButton}
@@ -363,7 +359,7 @@ const styles = StyleSheet.create({
     container:{
       alignItems: 'center',
       paddingVertical: 20,
-      backgroundColor: '#E7EBF0',
+      //backgroundColor: '#E7EBF0',
     },
     greenButton: {
         backgroundColor:"#30A451",

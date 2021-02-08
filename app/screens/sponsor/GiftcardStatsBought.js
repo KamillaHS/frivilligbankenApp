@@ -54,7 +54,7 @@ class GiftcardStatsBought extends Component {
         const { giftcards, totals } = this.state;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <View style={styles.area}>
                     <Text style={[styles.text, {fontSize: 18}]}>Statistik over købte gavekort</Text>
                 </View>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     area:{
         backgroundColor: 'rgba(81,123,190,0.3)',

@@ -304,7 +304,7 @@ class App extends Component {
     console.log("test", logInState);
     if(! logInState.loggedIn || logInState.loggedIn==='false') {
       //this.props.navigation.navigate('Login') 
-      await AsyncStorage.removeItem('nav6');
+      await AsyncStorage.removeItem('nav11');
     }
     this.setState({loading:false})
 

@@ -62,7 +62,7 @@ class UnionProfile extends Component {
     const encodedPicture = unionData.UnionLogo;
 
     return(
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
         <NavigationEvents onWillFocus={ () => this.getUnion() }/>
         <View style={styles.area}>
           <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     area:{
       backgroundColor: 'rgba(81,123,190,0.3)',

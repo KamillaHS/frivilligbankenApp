@@ -65,7 +65,7 @@ class UnionDashboard extends Component {
         const { union, jobs, memberRequests } = this.state;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getJobsWithApplications() }/>
                 <NavigationEvents onWillFocus={ () => this.getNewRequests() }/>
 
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
         height: '100%'
     },
     area:{

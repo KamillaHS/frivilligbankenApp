@@ -140,7 +140,7 @@ class UnionJobDescription extends Component {
         //const encodedVol2Picture = confirmed.VolunteerPic;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getApplicants() }/>
                 <NavigationEvents onWillFocus={ () => this.getConfirmed() }/>
                 
@@ -198,7 +198,7 @@ class UnionJobDescription extends Component {
                         <View style={applicants.length > 0 ? {display: 'flex'} : {display: 'none'}}>
                             {
                                 applicants.map((item, key) => (
-                                    <TouchableOpacity key={key.VolunteerID} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.VolunteerID, id2: jobData.JobID})}>
+                                    <TouchableOpacity key={key.VolunteerID} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.VolunteerID, id2: jobData.JobID, page: 'jobDescription'})}>
                                         <View style={item.Status == 'Godkendt' ? styles.confirmed : {display: 'none'}}>
 
                                             <View style={styles.profileImage}>
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     area:{
         backgroundColor: 'rgba(81,123,190,0.3)',

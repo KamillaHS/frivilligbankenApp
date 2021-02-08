@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -68,7 +69,9 @@ class JobDescription extends Component {
         const encodedPicture = jobData.UnionLogo;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getJob() }/>
+
                 <View style={styles.area}> 
                     <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                         <View style={styles.jobLogo}>
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     area:{
         backgroundColor: 'rgba(81,123,190,0.3)',

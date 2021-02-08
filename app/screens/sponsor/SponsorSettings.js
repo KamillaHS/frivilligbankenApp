@@ -47,7 +47,7 @@ class SponsorSettings extends Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
 
                 <View style={styles.noBGarea} >
                     <Button
@@ -69,6 +69,7 @@ class SponsorSettings extends Component {
                     />
                 </View>
 
+                {/*
                 <View style={styles.area}>
                     <View style={styles.switch}>
                         <Text style={styles.text}>Tillad Meddelelser </Text>
@@ -100,7 +101,10 @@ class SponsorSettings extends Component {
                         </View>
                     </View>
                 </View>
+                */
 
+
+                /*
                 <View style={[styles.area, {marginTop: 10}]}>
                     <TouchableOpacity style={styles.list}>
                         <Text style={styles.text}>Support</Text>
@@ -115,6 +119,7 @@ class SponsorSettings extends Component {
                         <Text style={styles.text}>Andet Juridisk</Text>
                     </TouchableOpacity>
                 </View>
+                */}
 
             </ScrollView>
         )

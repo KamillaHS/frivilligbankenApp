@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image, TextInput } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 
+import moment from 'moment';
+import 'moment/locale/da';
+moment.locale('da');
+
 const JOBS_URL = 'http://kamilla-server.000webhostapp.com/app/allJobs.php';
 
 class UnionAllJobs extends Component {
@@ -42,7 +46,7 @@ class UnionAllJobs extends Component {
         //const encodedPicture = jobsData.UnionLogo;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 {/*
                 <View style={styles.noBGarea}>
                     <Button
@@ -122,8 +126,8 @@ class UnionAllJobs extends Component {
                                     <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
                                         <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     </View>
-                                    <View style={{ width: 20, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                        <Text style={{color: '#4c4c4c' }} >1</Text>
+                                    <View style={{ width: 80, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                        <Text style={{color: '#4c4c4c' }} >{moment(item.StartDate).format('L')}</Text>
                                     </View>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -141,7 +145,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     noBGarea:{
         flex:1,

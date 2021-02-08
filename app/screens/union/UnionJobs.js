@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 const UNION_JOBS_URL = 'http://kamilla-server.000webhostapp.com/app/union/getUnionJobs.php';
+
 
 class UnionJobs extends Component {
 
@@ -19,7 +21,7 @@ class UnionJobs extends Component {
       };
 
     state = { 
-        jobsData: [] 
+        jobsData: [],
     }
 
     async getJobs() {
@@ -42,7 +44,9 @@ class UnionJobs extends Component {
         //const encodedPicture = jobsData.UnionLogo;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getJobs() }/>
+
                 <View style={styles.noBGarea}>
                     <Button 
                         buttonStyle={[styles.blueButton, {marginBottom: 10}]}
@@ -77,7 +81,7 @@ class UnionJobs extends Component {
                                         <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     </View>
                                     <View style={{ width: 20, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
-                                        <Text style={{color: '#4c4c4c' }} >1</Text>
+                                        <Text style={{color: '#4c4c4c' }} >{item.num}</Text>
                                     </View>
                                 </View>
                             </TouchableWithoutFeedback>
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     noBGarea:{
         width: '90%',

@@ -58,7 +58,7 @@ class GiftcardShop extends Component {
         //const encodedPicture = giftCardData.SponsorPic;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getGiftCards() }/>
                 <NavigationEvents onWillFocus={ () => this.getUserPoints() }/>
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     area:{
         backgroundColor: 'rgba(81,123,190,0.3)',

@@ -42,7 +42,7 @@ class SponsorGiftcards extends Component {
         //const encodedPicture = giftcardsData.SponsorPic;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <View style={styles.noBGarea}>
                     <Button 
                         buttonStyle={[styles.blueButton, {marginBottom: 10}]}
@@ -76,7 +76,7 @@ class SponsorGiftcards extends Component {
                                     <View style={{ justifyContent: 'center', paddingLeft: 5, paddingRight: 5 }}>
                                         <Text style={{color: '#4c4c4c', fontSize: 18, paddingTop: 3 }} numberOfLines={1} ellipsizeMode='tail'>{ item.Title }</Text>
                                     </View>
-                                    <View style={{ width: 20, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
+                                    <View style={{ width: 30, justifyContent: 'center', marginRight: 0, marginLeft: 'auto' }}>
                                         <Text style={{color: '#4c4c4c' }} >{item.Amount}</Text>
                                     </View>
                                 </View>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     noBGarea:{
         width: '90%',

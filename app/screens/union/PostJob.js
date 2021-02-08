@@ -106,7 +106,7 @@ class PostJob extends Component {
         const { title, start_date, end_date, category, categoryName, description, requirements, categories } = this.state;
 
         return(
-            <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+            <KeyboardAwareScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <View style={styles.area}> 
 
                     <Text>Jobtitel</Text>
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     area:{
         backgroundColor: 'rgba(81,123,190,0.3)',

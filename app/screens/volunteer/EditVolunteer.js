@@ -189,6 +189,7 @@ class EditVolunteer extends Component {
         return(
           <KeyboardAwareScrollView contentContainerStyle={styles.container}>
               <View style={styles.area}> 
+                {/*
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
                     <Image
                       style={{flex:1, width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50, backgroundColor: 'white', marginRight: 20}}
@@ -206,6 +207,7 @@ class EditVolunteer extends Component {
                         <Image source={{ uri: image }} style={{ width: 100, height: 100, maxHeight: 100, maxWidth: 100, borderRadius: 50 }} />}
                     </View>
                   </View>
+                */}
 
               
                   <Text>Fulde Navn</Text>
@@ -322,7 +324,7 @@ class EditVolunteer extends Component {
                       keyboardType='default'
                       style={styles.input}
                   />
-
+                {/*
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
                     <Image
                       style={{flex:1, width: 100, height: 80, maxHeight: 100, maxWidth: 100, borderRadius: 10, backgroundColor: 'white', marginRight: 20}}
@@ -341,7 +343,7 @@ class EditVolunteer extends Component {
                     </View>
 
                   </View>
-
+                */}
                   <Button 
                       title="Gem Ændringer" 
                       buttonStyle={styles.greenButton}

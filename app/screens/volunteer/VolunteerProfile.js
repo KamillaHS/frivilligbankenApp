@@ -153,7 +153,7 @@ class VolunteerProfile extends Component {
         
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
               <NavigationEvents onWillFocus={ () => this.getUser() }/>
               <NavigationEvents onWillFocus={ () => this.getUserGiftcards() }/>
               <NavigationEvents onWillFocus={ () => this.getUserInterests() }/>
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     noBGarea:{
         flex:1,

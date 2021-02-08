@@ -54,7 +54,7 @@ class VolunteerSettings extends Component {
 
     render() {
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
 
                 <View style={styles.noBGarea} >
                     <Button
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     noBGarea:{
         width: '90%',

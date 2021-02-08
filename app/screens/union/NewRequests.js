@@ -45,7 +45,7 @@ class NewRequests extends Component {
         //const encodedPicture = requests.VolunteerPic;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <NavigationEvents onWillFocus={ () => this.getNewRequests() }/>
 
                 <View style={styles.area}>
@@ -64,7 +64,7 @@ class NewRequests extends Component {
 
                     {
                         requests.map((item, i) => (
-                            <TouchableOpacity key={i} onPress={() => this.props.navigation.navigate('VolunteerView', {id: item.VolunteerID})}>
+                            <TouchableOpacity key={i} onPress={() => this.props.navigation.navigate('VolunteerView', {id: item.VolunteerID, page: 'requests'})}>
                                 <View style={styles.listItem}>
                                     <View style={styles.volunteerPic}>
                                         <Image 
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     topArea:{
         position: 'relative',

@@ -56,7 +56,7 @@ class PostGiftcard extends Component {
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    this.props.navigation.navigate('SponsorHome');
+                    this.props.navigation.navigate('SponsorGiftcards');
                 }
                 
             } else {

@@ -211,12 +211,13 @@ class VolunteerView extends Component {
     render() {
         const { userData, currentUnionID, userInterests, userMemberships, jobs, jobApplicationStatus, jobData } = this.state;
         const id = this.props.navigation.getParam('id');
+        const prevPage = this.props.navigation.getParam('page');
 
         const encodedPicture = userData.VolunteerPic;
         const encodedCV = userData.CV;
 
         return(
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
                 <View style={styles.area}>
                   <View style={{flex:1, flexDirection: 'row', alignItems: 'center'}}>
                     <Image
@@ -298,7 +299,7 @@ class VolunteerView extends Component {
 
                 {
                     userMemberships.map((item, i) => (
-                        <View key={i.UnionID} style={item.UnionID == currentUnionID && item.isConfirmed != 1 ? styles.noBGarea : {display: 'none'} }>
+                        <View key={i.UnionID} style={item.UnionID == currentUnionID && prevPage == 'requests' && item.isConfirmed != 1 ? styles.noBGarea : {display: 'none'} }>
                             <Text style={styles.text}>{userData.FullName} har ansøgt om at være medlem af din forening. Vil du godkende at vedkommende er medlem af din forening?</Text>
                         </View>
                         
@@ -307,7 +308,7 @@ class VolunteerView extends Component {
 
                 {
                     userMemberships.map((item, i) => (
-                        <View key={i.UnionID} style={item.UnionID == currentUnionID && item.isConfirmed != 1 ? styles.noBGarea : {display: 'none'} }>
+                        <View key={i.UnionID} style={item.UnionID == currentUnionID && prevPage == 'requests' && item.isConfirmed != 1 ? styles.noBGarea : {display: 'none'} }>
                             <Button 
                                 buttonStyle={styles.greenButton}
                                 title='Godkend'
@@ -324,7 +325,7 @@ class VolunteerView extends Component {
 
 
 
-                <View style={jobApplicationStatus.Status == 'Afventer' ? [styles.noBGarea, {flexDirection: 'column'}] : {display: 'none'}}>
+                <View style={jobApplicationStatus.Status == 'Afventer' && prevPage == 'jobDescription' ? [styles.noBGarea, {flexDirection: 'column'}] : {display: 'none'}}>
                     <Text>Vil du godkende {userData.FullName} til jobbet som {jobData.Title}?</Text>
 
                     <View style={[styles.noBGarea, {width: '100%', padding: 0, paddingTop: 10}]}>
@@ -361,9 +362,11 @@ class VolunteerView extends Component {
                   <View>
                     {
                     userMemberships.map((item, i) => (
+                      <View style={item.isConfirmed == 1 ? {flex: 0} : {display: 'none'}}>
                         <View style={i % 2 == 0 ? styles.unionDark : styles.unionLight} key={i}>
                           <Text style={{fontSize: 16, color: '#4c4c4c'}}>{item.UnionName}</Text>
                         </View>
+                      </View>
                     ))
                     }
                   </View>
@@ -405,7 +408,7 @@ const styles = StyleSheet.create({
     container:{
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#E7EBF0',
+        //backgroundColor: '#E7EBF0',
     },
     noBGarea:{
         flex:1,

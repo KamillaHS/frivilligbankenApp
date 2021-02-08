@@ -62,6 +62,9 @@ import EditSponsor from './app/screens/sponsor/EditSponsor';
 
 import Debug from './app/screens/DebugScreen'
 
+// turn off erros and such
+console.disableYellowBox = true
+
 /* Volunteer Tabs */
 const JobTab = createStackNavigator({
   Jobs: { screen: Jobs },

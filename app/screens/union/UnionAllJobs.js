@@ -37,7 +37,7 @@ class UnionAllJobs extends Component {
     }
 
     componentDidMount() {
-        this.getJobs();
+        //this.getJobs();
     }
 
     render() {
@@ -47,6 +47,7 @@ class UnionAllJobs extends Component {
 
         return(
             <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
+                <NavigationEvents onWillFocus={ () => this.getJobs() }/>
                 {/*
                 <View style={styles.noBGarea}>
                     <Button

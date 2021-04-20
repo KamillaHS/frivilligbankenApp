@@ -26,7 +26,7 @@ class SignUpMessage extends Component {
                     </Text>
 
                     <Button 
-                        title="Opret Konto" 
+                        title="Opret Profil" 
                         buttonStyle={styles.greenButton}
                         onPress={() => this.props.navigation.navigate('VolunteerSignUp')}
                     />

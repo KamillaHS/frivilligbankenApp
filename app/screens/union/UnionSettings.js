@@ -4,6 +4,7 @@ import { Button, Icon } from 'react-native-elements';
 import SwitchToggle from 'react-native-switch-toggle';
 import ToggleSwitch from 'rn-toggle-switch'
 //import { isConfigurationAvailable } from "expo/build/AR";
+import { NavigationEvents } from 'react-navigation';
 
 
 class UnionSettings extends Component {

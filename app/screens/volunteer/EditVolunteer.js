@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';

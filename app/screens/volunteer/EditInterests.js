@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, AsyncStorage, TouchableOpaci
 import { Button, Icon, Divider, CheckBox } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 //import { TouchableOpacity } from "react-native-gesture-handler";
+import { NavigationEvents } from 'react-navigation';
 
 const USERINTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/volunteerInterests.php';
 const INTERESTS_URL = 'http://kamilla-server.000webhostapp.com/app/getInterests.php';

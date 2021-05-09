@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableWithoutFeedb
 import { Button, Icon, ListItem, Divider } from 'react-native-elements';
 import { stringify } from "qs";
 import { TextInput } from "react-native-gesture-handler";
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';

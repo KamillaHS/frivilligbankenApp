@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
+import { NavigationEvents } from 'react-navigation';
 
 const GIFTCARD_URL = 'http://kamilla-server.000webhostapp.com/app/singleGiftcard.php';
 const BUY_URL = 'http://kamilla-server.000webhostapp.com/app/buyGiftcard.php';

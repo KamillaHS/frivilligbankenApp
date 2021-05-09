@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image, AsyncStorage, Touchab
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 import RNSwipeVerify from 'react-native-swipe-verify'
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';

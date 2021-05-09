@@ -5,6 +5,7 @@ import {Picker} from '@react-native-community/picker';
 import { HeaderBackButton } from "react-navigation-stack";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';

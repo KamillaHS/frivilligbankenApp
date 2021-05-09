@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableWithoutFeedback, Image, TextInput } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';

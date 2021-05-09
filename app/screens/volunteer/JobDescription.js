@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 import { NavigationEvents } from 'react-navigation';
+import { NavigationEvents } from 'react-navigation';  x
 
 import moment from 'moment';
 import 'moment/locale/da';

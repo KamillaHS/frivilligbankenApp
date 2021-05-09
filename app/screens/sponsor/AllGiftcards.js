@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, ImageBackground, Picker } from "react-native";
 import { Button, Icon } from 'react-native-elements';
 import { TextInput } from "react-native-gesture-handler";
+import { NavigationEvents } from 'react-navigation';
 
 const GIFTCARDS_URL = 'http://kamilla-server.000webhostapp.com/app/allGiftcards.php';
 

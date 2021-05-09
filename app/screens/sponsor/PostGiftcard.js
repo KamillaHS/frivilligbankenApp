@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, TextInput, Picker, Touchable
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';

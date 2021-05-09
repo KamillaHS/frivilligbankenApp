@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Icon } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 const GIFTCARDSBOUGHT_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/giftcardStatsBought.php';
 const GIFTCARDSBOUGHTTOTALS_URL = 'http://kamilla-server.000webhostapp.com/app/sponsor/giftcardStatsBoughtTotals.php';

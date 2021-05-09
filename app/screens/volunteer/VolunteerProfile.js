@@ -5,7 +5,6 @@ import { NavigationEvents } from 'react-navigation';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 import WithLocalSvg from 'react-native-svg';
 import SvgUri from 'react-native-svg-uri';
-import { NavigationEvents } from 'react-navigation';
 
 import moment from 'moment';
 import 'moment/locale/da';

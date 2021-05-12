@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image, TouchableOpacity, Tex
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 import { NavigationEvents } from 'react-navigation';
+import { withNavigation} from 'react-navigation'
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -101,6 +102,8 @@ class UnionJobDescription extends Component {
             })
     
             const data = await response.text();
+            this.getJob();
+            this.getConfirmed();
             //this.props.navigation.navigate('UnionJobDescription');
         } else {
             Alert.alert('Advarsel', 'Indtast venligst et gyldigt antal timer')
@@ -198,7 +201,10 @@ class UnionJobDescription extends Component {
                         <View style={applicants.length > 0 ? {display: 'flex'} : {display: 'none'}}>
                             {
                                 applicants.map((item, key) => (
-                                    <TouchableOpacity key={key.VolunteerID} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.VolunteerID, id2: jobData.JobID, page: 'jobDescription'})}>
+                                    <TouchableOpacity key={key.VolunteerID} onPress={() => this.props.navigation.navigate("VolunteerView", {id: item.VolunteerID, 
+                                                                                                                                            id2: jobData.JobID, 
+                                                                                                                                            page: 'jobDescription'}
+                                                                                                                            )}>
                                         <View style={item.Status == 'Godkendt' ? styles.confirmed : {display: 'none'}}>
 
                                             <View style={styles.profileImage}>
@@ -322,7 +328,9 @@ class UnionJobDescription extends Component {
                                             <Button 
                                                 buttonStyle={[styles.greenButton, {width: 'auto'}]}
                                                 title='Godkend'
-                                                onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil give ' + item.FullName + ' ' + item.totalHours + ' timer?', [
+                                                onPress={() => Alert.alert('Bekræft', 'Er du sikker på at du vil give ' 
+                                                                                        + item.FullName + ' ' 
+                                                                                        + item.totalHours + ' timer?', [
                                                     {
                                                         text: 'Ja, fortsæt',
                                                         onPress: () => {

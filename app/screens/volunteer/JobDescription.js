@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, ScrollView, Image } from "react-native";
 import { Button, Icon, Divider } from 'react-native-elements';
 import { HeaderBackButton } from "react-navigation-stack";
 import { NavigationEvents } from 'react-navigation';
+import { withNavigation} from 'react-navigation'
 
 import moment from 'moment';
 import 'moment/locale/da';
@@ -57,8 +58,14 @@ class JobDescription extends Component {
         const data = await response.json()
     }
 
+
     componentDidMount() {
         this.getJob();
+
+        const { navigation } = this.props;
+        this.focusListener = navigation.addListener('didFocus', () => {
+            console.log('calling this on focus changed');
+        })
     }
 
     
@@ -70,12 +77,6 @@ class JobDescription extends Component {
 
         return(
             <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
-                <NavigationEvents
-                    onWillFocus={payload => console.log('will focus', payload)}
-                    onDidFocus={payload => console.log('did focus', payload)}
-                    onWillBlur={payload => console.log('will blur', payload)}
-                    onDidBlur={payload => console.log('did blur', payload)}
-                />
                 <NavigationEvents onWillFocus={ () => this.getJob() }/>
 
                 <View style={styles.area}> 
@@ -161,7 +162,7 @@ class JobDescription extends Component {
     }
 }
 
-export default JobDescription;
+export default withNavigation(JobDescription);
 
 const styles = StyleSheet.create({
     container:{

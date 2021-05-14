@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Alert, TextInput, ImageBackground, Image, AsyncStorage, KeyboardAvoidingView } from "react-native";
 import { Button, Icon, withTheme } from 'react-native-elements';
+import { NavigationEvents } from 'react-navigation';
 
 const LOGIN_URL = 'http://kamilla-server.000webhostapp.com/app/userLogin.php';
 
@@ -11,6 +12,7 @@ class LoginScreen extends Component {
         this.state= {
             email: '',
             password: '',
+            newUser: false,
         };
     }
 
@@ -37,7 +39,7 @@ class LoginScreen extends Component {
                 alert(data.error)
             } else {
                 AsyncStorage.setItem('UserID', data.user.UserID)
-                this.props.navigation.navigate('VolunteerTabs')
+                this.props.navigation.navigate('Home', {newUser: false})
             }
         } else {
             Alert.alert('Tomme felter', 'Venligt indtast email og password for at logge ind')

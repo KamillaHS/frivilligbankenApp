@@ -23,6 +23,7 @@ class GiftcardStatsMade extends Component {
     state = { 
         giftcards: [],
         totals: [],
+        giftcardTotalMade: 0,
     }
 
     async getGiftcardsMade() {
@@ -52,7 +53,10 @@ class GiftcardStatsMade extends Component {
 
     render() {
         const { giftcards, totals } = this.state;
-        CompleteTotal = totals.TotalA * totals.TotalM;
+        let { giftcardTotalMade } = this.state;
+
+        giftcards.forEach(element => (giftcardTotalMade += element.Amount * element.ValueM));
+        console.log(giftcardTotalMade);
 
         return(
             <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
@@ -61,7 +65,7 @@ class GiftcardStatsMade extends Component {
                 </View>
 
                 <View style={styles.area}>
-                    <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
+                <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
                         <Text style={[styles.text, {width: '55%', fontSize: 18}]}>Titel</Text>
                         <Text style={[styles.text, {width: '20%', textAlign: 'right'}]}>Mængde</Text>
                         <Text style={[styles.text, {width: '25%', textAlign: 'right'}]}>Værdi Kr.</Text>
@@ -85,7 +89,7 @@ class GiftcardStatsMade extends Component {
 
                     <View style={{marginTop: 5}}>
                         <Text style={[styles.text, {fontSize: 15}]}>Der er i alt blevet oprettet gavekort til en værdi af:</Text>
-                        <Text style={[styles.text, {fontSize: 18}]}>{totals.TotalA} * {totals.TotalM} = {CompleteTotal} DKK</Text>
+                        <Text style={[styles.text, {fontSize: 18}]}>{giftcardTotalMade} DKK</Text>
                     </View>
                 </View>
 

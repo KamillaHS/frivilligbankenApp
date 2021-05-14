@@ -30,7 +30,7 @@ class VolunteerDashScreen extends Component {
     state = {
         userStatus: [],
         memberJobs: [],
-        name: []
+        name: [],
     }
 
     async getUserStatus() {
@@ -71,6 +71,22 @@ class VolunteerDashScreen extends Component {
         const { name } = this.state;
 
         const encodedPicture = memberJobs.UnionLogo;
+        //console.log(name.VolunteerID);
+
+        const isNew = this.props.navigation.getParam('newUser');
+        //console.log(isNew);
+        if(isNew == false) {
+            console.log('Not a new User')
+        } else {
+            console.log('New user - checking if they have a valid Volunteer ID');
+            if(name.VolunteerID != '' || name.VolunteerID != 0) {
+                console.log('A valid Volunteer ID detected. Please Proceed');
+            } else {
+                console.log('A valid Volunteer ID was not detected. Redirecting to Volunteer Creation Page');
+                this.props.navigation.navigate('VolunteerSignUp', {error: 'VolIDnotDetected'});
+            }
+        }
+        
 
         return(
             <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>

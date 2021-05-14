@@ -132,7 +132,7 @@ class VolunteerSignUp extends Component {
             if (data.error) {
                 alert(data.error)
             } else {
-                this.props.navigation.navigate('VolunteerTabs')
+                this.props.navigation.navigate('VolunteerTabs', {newUser: true})
             }
             
         } else {
@@ -149,6 +149,14 @@ class VolunteerSignUp extends Component {
         const { citiesResult } = this.state;
 
         let { image, imageBase64, cvImage, cvImageBase64 } = this.state;
+
+        VolIDnotDetected
+        const isDetected = this.props.navigation.getParam('error');
+        console.log(isDetected);
+        if(isset(isDetected)) {
+            console.log('Redirected from Dashboard. No valid ID found.')
+            alert('Der skete desværre en fejl', 'Der skete en fejl i registreringens processen. Venligst udfyld dine informationer igen.');
+        }
 
         return(
             <KeyboardAwareScrollView contentContainerStyle={styles.container}>

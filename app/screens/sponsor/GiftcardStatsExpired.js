@@ -23,6 +23,7 @@ class GiftcardStatsExpired extends Component {
     state = { 
         giftcards: [],
         totals: [],
+        giftcardTotalExpired: 0,
     }
 
     async getGiftcardsExpired() {
@@ -52,6 +53,10 @@ class GiftcardStatsExpired extends Component {
 
     render() {
         const { giftcards, totals } = this.state;
+        let { giftcardTotalExpired } = this.state;
+
+        giftcards.forEach(element => (giftcardTotalExpired += element.TotalAmount * element.ValueM));
+        //console.log(giftcardTotalExpired);
 
         return(
             <ScrollView style={{backgroundColor: '#E7EBF0'}} contentContainerStyle={styles.container}>
@@ -84,7 +89,7 @@ class GiftcardStatsExpired extends Component {
 
                     <View style={{marginTop: 5}}>
                         <Text style={[styles.text, {fontSize: 15}]}>Der er i alt blevet købt gavekort til en værdi af:</Text>
-                        <Text style={[styles.text, {fontSize: 18}]}>{totals.TotalM} DKK</Text>
+                        <Text style={[styles.text, {fontSize: 18}]}>{giftcardTotalExpired} DKK</Text>
                     </View>
 
                 </View>

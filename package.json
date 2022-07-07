@@ -14,7 +14,7 @@
     "expo": "^39.0.3",
     "expo-cli": "^3.21.13",
     "expo-image-picker": "~9.1.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "react": "16.13.1",
     "react-dom": "16.11.0",
     "react-native": "0.63.3",

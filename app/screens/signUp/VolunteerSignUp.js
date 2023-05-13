@@ -150,13 +150,16 @@ class VolunteerSignUp extends Component {
 
         let { image, imageBase64, cvImage, cvImageBase64 } = this.state;
 
-        VolIDnotDetected
+        //VolIDnotDetected
+        /*
         const isDetected = this.props.navigation.getParam('error');
         console.log(isDetected);
-        if(isset(isDetected)) {
+        if(isDetected != "") {
             console.log('Redirected from Dashboard. No valid ID found.')
             alert('Der skete desværre en fejl', 'Der skete en fejl i registreringens processen. Venligst udfyld dine informationer igen.');
         }
+        */
+        
 
         return(
             <KeyboardAwareScrollView contentContainerStyle={styles.container}>
